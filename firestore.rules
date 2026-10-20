@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Outil de table entre amis : lecture/écriture ouvertes sur ces deux collections.
+    match /inventaire/{doc} {
+      allow read, write: if true;
+    }
+    match /essais/{doc} {
+      allow read, write: if true;
+    }
+    match /tisanes/{doc} {
+      allow read, write: if true;
+    }
+    match /ingredients/{doc} {
+      allow read, write: if true;
+    }
+    match /categories/{doc} {
+      allow read, write: if true;
+    }
+    match /grimoire_ingredients/{doc} {
+      allow read, write: if true;
+    }
+    match /grimoire_potions/{doc} {
+      allow read, write: if true;
+    }
+    match /grimoire_anecdotes/{doc} {
+      allow read, write: if true;
+    }
+    // Page Alchimie : mêmes collections, préfixées alch_
+    match /{col}/{doc} {
+      allow read, write: if col.matches('alch_.*');
+    }
+  }
+}

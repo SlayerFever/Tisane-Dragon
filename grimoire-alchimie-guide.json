@@ -1,0 +1,5667 @@
+{
+ "version": 1,
+ "categories": [
+  {
+   "id": "alcool",
+   "name": "Alcool",
+   "color": "#86b5e0",
+   "group": "classification"
+  },
+  {
+   "id": "bois",
+   "name": "Bois",
+   "color": "#c3a1e0",
+   "group": "classification"
+  },
+  {
+   "id": "eau",
+   "name": "Eau",
+   "color": "#e6a95a",
+   "group": "classification"
+  },
+  {
+   "id": "essence_de_créature",
+   "name": "Essence de créature",
+   "color": "#6fcdbf",
+   "group": "classification"
+  },
+  {
+   "id": "essence_de_monstre",
+   "name": "Essence de monstre",
+   "color": "#e08fb4",
+   "group": "classification"
+  },
+  {
+   "id": "essence_élémentaire",
+   "name": "Essence élémentaire",
+   "color": "#d6cf7a",
+   "group": "classification"
+  },
+  {
+   "id": "fibres",
+   "name": "Fibres",
+   "color": "#e0916a",
+   "group": "classification"
+  },
+  {
+   "id": "gemme",
+   "name": "Gemme",
+   "color": "#9aa9c9",
+   "group": "classification"
+  },
+  {
+   "id": "médicinal",
+   "name": "Médicinal",
+   "color": "#a3c4a0",
+   "group": "classification"
+  },
+  {
+   "id": "métal",
+   "name": "Métal",
+   "color": "#86b5e0",
+   "group": "classification"
+  },
+  {
+   "id": "métal_précieux",
+   "name": "Métal précieux",
+   "color": "#c3a1e0",
+   "group": "classification"
+  },
+  {
+   "id": "os",
+   "name": "Os",
+   "color": "#e6a95a",
+   "group": "classification"
+  },
+  {
+   "id": "peau",
+   "name": "Peau",
+   "color": "#6fcdbf",
+   "group": "classification"
+  },
+  {
+   "id": "pigment",
+   "name": "Pigment",
+   "color": "#e08fb4",
+   "group": "classification"
+  },
+  {
+   "id": "plume",
+   "name": "Plume",
+   "color": "#d6cf7a",
+   "group": "classification"
+  },
+  {
+   "id": "psychotrope",
+   "name": "Psychotrope",
+   "color": "#e0916a",
+   "group": "classification"
+  },
+  {
+   "id": "roche",
+   "name": "Roche",
+   "color": "#9aa9c9",
+   "group": "classification"
+  },
+  {
+   "id": "sable",
+   "name": "Sable",
+   "color": "#a3c4a0",
+   "group": "classification"
+  },
+  {
+   "id": "stimulant",
+   "name": "Stimulant",
+   "color": "#86b5e0",
+   "group": "classification"
+  },
+  {
+   "id": "stupéfiant",
+   "name": "Stupéfiant",
+   "color": "#c3a1e0",
+   "group": "classification"
+  },
+  {
+   "id": "toxine",
+   "name": "Toxine",
+   "color": "#e6a95a",
+   "group": "classification"
+  },
+  {
+   "id": "arctique",
+   "name": "Arctique",
+   "color": "#9aa9c9",
+   "group": "environnement"
+  },
+  {
+   "id": "colline",
+   "name": "Colline",
+   "color": "#a3c4a0",
+   "group": "environnement"
+  },
+  {
+   "id": "côte",
+   "name": "Côte",
+   "color": "#86b5e0",
+   "group": "environnement"
+  },
+  {
+   "id": "désert",
+   "name": "Désert",
+   "color": "#c3a1e0",
+   "group": "environnement"
+  },
+  {
+   "id": "forêt",
+   "name": "Forêt",
+   "color": "#e6a95a",
+   "group": "environnement"
+  },
+  {
+   "id": "marais",
+   "name": "Marais",
+   "color": "#6fcdbf",
+   "group": "environnement"
+  },
+  {
+   "id": "montagne",
+   "name": "Montagne",
+   "color": "#e08fb4",
+   "group": "environnement"
+  },
+  {
+   "id": "prairie",
+   "name": "Prairie",
+   "color": "#d6cf7a",
+   "group": "environnement"
+  },
+  {
+   "id": "sous-marin",
+   "name": "Sous-marin",
+   "color": "#e0916a",
+   "group": "environnement"
+  },
+  {
+   "id": "sous-terrain",
+   "name": "Sous-terrain",
+   "color": "#9aa9c9",
+   "group": "environnement"
+  },
+  {
+   "id": "ville",
+   "name": "Ville",
+   "color": "#a3c4a0",
+   "group": "environnement"
+  },
+  {
+   "id": "corrosif",
+   "name": "Corrosif",
+   "color": "#6fcdbf",
+   "group": "propriete"
+  },
+  {
+   "id": "durable",
+   "name": "Durable",
+   "color": "#9aa9c9",
+   "group": "propriete"
+  },
+  {
+   "id": "fluide",
+   "name": "Fluide",
+   "color": "#e08fb4",
+   "group": "propriete"
+  },
+  {
+   "id": "fragile",
+   "name": "Fragile",
+   "color": "#e0916a",
+   "group": "propriete"
+  },
+  {
+   "id": "inflammable",
+   "name": "Inflammable",
+   "color": "#6fcdbf",
+   "group": "propriete"
+  },
+  {
+   "id": "psychédélique",
+   "name": "Psychédélique",
+   "color": "#86b5e0",
+   "group": "propriete"
+  },
+  {
+   "id": "résonnant",
+   "name": "Résonnant",
+   "color": "#e08fb4",
+   "group": "propriete"
+  },
+  {
+   "id": "toxique",
+   "name": "Toxique",
+   "color": "#e6a95a",
+   "group": "propriete"
+  },
+  {
+   "id": "tranchant",
+   "name": "Tranchant",
+   "color": "#d6cf7a",
+   "group": "propriete"
+  },
+  {
+   "id": "tâchant",
+   "name": "Tâchant",
+   "color": "#a3c4a0",
+   "group": "propriete"
+  },
+  {
+   "id": "unique",
+   "name": "Unique",
+   "color": "#e0916a",
+   "group": "propriete"
+  },
+  {
+   "id": "volatil",
+   "name": "Volatil",
+   "color": "#d6cf7a",
+   "group": "propriete"
+  },
+  {
+   "id": "étourdissant",
+   "name": "Étourdissant",
+   "color": "#c3a1e0",
+   "group": "propriete"
+  }
+ ],
+ "ingredients": [
+  {
+   "name": "Abeille tueuse",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Acajou",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Acier",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Aconit",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Acore odorant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Actée rouge",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Adamantium",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Agaric jaunissant",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Agave bleu",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Ailante glanduleux",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois",
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Aile de chauve-souris",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Aile de chauve-souris cavernicole",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Ailes de papillon de neige bleue",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Ailes de poisson volant",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Airain",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Albâtre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Algue rouge",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Aloe vera",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal",
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Alpaga",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Amanite phalloïde tachetée",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Amanite tue-mouches",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope",
+    "toxine"
+   ],
+   "props": [
+    "psychédélique",
+    "toxique"
+   ],
+   "envs": [
+    "arctique",
+    "colline"
+   ]
+  },
+  {
+   "name": "Anguille",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Annone des marais",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Anémone œil de bœuf",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Araignée chauve-souris tisseuse",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant",
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Araignée roue d'or",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Araignée-banane",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Argent",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Argile de golem d'argile",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Armoise de Michaux",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Armoise maritime",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Armérie maritime",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Asclépiade",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres",
+    "médicinal",
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Aspergillus oryzae",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Astéracées caoutchouteuses",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Ayahuasca",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Azurite",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Baie de Brindall",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment",
+    "bois"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Bambou",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "côte",
+    "forêt",
+    "montagne",
+    "ville"
+   ]
+  },
+  {
+   "name": "Bec de faucon de sang",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Berce de Mantegazzi",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Bigaradier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Bière",
+   "qualite": "Basse",
+   "desc": "Qualité basse · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Blé",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Bois de fer du désert",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Bois flotté",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Bombyx du mûrier",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Boue terreuse",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Bouleau",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Branchies de requin",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Bronze",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Brugmansie",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stupéfiant",
+    "toxine"
+   ],
+   "props": [
+    "étourdissant",
+    "toxique"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Busserole",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Cachoutier",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "pigment",
+    "bois"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Cactus oursin",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant",
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Cafard",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Calcaire",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Camomille",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Canne à sucre",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Carapace de tortue dragon",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Catechu",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Cendre d'éfrit",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Cerise",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "alcool",
+    "bois"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Champignon-boule cavernicole",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Champignouret",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Chanvre",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "fibres",
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Choka bleu",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool",
+    "fibres",
+    "eau"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Châtaigne",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment",
+    "bois"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Chêne",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Chêne d'eau",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "bois",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Cidre",
+   "qualite": "Basse",
+   "desc": "Qualité basse · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Cleistocactus strausii",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "désert",
+    "montagne"
+   ]
+  },
+  {
+   "name": "Cloporte rosâtre",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Coca",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "côte",
+    "montagne"
+   ]
+  },
+  {
+   "name": "Cochenille",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Coque de noix de coco",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Coquille d'ormeau",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Corail de bois tendre",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Cordyline fruticosa",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool",
+    "pigment"
+   ],
+   "props": [
+    "inflammable",
+    "fluide",
+    "tâchant"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Coton",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Crabe arctique",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Craie",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Crapet arlequin gonflé",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool",
+    "stupéfiant"
+   ],
+   "props": [
+    "inflammable",
+    "fluide",
+    "étourdissant"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Crocs de vampire",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Cuivre",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Cyprès chauve",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Cèdre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Dendrobate",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Douce-amère",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Dragon millipède",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Drupes du houx",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Dulse",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Défense de mammouth",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Eau de marais",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2 · Valeur : 1 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau de source",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0 · Valeur : 2 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau des égouts",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2 · Valeur : 1 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau distillée",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2 · Valeur : 4 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau potable",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0 · Valeur : 2 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau sacrée",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4 · Valeur : 25 po.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau sale",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2 · Valeur : 1 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau élémentaire",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2 · Valeur : 4 pc.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau-de-vie pure",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · modificateur du DD de fabrication −2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Eau-de-vie pure distillée",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · modificateur du DD de fabrication −4.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Encre de kraken",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Encre de pieuvre géante",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Fer météorique",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Fer élémentaire",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Feuilles de kratom",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Feuilles de thé",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Fil de ver à soie",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Fleur de soie",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Fourmi balle de fusil",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Fragments de démon de glace",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Fruit de coque du Levant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant",
+    "stimulant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Fucus vésiculeux",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Fèves de cacao",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Gelée ocre",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Gemmes broyées",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Genêt à balais",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Ginseng",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Glandes de solifuge",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Gombo",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres",
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Goémon noir",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Graine de poivrier à épis crochus",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant",
+    "médicinal"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Grains de café",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Granit",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Gravier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Gravier de gargouille",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Griffe du diable",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Griffes d'oni",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Griffes de dragon noir ancien",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Grog",
+   "qualite": "Basse",
+   "desc": "Qualité basse · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Grès",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Guêpe",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Gymnopile remarquable",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Heliconius erato",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Hippocampe",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Houx",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Houx cassine",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Hydromel",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · modificateur du DD de fabrication −2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Hypholome en touffe",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Hémileucin du ményanthe",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Hépatique",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Incilius alvarius",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Indigo",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "désert",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Jade",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Kava",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Kerriidae",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Khat",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Laine",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Lait de jument",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool",
+    "eau"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "colline",
+    "désert",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Langue de mimic",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Lapacho",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Lapis-lazuli",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "gemme",
+    "pigment"
+   ],
+   "props": [
+    "fragile",
+    "tâchant"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Lavande",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Liatris à épi",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Lichen de barbe de géant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Lichen glaçon",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope",
+    "stupéfiant"
+   ],
+   "props": [
+    "psychédélique",
+    "étourdissant"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Limon crapaud-ver",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Limon d'aboleth",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Limon de babélien",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Lin",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres",
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Lotus bleu",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Macrocystis pyrifera",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool",
+    "stupéfiant"
+   ],
+   "props": [
+    "inflammable",
+    "fluide",
+    "étourdissant"
+   ],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Magnolia",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Magnétite",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Mallotus philippensis",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Mandibules d'ankheg",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Manioc",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Marbre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Marguerite",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Menthe des Steppes",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant",
+    "médicinal"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Millefeuille",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant",
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Millet",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Mithral",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Moussecorde",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Moustique géant",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Mouton",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Mue de gecko",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Murex",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Myrte",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Myrtille des marais",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Métal étoile",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Mûrier nain",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stupéfiant",
+    "alcool"
+   ],
+   "props": [
+    "étourdissant",
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Nerfs de chien esquiveur",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Ocre",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Olive",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Olivier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Omble chevalier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Onyx",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Or",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Oreille de limon",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant",
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Os d'ogre",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os d'oiseau",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de chimère",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de dragon (ancien)",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de géant des nuages",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de seigneur momie",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de ver pourpre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Os de vermine",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "os"
+   ],
+   "props": [
+    "durable"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Palme de cocotier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois",
+    "alcool",
+    "fibres"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Palmiste multipliant",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Palétuvier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Panaeolus cinctulus",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Papillon de neige bleue",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "pigment",
+    "stimulant"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Pavot somnifère",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Peau d'azer",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Peau d'hydre",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau d'ours noir",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de béhir",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de chimère",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de diantrefosse",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de doppelganger",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Peau de dragon noir adulte",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de sanglier",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de serpent constricteur géant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "peau"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de serpent géant",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Peau de succube",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Peau de tarrasque",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Penicillium",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Perle",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Petite roussette",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Peyote",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Physochlaina praealta",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Pierre céleste",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Pierre d'élémentaire de terre",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Piment royal",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Pin argenté",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Pin parasol",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Pissenlit",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Platine",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Plomb",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Plume d'androsphinx",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de cockatrice",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de couatl",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de déva",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de gynosphinx",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de pigeon",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Plume de poulet",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de solar",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plume de vrock",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "plume"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Plumes de couatl",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Plumes de griffon",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Plumes de harpie",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Podocarpus totara",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Poil de chenille d'hémileucin du ményanthe",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Poison de ver pourpre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Poisson d'argent",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Poisson-chèvre à queue rayée",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Poisson-fantôme cavernicole",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Poisson-lion",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Poisson-pierre",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Pollen d'ephedra fragilis",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal",
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Polypore oblique",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Pomme",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "alcool",
+    "bois"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Pou de givre",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Pouding noir",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Poussière de divinité",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Processionnaire du chêne",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Psilocybe cubensis",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "marais",
+    "ville"
+   ]
+  },
+  {
+   "name": "Psilocybe lancéolé",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "colline",
+    "prairie"
+   ]
+  },
+  {
+   "name": "Psilocybe montagnard",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Pâturin commun",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Pézize écarlate",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Queue de rat",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_créature",
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Raifort",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Raisins",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Ramboutan",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Rayons de nageoire de poisson-lion",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Rheum Australe",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "colline",
+    "montagne"
+   ]
+  },
+  {
+   "name": "Rhum",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Riz",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Rotin",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Rubis",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Sable de côte",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sable de rivière",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sable du désert",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sable mouvant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sable stygien",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "sable"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Salamandre géante",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Salive de kraken",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Sang de tarasque",
+   "qualite": "Suprême",
+   "desc": "Qualité suprême · DD d'acquisition 25 · modificateur du DD de fabrication −4.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sang de troll",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sang planétaire",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Saphir étoilé",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Sauge des devins",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "psychotrope",
+    "stimulant"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "forêt",
+    "ville"
+   ]
+  },
+  {
+   "name": "Saupe",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Scarabée cavernicole",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Scarabée de gel",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Scirpe-jonc",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Serpent de Méduse",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sigan marbré",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "psychotrope",
+    "toxine"
+   ],
+   "props": [
+    "psychédélique",
+    "toxique"
+   ],
+   "envs": [
+    "côte",
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Silène acaule",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Soie d'araignée chauve-souris tisseuse",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Solifuge",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Stéatite",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "roche"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Sumac grimpant",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "montagne"
+   ]
+  },
+  {
+   "name": "Tabac",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "stupéfiant",
+    "stimulant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "colline"
+   ]
+  },
+  {
+   "name": "Tasse d'or",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "côte"
+   ]
+  },
+  {
+   "name": "Tentacules d'aboleth",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Thermobie",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Topaze",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "gemme"
+   ],
+   "props": [
+    "fragile"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Trémelle fucus",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Urine de vache",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Valériane",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "prairie"
+   ]
+  },
+  {
+   "name": "Vapeur de méphite de vapeur",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_élémentaire"
+   ],
+   "props": [
+    "volatil"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Varech",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "sous-marin"
+   ]
+  },
+  {
+   "name": "Venin d'ankheg",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Venin de pseudodragon",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Veratrum californicum",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "toxine"
+   ],
+   "props": [
+    "toxique"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Verglas",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "eau"
+   ],
+   "props": [
+    "fluide"
+   ],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Vin",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · modificateur du DD de fabrication 0.",
+   "clas": [
+    "alcool"
+   ],
+   "props": [
+    "inflammable",
+    "fluide"
+   ],
+   "envs": []
+  },
+  {
+   "name": "Vipérine commune",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "ville"
+   ]
+  },
+  {
+   "name": "Wassaï",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": [
+    "forêt"
+   ]
+  },
+  {
+   "name": "Weta cavernicole",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Xanthorhiza",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "médicinal",
+    "pigment"
+   ],
+   "props": [
+    "tâchant"
+   ],
+   "envs": [
+    "marais"
+   ]
+  },
+  {
+   "name": "Yeux de basilic",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "essence_de_monstre"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Yeux de doppelganger",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stimulant"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Yucca bleu",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "désert"
+   ]
+  },
+  {
+   "name": "Écailles de crocodile géant",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "essence_de_créature"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Écailles de naga corrupteur",
+   "qualite": "Moyenne",
+   "desc": "Qualité moyenne · DD d'acquisition 15 · modificateur du DD de fabrication 0.",
+   "clas": [
+    "médicinal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Écrevisse cavernicole",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "stupéfiant"
+   ],
+   "props": [
+    "étourdissant"
+   ],
+   "envs": [
+    "sous-terrain"
+   ]
+  },
+  {
+   "name": "Électrum",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "métal_précieux"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Épicéa à écorce de gel",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "bois",
+    "fibres"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Épinette blanche",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "fibres",
+    "bois"
+   ],
+   "props": [],
+   "envs": [
+    "arctique"
+   ]
+  },
+  {
+   "name": "Étain",
+   "qualite": "Basse",
+   "desc": "Qualité basse · DD d'acquisition 10 · modificateur du DD de fabrication +2.",
+   "clas": [
+    "métal"
+   ],
+   "props": [],
+   "envs": []
+  },
+  {
+   "name": "Œil de Newt",
+   "qualite": "Élevée",
+   "desc": "Qualité élevée · DD d'acquisition 20 · modificateur du DD de fabrication −2.",
+   "clas": [
+    "psychotrope"
+   ],
+   "props": [
+    "psychédélique"
+   ],
+   "envs": [
+    "marais"
+   ]
+  }
+ ],
+ "recettes": [
+  {
+   "name": "Acide",
+   "ingredients": [
+    "Eau",
+    "Toxine"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest\nComposition : Eau (fluide) + Toxine (toxique)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 10\nPropriétés : fluide, corrosif\nTemps de fabrication : 8 heures · Valeur : 25 po\nVous pouvez dépenser une action pour asperger le contenu de cette fiole sur une créature à 1,5 mètre de vous ou jeter la fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Dans tous les cas, vous attaquez une créature ou un objet à distance en utilisant l'acide comme une arme improvisée. Si elle est touchée, la cible reçoit 7 (2d6) dégâts d'acide. Fiole de 500 g de 550 ml.",
+   "duration": null,
+   "fail": "Échec de fabrication, corrosif : 3 (1d6) dégâts d'acide au créateur."
+  },
+  {
+   "name": "Antitoxine",
+   "ingredients": [
+    "Toxine",
+    "Médicinal"
+   ],
+   "text": "Rang : Novice\nComposition : Toxine (toxique) + Médicinal\nOutils : kit d'herboristerie\nTest : test d'Intelligence DD 5\nPropriétés : fluide\nTemps de fabrication : 40 heures · Valeur : 50 po\nUne créature qui boit le contenu de cette fiole bénéficie d'un avantage pour ses jets de sauvegarde contre le poison pendant 1 heure. Cette potion n'accorde aucun avantage aux morts-vivants ou créatures artificielles.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Baume d'altération",
+   "ingredients": [
+    "Alcool",
+    "Essence de créature - Chenille"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Alcool (inflammable, fluide) + Essence de créature - Chenille (unique)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 10\nPropriétés : fluide\nTemps de fabrication : 6 heures · Valeur : 20 po\nCe liquide versatile n'a aucun effet seul, mais sert de base à de nombreuses décoctions alchimiques.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Baume de régénération",
+   "ingredients": [
+    "Huile",
+    "Médicinal"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire\nComposition : Huile (inflammable, fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour appliquer ce baume violet sur son corps. Pendant une minute, elle récupère 1d4 + 1 points de vie au début de chaque tour.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Baume de régénération majeur",
+   "ingredients": [
+    "Huile",
+    "Médicinal"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Huile (inflammable, fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour appliquer ce baume violet sur son corps. Pendant une minute, elle récupère 2d4 + 2 points de vie au début de chaque tour.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Baume explosif",
+   "ingredients": [
+    "Feu alchimique",
+    "Alcool"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest\nComposition : Feu alchimique (volatil) + Alcool (inflammable, fluide)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 20\nPropriétés : fluide, volatil\nTemps de fabrication : 12 heures · Valeur : 250 po\nPotion, rare. Ce liquide visqueux noir de jais explose au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 9 mètres, auquel cas, elle se brisera à l'impact. Chaque créature dans un rayon de 3 mètres de l'impact doit effectuer un jet de sauvegarde de Dextérité DD 15. En cas d'échec, une créature reçoit 21 (6d6) dégâts de force et est projetée à terre. En cas de réussite, une créature reçoit moitié moins de dégâts et n'est pas projetée à terre.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Baume réparateur",
+   "ingredients": [
+    "Huile",
+    "Médicinal - Aloès"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire\nComposition : Huile (inflammable, fluide) + Médicinal - Aloès\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nObjet merveilleux, peu commun Ce bocal en verre de 7,5 centimètres de diamètre contient 1d4+1 doses de mélange épais sentant légèrement l'aloès. Le bocal et son contenu pèsent 230 g. Une créature peut dépenser une action pour avaler ou appliquer une dose de ce baume sur sa peau. La créature qui le reçoit récupère 11 (2d8+2) points de vie, n'est plus empoisonnée et est guérie de toute maladie.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Bourbier en bouteille",
+   "ingredients": [
+    "Acide",
+    "Colle"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest\nComposition : Acide (corrosif, fluide) + Colle (fluide)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 20\nPropriétés : fluide, corrosif\nTemps de fabrication : 12 heures · Valeur : 250 po\nPotion, rare. Ce liquide visqueux devient incroyablement collant au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 9 mètres, auquel cas, elle se brisera à l'impact et engendrera une zone de terrain difficile dans un rayon de 6 mètres autour de l'impact. Chaque créature sur le terrain difficile doit réussir un jet de sauvegarde de Force DD 15, sans quoi elle se retrouve agrippée. Une créature qui commence son tour agrippée reçoit 5 (2d4) dégâts d'acide. Elle peut recommencer le jet de sauvegarde de Force à la fin de chaque tour. En cas de réussite, elle parvient à se libérer.",
+   "duration": null,
+   "fail": "Échec de fabrication, corrosif : 3 (1d6) dégâts d'acide au créateur."
+  },
+  {
+   "name": "Bouteille d'éclat",
+   "ingredients": [
+    "Gemme",
+    "Alcool"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest\nComposition : Gemme + Alcool (Inflammable, fluide)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 20\nPropriétés : aucune\nTemps de fabrication : 12 heures · Valeur : 250 po\nPotion, rare. Cette poudre alchimique émet un éclat aveuglant au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 9 mètres, auquel cas, elle se brisera à l'impact. Chaque créature dans un rayon de 3 mètres de l'impact doit effectuer un jet de sauvegarde de Constitution DD 15. En cas d'échec, une créature reçoit 15 (6d4) dégâts radiants et est aveuglée pendant 1 minute. En cas de réussite, elle reçoit moitié moins de dégâts et n'est pas aveuglée.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Bouteille fumigène",
+   "ingredients": [
+    "Bouteille - En cuivre au goulot bouché au plomb",
+    "Essence élémentaire - Feu"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Bouteille - En cuivre au goulot bouché au plomb + Essence élémentaire – Feu (volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : aucune\nTemps de fabrication : 35 heures · Valeur : 350 po\nObjet merveilleux, peu commun De la fumée s'échappe du goulot bouché au plomb de cette bouteille en cuivre, qui pèse 450 g. Lorsque vous dépensez une action pour la déboucher, un nuage de fumée épaisse se répand dans un rayon de 18 mètres autour de la bouteille. La zone enfumée est fortement obscurcie. Le rayon augmente de 3 mètres pour chaque minute où la bouteille reste ouverte jusqu'à atteindre un rayon maximal de 36 mètres. Le nuage persiste tant que la bouteille est ouverte. Si vous souhaitez fermer la bouteille, vous devez utiliser une action pour prononcer son mot de commande. Lorsque la bouteille est fermée, le nuage se disperse au bout de 10 minutes. Un vent de puissance moyenne (18 à 32 kilomètres-heure) peut également disperser la fumée après 1 minute, et un vent puissant (34 kilomètres-heure ou plus) disperse la fumée après 1 round.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Breuvage de l'orateur",
+   "ingredients": [
+    "Baume d'altération",
+    "Métal précieux - Argent"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Métal précieux - Argent (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 120 heures · Valeur : 1 200 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide argenté. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour chaque test de caractéristique visant à persuader ou convaincre une autre créature, comme les tests de Charisme (Persuasion).",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Chandelle",
+   "ingredients": [
+    "Peau",
+    "Ficelle"
+   ],
+   "text": "Rang : Novice\nComposition : Peau + Ficelle\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test de Dextérité DD 5\nPropriétés : aucune\nTemps de fabrication : 1 heure · Valeur : 1 pc\nPendant 1 heure, une bougie émet de la lumière vive dans un rayon de 1,5 mètre et de la lumière faible dans un rayon supplémentaire de 1,5 mètre.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Cierge d'invocation",
+   "ingredients": [
+    "Bougie",
+    "Essence de monstre - Alignement",
+    "Charme d'amélioration"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Bougie + Essence de monstre - Alignement (unique) + Charme d'amélioration (fragile)\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test de Sagesse DD 25\nPropriétés : aucune Précision : La création d'un cierge d'invocation consacré à une divinité maléfique est un acte que de nombreuses guildes interdisent ou soumettent à des restrictions. Un tel objet ne peut être vendu que sur le marché noir.\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nObjet merveilleux, très rare (harmonisation requise) Ce cierge fin est consacré à une divinité et partage son alignement. Celui-ci peut être détecté à l'aide du sort détection du mal et du bien. Le MJ choisit le dieu et l'alignement associé ou les décide au hasard. d20 Alignement 1–2 Chaotique mauvais 3–4 Chaotique neutre 5–7 Chaotique bon 8–9 Neutre mauvais 10–11 Neutre 12–13 Neutre bon 14–15 Loyal mauvais 16–17 Loyal neutre 18–20 Loyal bon La magie du cierge est activée quand ce dernier est allumé, ce qui nécessite une action. Après avoir brûlé pendant 4 heures, le cierge est détruit. Vous pouvez l'éteindre avant ce délai pour le réutiliser ultérieurement. Déduisez la durée en minutes pendant laquelle le cierge a brûlé du temps de combustion total du cierge. Tant que le cierge est allumé, il émet une lumière faible sur un rayon de 9 mètres. Les créatures présentes dans la lumière et dont l'alignement correspond à celui du cierge bénéficient d'un avantage sur leurs jets d'attaque et de sauvegarde et sur leurs tests de caractéristique. De plus, si un clerc ou un druide dont l'alignement correspond à celui du cierge se trouve dans la lumière, il peut lancer les sorts de niveau 1 qui ont été préparés sans dépenser d'emplacement de sort. Cependant, les effets du sort sont identiques à ceux d'un sort de niveau 1. Quand vous allumez le cierge pour la première fois, vous pouvez également l'utiliser pour lancer le sort portail. Dans ce cas, le cierge est détruit.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Cire à cacheter",
+   "ingredients": [
+    "Colle",
+    "Huile"
+   ],
+   "text": "Rang : Novice\nComposition : Colle (fluide) + Huile (inflammable, fluide)\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test d'Intelligence DD 5\nPropriétés : aucune\nTemps de fabrication : 1 heure · Valeur : 5 pa\nCette cire teinte est utilisée pour cacheter les lettres et documents. La cire refroidit rapidement, mais conserve une forme détaillée tant qu'elle est chaude.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Colle",
+   "ingredients": [
+    "Peau",
+    "Eau"
+   ],
+   "text": "Rang : Novice\nComposition : Peau + Eau (fluide)\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test d'Intelligence DD 5\nPropriétés : fluide\nTemps de fabrication : 1 heure · Valeur : 1 pa\nCette fiole contient un adhésif visqueux.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Colle universelle",
+   "ingredients": [
+    "Colle",
+    "Essence élémentaire - Terre"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Colle (fluide) + Essence élémentaire – Terre (volatil)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nObjet merveilleux, légendaire Cette substance visqueuse d'un blanc laiteux peut assembler deux objets en les collant l'un à l'autre. Elle doit être stockée dans un bocal ou une fiole dont l'intérieur a été revêtu d'huile d'insaisissabilité. Lorsqu'il est obtenu, le récipient contient 1d6 + 1 dose de 30 g chacune. 30 millilitres de colle permettent de couvrir un carré de 30 centimètres de côté. La colle sèche en 1 minute. Après ce délai, le lien créé par la colle ne peut être brisé que par l'application d'un solvant universel ou d'une huile éthérée ou bien avec le sort souhait.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Craie",
+   "ingredients": [
+    "Roche"
+   ],
+   "text": "Rang : Novice\nComposition : Roche (calcaire blanc)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 5\nPropriétés : aucune\nTemps de fabrication : 1 heure · Valeur : 1 pc\nCe fragile morceau de calcaire blanc peut être utilisé pour dessiner des marques blanches sur des surfaces solides.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Décoction de guérison",
+   "ingredients": [
+    "Eau",
+    "Médicinal"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 4 heures · Valeur : 20 po\nPotion, commun. Un personnage qui boit le liquide rouge magique contenu dans cette fiole récupère 1d4 + 1 points de vie. Boire ou donner une potion coûte une action.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Décoction de métamorphose",
+   "ingredients": [
+    "Baume d'altération",
+    "Pigment"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Pigment (tachant)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 20 heures · Valeur : 60 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide gluant vert. Ses effets durent 1 heure. Pendant ce temps, son apparence change de manière aléatoire. Faites un jet 1d4 fois dans le tableau ci-dessous pour déterminer la nature de la transformation, en relançant en cas de résultat identique. 1d6 Transformation aléatoire La créature devient plus petite ou plus grande 1 de 30 centimètres. La morphologie de la créature change pour 2 devenir plus fine, plus grosse, plus musclée, etc. Le visage de la créature se transforme en celui 6 d'une créature inconnue.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Eau bénite corrompue",
+   "ingredients": [
+    "Essence de créature - Fiélon",
+    "Eau bénite"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest\nComposition : Essence de créature – Fiélon (unique) + Eau bénite (fluide)\nSource : divine (mauvais)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Cette flasque contient un liquide transparent qui empeste l'encens grossier et les immondices. Vous pouvez utiliser une action pour asperger le contenu de cette flasque sur une créature à 1,5 mètre de vous ou jeter la flasque à une distance maximale de 6 mètres. Elle se brisera alors à l'impact. Dans tous les cas, faites un jet d'attaque à distance contre la cible en utilisant la potion comme une arme improvisée. La cible subit 3d8 dégâts nécrotiques (6d8 s'il s'agit d'une créature céleste) en cas d'attaque réussie. Les fiélons, les aberrations et les morts-vivants sont immunisés contre ces dégâts. Profané : Cet objet est perçu comme étant profané par des effets comme Sens divin et les sorts comme détection du mal et du bien.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Élixir de célérité",
+   "ingredients": [
+    "Potion de mouvement",
+    "Stimulant"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Stimulant\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 100 heures · Valeur : 300 po\nPotion, commun. Une créature peut dépenser une action pour boire cet élixir pétillant bleu. Ses effets durent 1 minute. Pendant ce temps, à chaque tour, la créature peut effectuer l'action Foncer comme action bonus. Lorsque les effets se dissipent, la créature gagne un niveau de fatigue et ne peut plus améliorer ses mouvements avec la magie avant un long repos.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Encre",
+   "ingredients": [
+    "Eau",
+    "Pigment"
+   ],
+   "text": "Rang : Novice\nComposition : Eau (fluide) + Pigment (tachant)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 5\nPropriétés : fluide, tachant\nTemps de fabrication : 8 heures · Valeur : 10 po\nCette bouteille contient un liquide tachant noir utilisé pour écrire. Son poids moyen est de 30 g et de 30 ml.",
+   "duration": null,
+   "fail": "Échec de fabrication, tâchant : impossible de cacher la tentative."
+  },
+  {
+   "name": "Essence d'euphraise",
+   "ingredients": [
+    "Eau",
+    "Médicinal - Euphraise"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Médicinal - Euphraise (unique)\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 6 heures · Valeur : 20 po\nPotion, commun. Une créature aveuglée peut appliquer ce baume collant jaune à ses yeux au début d'un long repos. À son réveil, elle a retrouvé la vue. Ce baume n'a aucun effet sur la cécité naturelle qui peut survenir à la naissance ou à un âge avancé.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Essence de méduse",
+   "ingredients": [
+    "Huile",
+    "Essence de monstre - œil de méduse"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence de monstre - œil de méduse (unique)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 25\nPropriétés : fluide\nTemps de fabrication : 15 heures · Valeur : 500 po\nPotion, très rare. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous pouvez attaquer une créature à distance en utilisant l'essence de méduse comme une arme improvisée. Si elle est touchée, la cible doit effectuer un jet de sauvegarde de Constitution DD 20. En cas d'échec de 5 ou plus, la créature est instantanément pétrifiée. Sinon, elle commence à se changer en pierre et est entravée. Elle doit recommencer le jet de sauvegarde à la fin du prochain tour. Elle devient pétrifiée en cas d'échec ou annule les effets en cas de réussite. La pétrification dure jusqu'à ce que la créature soit libérée par le sort restauration suprême ou une magie similaire.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Essence de terreur",
+   "ingredients": [
+    "Poison de base",
+    "Psychotrope"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit\nComposition : Poison de base + Psychotrope (toxique, fluide, psychédélique)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : toxique, fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Cette flasque renferme un liquide violet en constante ébullition, et des volutes chaotiques de fumée noire s'en échappent lorsqu'elle est ouverte. Vous pouvez utiliser une action pour lancer cette flasque aux pieds d'une créature à moins de malsaine enveloppe la cible. Cette dernière doit réussir un jet de sauvegarde de Sagesse DD 12, sous peine d'être paralysée de terreur pendant une minute, persuadée de sa fin imminente. À la fin de chacun de ses tours, une créature affectée peut refaire un jet de sauvegarde et mettre fin à l'effet en cas de réussite.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Essence éthérée",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Air"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest · interdit, inhalation\nComposition : Huile (inflammable, fluide) + Essence élémentaire – Air (volatil)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 20\nPropriétés : fluide, toxique\nTemps de fabrication : 14 heures · Valeur : 300 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 15, sans quoi elle est empoisonnée pendant 8 heures. La créature empoisonnée est inconsciente. Elle se réveille si elle reçoit des dégâts ou si une autre créature dépense une action pour la réveiller.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Extrait de patte de grenouille",
+   "ingredients": [
+    "Potion de mouvement",
+    "Essence de créature - Pattes de grenouilles"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Essence de créature - Pattes de grenouilles (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 34 heures · Valeur : 100 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide vert clair. Pendant une minute, sa distance et sa hauteur de saut sont triplées.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Fatigue liquide",
+   "ingredients": [
+    "Eau",
+    "Stupéfiant"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit\nComposition : Eau (fluide) + Stupéfiant (étourdissant)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique, étourdissant\nTemps de fabrication : 15 heures · Valeur : 500 po\nPotion, très rare. Une créature qui ingère ce poison doit réussir un jet de sauvegarde de Constitution DD 20, sans quoi elle gagne un niveau de fatigue.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos; étourdissant : le créateur est étourdi jusqu'à un long repos."
+  },
+  {
+   "name": "Feu alchimique",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Feu"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Feu (unique, volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 10\nPropriétés : fluide, volatil\nTemps de fabrication : 17 heures · Valeur : 50 po\nCe liquide gluant et collant s'enflamme au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous attaquez une créature ou un objet à distance en utilisant le feu alchimique comme une arme improvisée. Si elle est touchée, la cible reçoit 2 (1d4) dégâts de feu au début de chaque tour. Une créature peut annuler ces dégâts en dépensant une action pour effectuer un test de Dextérité DD 10 afin d'éteindre les flammes.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Filtre de fuite",
+   "ingredients": [
+    "Huile",
+    "Stimulant"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Huile (inflammable, fluide) + Stimulant\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 6 heures · Valeur : 20 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide gras et transparent. Ses effets durent 1 heure. Pendant ce temps, la créature peut dépenser 1,5 mètre de déplacement pour s'échapper automatiquement de liens non magiques, comme des menottes, ou d'une autre créature qui l'agrippe.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Fiole de tonnerre",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Tonnerre"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Tonnerre (unique, volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 20\nPropriétés : fluide, volatil\nTemps de fabrication : 12 heures · Valeur : 250 po\nPotion, rare. Ce liquide violet scintillant explose de manière assourdissante au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 9 mètres, auquel cas, elle se brisera à l'impact. Chaque créature dans un rayon de DD 15. En cas d'échec, une créature reçoit 21 (6d6) dégâts de tonnerre et est assourdie pendant 1 minute. En cas de réussite, elle reçoit moitié moins de dégâts et n'est pas assourdie.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Flamme d’alkahest",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Feu"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire – Feu (unique, volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide, volatil\nTemps de fabrication : 10 heures · Valeur : 100 po\nPotion, peu commun. Ce liquide gluant et collant s'enflamme au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous pouvez attaquer une créature ou un objet à distance en utilisant la flamme d'alkahest comme une arme improvisée. Si elle est touchée, la cible reçoit 7 (3d4) dégâts de feu au début de chaque tour. Une créature peut annuler ces dégâts en dépensant une action pour effectuer un test de Dextérité DD 15 afin d'éteindre les flammes.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Folie insidieuse",
+   "ingredients": [
+    "Essence de créature - Chair malade",
+    "Stupéfiant",
+    "Psychotrope"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire · interdit\nComposition : Essence de créature – Chair malade (unique) + Stupéfiant (étourdissant) + Psychotrope (psychédélique)\nSource : naturelle\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : unique, Fluide\nTemps de fabrication : 12 heures · Valeur : 250 po\nPoison (ingéré), rare. Seuls les yeux les plus perçants sont en mesure d'apercevoir les parasites flottant dans le liquide de cette fiole. Une créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 15. En cas d'échec, elle est infectée par un minuscule parasite magique et obtient le trait Folie infinie (ou un autre trait approprié choisi par le MJ). À chaque lever du jour, elle doit effectuer un nouveau jet de sauvegarde de Constitution. À chaque échec, elle obtient un autre trait de folie. Cela dure jusqu'à ce que la créature réussisse un jet de sauvegarde de Constitution pour éliminer la maladie. Tous les traits de folie obtenus sont permanents jusqu'à ce que la créature reçoive un sort restauration suprême ou une magie similaire. Les créatures immunisées contre les maladies sont immunisées contre cet effet.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Foudre en bouteille",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Foudre"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Foudre (volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 10\nPropriétés : fluide, volatil\nTemps de fabrication : 17 heures · Valeur : 50 po\nPotion, commun. Une créature peut dépenser une action pour déboucher cette fiole et libérer un éclair formant une ligne de 4,5 mètres de long et 1,5 mètre de large dans la direction de son choix. Chaque créature se trouvant sur la ligne doit effectuer un jet de sauvegarde de Dextérité DD 10. Une créature reçoit 3 (1d6) dégâts de foudre en cas d'échec ou moitié moins de dégâts en cas de réussite. La foudre met feu aux objets inflammables de la zone qui ne sont pas portés ou tenus.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Fumées d'othur",
+   "ingredients": [
+    "Huile",
+    "Toxine"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit, inhalation\nComposition : Huile (inflammable, fluide) + Toxines (toxique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 15 heures · Valeur : 500 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 13 ou recevoir 10 (3d6) dégâts de poison, et elle doit recommencer le jet de sauvegarde à chaque début de tour. Pour chaque échec successif, le personnage reçoit 3 (1d6) dégâts de poison. Après 3 réussites, le poison se dissipe.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Givre alchimique",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Glace"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Glace (unique, volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 10\nPropriétés : fluide, volatil\nTemps de fabrication : 17 heures · Valeur : 50 po\nPotion, commun. Ce liquide gluant et collant absorbe la chaleur de la zone environnante au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous attaquez une créature ou un objet à distance en utilisant le givre alchimique comme une arme improvisée. Si elle est touchée, la cible reçoit peut annuler ces dégâts en dépensant une action pour effectuer un test de Dextérité DD 10 afin d'enlever le liquide.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Glace d'alkahest",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Glace"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Glace (unique, volatil)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide, volatil\nTemps de fabrication : 10 heures · Valeur : 100 po\nPotion, peu commun. Ce liquide gluant et collant absorbe la chaleur de la zone environnante au contact de l'air. Vous pouvez dépenser une action pour jeter cette fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous attaquez une créature ou un objet à distance en utilisant la glace d'alkahest comme une arme improvisée. Si elle est touchée, la cible reçoit peut annuler ces dégâts en dépensant une action pour effectuer un test de Dextérité DD 15 afin d'enlever le liquide.",
+   "duration": null,
+   "fail": "Échec de fabrication, volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Huile",
+   "ingredients": [
+    "Peau"
+   ],
+   "text": "Rang : Novice\nComposition : Peau\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test d'Intelligence DD 5\nPropriétés : inflammable, fluide\nTemps de fabrication : 8 heures · Valeur : 1 pa\nL'huile est généralement tirée de la graisse animale et contenue dans une fiole en argile d'une contenance de 0,47 litre pour un poids total de 0,5 kg. Vous pouvez dépenser une action pour asperger l'huile contenue dans cette fiole sur une créature à 1,5 mètre de vous ou jeter la fiole à une distance maximale de 6 mètres, auquel cas, elle se brisera à l'impact. Vous attaquez une créature ou un objet à distance en utilisant l'huile comme une arme improvisée. Si la cible est touchée, elle est recouverte d'huile. Si la cible subit des dégâts de feu avant que l'huile ne sèche (après 1 minute), l'huile s'enflamme et inflige 5 dégâts de feu supplémentaires. Vous pouvez également verser une fiole d'huile sur le sol pour couvrir un carré de 1,5 mètre de côté, à condition que le sol soit plat à cet endroit. Une fois allumée, l'huile brûle pendant 2 rounds et inflige 5 dégâts de feu à toute créature qui entre dans la zone ou qui termine son tour dedans. Une créature ne peut subir ces dégâts qu'une fois par tour.",
+   "duration": null,
+   "fail": "Échec de fabrication, inflammable : 3 (1d6) dégâts de feu au créateur."
+  },
+  {
+   "name": "Huile d'affûtage",
+   "ingredients": [
+    "Huile",
+    "Métal"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest\nComposition : Huile (inflammable, fluide) + Métal\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare Cette huile transparente et gélatineuse scintille avec de minuscules éclats argentés. Elle peut servir à enduire une arme tranchante ou perforante, ou jusqu'à 5 munitions tranchantes ou perforantes. Appliquer l'huile prend 1 minute. Pendant 1 heure, l'objet enduit devient magique et a un bonus de + 3 sur les jets d'attaque et de dégâts.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Huile d'insaisissabilité",
+   "ingredients": [
+    "Huile",
+    "Peau"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Huile (inflammable, fluide) + Peau\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Cet onguent collant noir est épais et lourd dans son récipient, mais s'écoule rapidement lorsqu'il est versé. L'huile peut recouvrir une créature de taille Moyenne ou plus petite, ainsi que l'équipement qu'elle porte et tient (une fiole supplémentaire est nécessaire pour chaque catégorie de taille au-dessus de Moyenne). Appliquer l'huile prend 10 minutes. La créature recouverte d'huile obtient les effets du sort liberté de mouvement pendant 8 heures. Il est également possible d'utiliser une action pour verser l'huile sur le sol pour couvrir un carré de 3 mètres de côté. Les effets du sort graisse sont alors répliqués dans cette zone pendant 8 heures.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Huile de taggit",
+   "ingredients": [
+    "Poison de base",
+    "Stupéfiant"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest · interdit, ingestion\nComposition : Poison de base (toxique, fluide) + Stupéfiant (étourdissant)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 20\nPropriétés : fluide, toxique\nTemps de fabrication : 800 heures · Valeur : 400 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 13, sans quoi elle est empoisonnée pendant 24 heures. La créature empoisonnée est inconsciente. Elle se réveille si elle reçoit des dégâts",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Huile éthérée",
+   "ingredients": [
+    "Huile",
+    "Essence élémentaire - Air"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Abstracteur\nComposition : Huile (inflammable, fluide) + Essence élémentaire - Air (volatil)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Des gouttes de cette huile trouble et grise se forment à l'extérieur de son récipient avant de s'évaporer aussitôt. L'huile peut recouvrir une créature de taille Moyenne ou plus petite, ainsi que l'équipement qu'elle porte et tient (une fiole supplémentaire est nécessaire pour chaque catégorie de taille au-dessus de Moyenne). Appliquer l'huile prend 10 minutes. La créature concernée obtient les effets du sort forme éthérée pendant 1 heure.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Infusion de fouisseur",
+   "ingredients": [
+    "Potion de mouvement",
+    "Essence de créature - Griffes de taupe"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Essence de créature - Griffes de taupe (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 100 heures · Valeur : 300 po\nPotion, commun. Une créature peut dépenser une action pour boire cette potion. Ses effets durent 1 heure. Pendant ce temps, la créature peut se déplacer dans le sable, la terre, la boue ou la neige à la moitié de sa vitesse habituelle.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Infusion sainte",
+   "ingredients": [
+    "Eau",
+    "Médicinal"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 30 heures · Valeur : 90 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide argenté.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Larmes de minuit",
+   "ingredients": [
+    "Poison de base",
+    "Toxine",
+    "Sable"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit, ingestion\nComposition : Poison de base (toxique, fluide) + Toxine (toxique) + Sable (fluide)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 40 heures · Valeur : 1 500 po\nUne créature qui ingère ce poison ne subit aucun effet avant le coup de minuit. Si le poison n'a pas été neutralisé d'ici là, la créature doit réussir un jet de sauvegarde de Constitution DD 17. Elle reçoit 31 (9d6) dégâts de poison en cas d'échec ou moitié moins de dégâts en cas de réussite.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Liquide de l'imposteur",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Plume d'oiseau moqueur"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Plume d'oiseau moqueur (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 40 heures · Valeur : 120 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide amer pourpre. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour chaque test de caractéristique visant à duper ou tromper une autre créature, comme les tests de Charisme (Tromperie). La langue de la créature prend également une teinte violacée pendant toute la durée des effets. Une autre créature peut remarquer cette différence avec un test de Sagesse (Perception) DD 15.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Malice",
+   "ingredients": [
+    "Poison de base",
+    "Psychotrope"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest · interdit, inhalation\nComposition : Poison de base (toxique, fluide) + Psychotrope (psychédélique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 20\nPropriétés : fluide, toxique\nTemps de fabrication : 12 heures · Valeur : 250 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 15, sans quoi elle est empoisonnée pendant 1 heure. La créature empoisonnée est aveuglée.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Mangechair",
+   "ingredients": [
+    "Huile",
+    "Toxine"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest · interdit\nComposition : Huile (inflammable, fluide) + Toxine (toxique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide, poison\nTemps de fabrication : 40 heures · Valeur : 120 po\nPotion, commun. Vous pouvez dépenser une action pour asperger le contenu de cette fiole sur une créature à 1,5 mètre de vous ou jeter la fiole jusqu'à 6 mètres, auquel cas, elle se brisera à l'impact. Dans tous les cas, vous attaquez une créature à distance en utilisant la potion Mangechair comme une arme improvisée. Si elle est touchée, la cible reçoit 7 (2d6) dégâts nécrotiques.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Mort liquide",
+   "ingredients": [
+    "Essence de créature - fluides corporels de prisonniers exécutés",
+    "Toxine",
+    "Eau"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit\nComposition : Essence de créature – fluides corporels de prisonniers exécutés (unique, fluide) + Toxine (toxique) + Eau (fluide)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 40 heures · Valeur : 1 500 po\nPoison (ingéré), très rare. Distillée à partir des fluides corporels de prisonniers exécutés, cette potion constitue une dose mortelle d'essence de mort la plus pure. Une créature qui ingère ce poison doit effectuer immédiatement un jet de sauvegarde de Constitution DD 20. En cas d'échec, les créatures possédant moins de 50 points de vie meurent instantanément. Les créatures ayant plus de 50 points de vie subissent 5d10 dégâts de poison. Les créatures qui réussissent ce jet subissent la moitié de ces dégâts. À la fin de chacun de ses tours, une créature empoisonnée peut refaire un jet de sauvegarde et mettre fin à l'état empoisonné en cas de réussite. Les points de vie perdus à cause de ce poison ne peuvent être regagnés qu'avec un repos long ou à l'aide du sort restauration suprême. Les créatures immunisées contre les dégâts de poison ou l'état empoisonné sont immunisées contre cet effet.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Mucus de rampant",
+   "ingredients": [
+    "Eau",
+    "Toxine - Mucus de rampant"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit, contact\nComposition : Eau (fluide) + Toxine - Mucus de rampant (toxique, unique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 20 heures · Valeur : 200 po\nCette toxine doit être récoltée sur le corps d'un rampant mort ou incapable d'agir. Une créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 13, sans quoi elle est empoisonnée pendant 1 minute. La créature empoisonnée est paralysée. Elle peut recommencer le jet de sauvegarde à la fin de chaque tour. En cas de succès, l'effet est annulé.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Parfum",
+   "ingredients": [
+    "Médicinal - Fleurs",
+    "Eau"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Médicinal – Fleurs (fragile, unique) + Eau (fluide)\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 2 heures · Valeur : 5 po\nCette fiole fragile contient un liquide au parfum sucré et floral.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Peinture",
+   "ingredients": [
+    "Pigment",
+    "Eau"
+   ],
+   "text": "Rang : Novice\nComposition : Pigment (tachant) + Eau (fluide)\nOutils : matériel d'alchimiste, matériel de peintre\nTest : test d'Intelligence DD 5\nPropriétés : fluide, tachant\nTemps de fabrication : 4 heures · Valeur : 5 po\nCe bocal contient une substance liquide épaisse et colorée utilisée pour appliquer de la couleur aux surfaces.",
+   "duration": null,
+   "fail": "Échec de fabrication, tâchant : impossible de cacher la tentative."
+  },
+  {
+   "name": "Philtre d'amour",
+   "ingredients": [
+    "Parfum",
+    "Stupéfiant"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur · interdit\nComposition : Parfum (fluide) + Stupéfiant (étourdissant)\nOutils : kit d'empoisonneur\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Dans un intervalle de 10 minutes après avoir bu ce philtre, vous êtes charmé par la prochaine créature que vous croisez pendant 1 heure. Si la créature appartient à une espèce et un genre auquel vous êtes attiré en temps normal, vous la considérez comme votre grand amour en étant charmé. Le liquide effervescent aux nuances roses de cette potion contient une bulle en forme de cœur difficile à apercevoir.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Pigments merveilleux",
+   "ingredients": [
+    "Peinture",
+    "Catalyste d'invocation"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Peinture (fluide, tachant) + Catalyste d'invocation (fragile)\nOutils : matériel d'alchimiste, matériel de peintre\nTest : test d'Intelligence DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nObjet merveilleux, très rare Ces pigments, que l'on trouve habituellement dans 1d4 pots à l'intérieur d'une boîte en bois avec un pinceau (pour un poids total de 500 g), vous permettent de créer des objets en trois dimensions en les peignant en deux dimensions. Lorsque vous vous concentrez sur l'image de l'objet souhaité, la peinture s'échappe du pinceau pour le former. Chaque pot contient suffisamment de peinture pour couvrir une surface de 90 mètres carrés, afin de créer des objets ou éléments de terrain inanimés, par exemple une porte, un fossé, des fleurs, des arbres, des cellules ou des pièces sur un volume maximum de 280 mètres cubes. Il faut 10 minutes pour couvrir une surface de 9 mètres carrés. Une fois l'œuvre terminée, l'objet ou élément de terrain représenté devient un véritable objet non magique. Ainsi, il suffit de peindre une porte sur un mur pour créer une véritable porte, qui pourra être ouverte pour accéder à ce qui se trouve derrière le mur. Peindre un fossé sur le sol permet de créer un vrai fossé, dont la profondeur est comptabilisée dans la surface totale des objets créés. Aucun objet créé par les pigments ne peut avoir une valeur supérieure à 25 po. Si vous peignez un objet d'une valeur supérieure (par exemple, un diamant ou un tas d'or), l'objet paraît authentique à première vue, mais une inspection plus poussée révèle qu'il est fait de pâte, d'os ou d'une quelconque matière sans aucune valeur. Si vous représentez une forme d'énergie, par exemple du feu ou de la foudre, l'énergie apparaît et se dissipe dès que l'œuvre est terminée, sans affecter quoi que ce soit.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Poison de base",
+   "ingredients": [
+    "Toxine",
+    "Eau"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Alkahest · contact\nComposition : Toxines (toxique) + Eau (fluide)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 10\nPropriétés : fluide, toxique\nTemps de fabrication : 34 heures · Valeur : 100 po\nLe poison contenu dans cette fiole peut servir à enduire une arme tranchante ou perforante, ou jusqu'à trois munitions. Appliquer le poison coûte une action. Une créature touchée par l'arme ou la munition empoisonnée doit effectuer un jet de sauvegarde de Constitution DD 10 ou recevoir 2 (1d4) dégâts de poison. Une fois appliqué, le poison reste actif pendant 1 minute avant de se dissiper.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Poison de ver pourpre",
+   "ingredients": [
+    "Eau",
+    "Toxine - Venin de ver pourpre"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit, blessure\nComposition : Eau (fluide) + Toxine – Venin de ver pourpre (fluide, toxique, unique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nCette toxine doit être récoltée sur le corps d'un ver pourpre mort ou incapable d'agir. Une créature victime de ce poison doit effectuer un jet de sauvegarde de Constitution DD 19. Elle reçoit 42 (12d6) dégâts de poison en cas d'échec ou moitié moins de dégâts en cas de réussite.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Poison de wiverne",
+   "ingredients": [
+    "Eau",
+    "Toxine - Venin de vouivre"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit, blessure\nComposition : Eau (fluide) + Toxine - Venin de vouivre (unique, toxique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 15\nPropriétés : fluide, toxique\nTemps de fabrication : 120 heures · Valeur : 1 200 po\nCette toxine doit être récoltée sur le corps d'une vouivre morte ou incapable d'agir. Une créature victime de ce poison doit effectuer un jet de sauvegarde de Constitution DD 15. Elle reçoit 24 (7d6) dégâts de poison en cas d'échec ou moitié moins de dégâts en cas de réussite.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Poison drow",
+   "ingredients": [
+    "Eau",
+    "Essence de créature - Venin d'araignée"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit, blessure\nComposition : Eau (fluide) + Essence de créature - Venin d'araignée (toxique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 15\nPropriétés : fluide, toxique\nTemps de fabrication : 20 heures · Valeur : 200 po\nCe poison est généralement uniquement fabriqué par les drows et uniquement dans un endroit bien à l'abri de la lumière du soleil. Une créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 13, sans quoi elle est empoisonnée pendant 1 heure. En cas d'échec de 5 ou plus, la créature perd connaissance en plus d'être empoisonnée. Elle se réveille si elle reçoit des dégâts ou si une autre créature dépense une action pour la réveiller.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Potion d'absorption",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence élémentaire - Eau"
+   ],
+   "text": "Rang : Maître · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Essence élémentaire - Eau (volatil)\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare. Une créature peut dépenser une action pour boire cette potion. Pendant une minute, elle devient résistante aux dégâts d'acide, de froid, de feu, de foudre et de tonnerre. En outre, si une autre créature la touche avec une attaque au corps à corps pendant ce temps et qu'elle a subi des dégâts d'acide, de froid, de feu, de foudre et de tonnerre pendant ce round, la créature qui attaque reçoit 5 dégâts d'acide, de froid, de feu, de foudre ou de tonnerre (selon le choix de l'utilisateur).",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'agrandissement",
+   "ingredients": [
+    "Baume d'altération",
+    "Psychotrope"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Psychotrope (psychédélique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Lorsque vous buvez cette potion, vous obtenez les effets d'agrandissement du sort agrandissement/rapetissement pendant 1d4 heures (aucune concentration requise). Le rouge dans le liquide de la potion s'agrandit continuellement à partir d'une petite perle pour colorer le liquide transparent autour d'elle, avant de se contracter. Secouer la bouteille n'interrompt pas ce processus.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'amitié avec les animaux",
+   "ingredients": [
+    "Alcool",
+    "Stupéfiant"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Alcool (inflammable, fluide) + Stupéfiant (étourdissant)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Lorsque vous buvez cette potion, vous pouvez jeter le sort amitié avec les animaux (sauvegarde DD 13) à volonté pendant 1 heure. Agiter ce liquide trouble permet de faire apparaître des petits morceaux : une écaille de poisson, une langue de colibri, une griffe de chat ou un poil d'écureuil.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'apaisement",
+   "ingredients": [
+    "Médicinal",
+    "Stimulant"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire, Abstracteur\nComposition : Médicinal + Stimulant\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour boire ce liquide argenté. Ses effets durent 1 heure. Pendant ce temps, la créature est immunisée aux dégâts psychiques, à tout effet permettant de connaître ses émotions ou lire dans ses pensées, aux sorts de divination et à l'état charmé. La potion contre même le sort souhait et les sorts ou effets de puissance similaire utilisés pour affecter l'esprit de la cible ou obtenir des informations sur celle-ci.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'endurance de l'ours",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Sang d'ours"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Sang d'ours (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire cet épais liquide brun. Ses effets durent 1 heure. Pendant ce temps, elle bénéficie d'un avantage pour ses tests de Constitution et gagne 2d6 points de vie temporaires.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'énergie",
+   "ingredients": [
+    "Baume d'altération",
+    "Stimulant"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Stimulant\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide orangé pétillant. Pendant une minute, la créature peut interagir avec un objet supplémentaire à chaque tour.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'escalade",
+   "ingredients": [
+    "Potion de mouvement",
+    "Colle"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Colle (fluide)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 100 heures · Valeur : 300 po\nPotion, commun Lorsque vous buvez cette potion, vous obtenez une vitesse d'escalade égale à votre vitesse de marche pendant 1 heure. Pendant ce temps, vous bénéficiez d'un avantage pour vos tests de Force (Athlétisme) visant à grimper. Cette potion est séparée en couches brune, argentée et grise qui ressemblent à des bandes de pierre. Secouer la bouteille ne mélange pas les couleurs.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'héroïsme",
+   "ingredients": [
+    "Eau",
+    "Os"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Os\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Après avoir bu la potion, vous gagnez 10 points de vie temporaires pendant 1 heure. Pendant la même durée, vous obtenez les effets du sort bénédiction (aucune concentration requise). Avec ses bulles et sa vapeur, cette potion bleue paraît en ébullition.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'intuition",
+   "ingredients": [
+    "Eau",
+    "Psychotrope"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Eau (fluide) + Psychotrope (psychédélique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide violet fumant. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour chaque test de caractéristique visant à déceler des mensonges ou évaluer l'état émotionnel d'autres créatures, comme les tests de Sagesse (Perspicacité).",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion d'invisibilité",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence élémentaire - Air"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence élémentaire - Air\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, rare Le récipient de cette potion semble vide, mais son poids indique le contraire. Lorsque vous la buvez, vous devenez invisible pendant 1 heure. Tout ce que vous portez ou tenez est également invisible. L'effet s'annule si vous attaquez ou jetez un sort.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de chance",
+   "ingredients": [
+    "Baume d'altération",
+    "Gemme"
+   ],
+   "text": "Rang : Maître · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Gemme\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare. Une créature peut dépenser une action pour boire ce liquide doré pétillant.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de clairvoyance",
+   "ingredients": [
+    "Alcool",
+    "Psychotrope"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire, Abstracteur\nComposition : Alcool (inflammable, fluide) + Psychotrope (psychédélique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Lorsque vous buvez cette potion, vous obtenez les effets du sort clairvoyance. Un œil flotte au milieu de ce liquide jaunâtre, mais disparaît lorsque le récipient est ouvert.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de coagulation",
+   "ingredients": [
+    "Baume d'altération",
+    "Métal - Fer"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Métal - Fer (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 6 heures · Valeur : 20 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide gluant rouge. Ses effets durent 10 minutes. Pendant ce temps, les premiers dégâts reçus par la créature peuvent être réduits d'un montant déterminé par un jet de d4. Ensuite, les effets de la potion se dissipent.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de confusion",
+   "ingredients": [
+    "Potion de mouvement",
+    "Essence élémentaire - Air"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Essence élémentaire - Air\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide agité. Pendant une minute, tous les jets d'attaque qui prennent la créature pour cible subissent un désavantage. Un assaillant qui ne dépend pas de sa vue, comme avec la vision aveugle, ou qui peut voir à travers les illusions, comme avec la vision véritable, est immunisé à cet effet.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de diminution",
+   "ingredients": [
+    "Baume d'altération",
+    "Psychotrope"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Psychotrope (psychédélique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Lorsque vous buvez cette potion, vous obtenez les effets de rétrécissement du sort agrandissement/rapetissement pendant 1d4 heures (aucune concentration requise). Le rouge dans le liquide de cette potion se contracte en une petite perle avant de s'agrandir pour colorer le liquide transparent autour d'elle. Secouer la bouteille n'interrompt pas ce processus.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force de géant des collines",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de monstre - Ongle de pied de géant des collines"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de monstre - Ongle de pied de géant des collines (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Un éclat d'ongle de géant des collines flotte dans le liquide transparent de cette potion. Lorsque vous la buvez, votre score de Force passe à 21 pendant 1 heure. Cette potion n'a aucun effet si votre Force est égale ou supérieure à ce score.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force de géant des nuages",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de monstre - Ongle de pied de géant des nuages"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de monstre - Ongle de pied de géant des nuages (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare Un éclat d'ongle de géant des nuages flotte dans le liquide transparent de cette potion. Lorsque vous la buvez, votre score de Force passe à 27 pendant 1 heure. Cette potion n'a aucun effet si votre Force est égale ou supérieure à ce score.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force de géant des tempêtes",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de monstre - Ongle de pied de géant des tempêtes"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de monstre - Ongle de pied de géant des tempêtes (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, légendaire Un éclat d'ongle de géant des tempêtes flotte dans le liquide transparent de cette potion. Lorsque vous la buvez, votre score de Force passe à 29 pendant 1 heure. Cette potion n'a aucun effet si votre Force est égale ou supérieure à ce score.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force de géant du feu",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de monstre - Ongle de pied de géant du feu"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de monstre - Ongle de pied de géant du feu (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Un éclat d'ongle de géant du feu flotte dans le liquide transparent de cette potion. Lorsque vous la buvez, votre score de Force passe à 25 pendant 1 heure. Cette potion n'a aucun effet si votre Force est égale ou supérieure à ce score.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force de géant du givre/des pierres",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de monstre - Ongle de pied de géant du givre/ des pierres"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de monstre - Ongle de pied de géant du givre/ des pierres (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Un éclat d'ongle de géant du givre ou des pierres flotte dans le liquide transparent de cette. Lorsque vous la buvez, votre score de Force passe à 23 pendant 1 heure. Cette potion n'a aucun effet si votre Force est égale ou supérieure à ce score.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de force du taureau",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Corne de taureau"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Corne de taureau (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide noir à veines rouges. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour ses tests de Force et sa capacité de charge est doublée.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de forme gazeuse",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence élémentaire - Air"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence élémentaire - Air (volatil)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Lorsque vous buvez cette potion, vous obtenez les effets du sort forme gazeuse pendant 1 heure (aucune concentration requise) ou jusqu'à ce que vous annuliez les effets avec une action bonus. Le récipient de cette potion semble contenir un brouillard qui se déplace et se verse comme de l'eau.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de grâce féline",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Vibrisse de chat"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Vibrisse de chat (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide tacheté orange et gris. Ses effets durent 1 heure. Pendant ce temps, elle bénéficie d'un avantage pour ses tests de Dextérité et ne reçoit pas de dégâts de chute de 6 mètres ou moins.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de guérison",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 8 heures · Valeur : 50 po\nPotion, commun Un personnage qui boit le liquide rouge magique contenu dans cette fiole récupère 7 (2d4 + 2) points de vie. Boire ou donner une potion coûte une action.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de guérison majeure",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 20 heures · Valeur : 200 po\nPotion, peu commun Un personnage qui boit le liquide rouge magique contenu dans cette fiole récupère 14 (4d4 + 4) points de vie. Boire ou donner une potion coûte une action.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de guérison supérieure",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 120 heures · Valeur : 2 000 po\nPotion, rare Un personnage qui boit le liquide rouge magique contenu dans cette fiole récupère 28 (8d4 + 8) points de vie. Boire ou donner une potion coûte une action.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de guérison ultime",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Maître · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 180 heures · Valeur : 20 000 po\nPotion, très rare Un personnage qui boit le liquide rouge magique contenu dans cette fiole récupère 45 (10d4 + 20) points de vie. Boire ou donner une potion coûte une action.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de la fée verte",
+   "ingredients": [
+    "Alcool",
+    "Psychotrope"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Alcool (inflammable, fluide) + Psychotrope (psychédélique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide trouble et opaque. Ses effets durent 10 minutes.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de lecture des pensées",
+   "ingredients": [
+    "Alcool",
+    "Psychotrope"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire, Abstracteur · interdit\nComposition : Alcool (fluide) + Psychotrope\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare Lorsque vous buvez cette potion, vous obtenez les effets du sort détection des pensées (sauvegarde DD 13). Un nuage ovale rose flotte au milieu du liquide compact violet de cette potion.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de majesté de l'aigle",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Plume d'aigle"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Plume d'aigle (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide doré. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour ses tests de Charisme.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de mouvement",
+   "ingredients": [
+    "Alcool",
+    "Stimulant"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Alcool (inflammable, fluide) + Stimulant\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 60 heures · Valeur : 180 po\nPotion, commun. Une créature peut dépenser une action pour boire ce liquide tourbillonnant vert. Ses effets durent 1 heure. Pendant ce temps, la vitesse de la créature augmente de 3 mètres.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de nage",
+   "ingredients": [
+    "Potion de mouvement",
+    "Essence de créature - Moustaches de phoque"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Essence de créature - Moustaches de phoque (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 100 heures · Valeur : 300 po\nPotion, commun. Une créature peut dépenser une action pour boire cette potion et obtenir une vitesse de nage égale à sa vitesse de marche pendant 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour ses tests de Force (Athlétisme) visant à nager. Des vagues sont visibles dans cette potion, même lorsqu'elle est immobile.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de peau d'écorce",
+   "ingredients": [
+    "Baume d'altération",
+    "Médicinal - Écorce"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Médicinal - Écorce (unique)\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide fibreux. Ses effets durent 1 heure. Pendant ce temps, la peau de la créature prend une apparence rugueuse et similaire à de l'écorce, et sa CA ne peut être inférieure à 16, peu importe l'armure qu'elle porte.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de peau de pierre",
+   "ingredients": [
+    "Baume d'altération",
+    "Roche"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Rocher\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour boire ce liquide grumeleux. Ses effets durent 1 heure. Pendant ce temps, la peau de la créature devient aussi dure que de la pierre et elle devient résistante aux dégâts contondants, perforants ou tranchants non magiques.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de poison",
+   "ingredients": [
+    "Potion de guérison",
+    "Toxine"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest, Apothicaire · interdit, ingestion\nComposition : Potion de guérison (fluide) + Toxines (toxique)\nOutils : kit d'empoisonneur\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nCette décoction a l'apparence, l'odeur et le goût d'une potion de soin ou d'une autre potion à effet bénéfique. Il s'agit cependant d'un poison déguisé par une magie d'illusion. Le sort identification peut révéler sa véritable nature. Si vous la buvez, vous recevez 10 (3d6) dégâts de poison et devez réussir un jet de sauvegarde de Constitution DD 13, sans quoi vous êtes empoisonné. Au début de chaque tour en étant empoisonné, vous recevez 10 (3d6) dégâts de poison. Vous pouvez recommencer le jet de sauvegarde à la fin de chaque tour. En cas de réussite, les dégâts de poison que vous recevez lors de vos prochains tours sont réduits d'un 1d6. Le poison se dissipe lorsque les dégâts atteignent 0.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de purification",
+   "ingredients": [
+    "Eau",
+    "Médicinal"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : Test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 34 heures · Valeur : 100 po\nPotion, commun. Une créature peut dépenser une action pour verser cette potion dans une portion de plat ou boisson non magique afin d'y éliminer tout poison ou maladie.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de regard pétrifiant",
+   "ingredients": [
+    "Essence de monstre - Yeux de basilic",
+    "Poison de base",
+    "Roche - Granit"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit\nComposition : Essence de monstre – Yeux de basilic (unique) + Poison de base (toxique, fluide, durable) + Roche – Granit\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : toxique\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Cette petite flasque contient un liquide noir et opaque à l'odeur âcre fabriqué à partir d'un extrait d'œil de basilic. Vous pouvez utiliser une action pour la jeter sur une créature se trouvant dans un rayon de 6 mètres de vous avec un jet d'attaque à distance en traitant la flasque comme une arme improvisée. Cette potion peut également enduire une lame ou une munition. Son effet dure une minute et se dissipe à l'utilisation. Si elle est touchée, la créature doit effectuer un jet de sauvegarde de Constitution DD 12. En cas d'échec, la créature commence à se changer en pierre et est entravée. À la fin de son prochain tour, la créature affectée fait un second jet de sauvegarde. Elle est pétrifiée pendant une heure en cas d'échec ou met fin à l'effet en cas de réussite. L'effet de pétrification ou d'entrave peut être annulé à l'aide d'un sort restauration inférieure ou d'une magie similaire.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Potion de renouvellement",
+   "ingredients": [
+    "Décoction de guérison",
+    "Stimulant"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Stimulant\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour boire cette potion et mettre fin à tout effet réduisant l'une de ses caractéristiques.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de résistance",
+   "ingredients": [
+    "Baume d'altération",
+    "Médicinal"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Lorsque vous buvez cette potion, vous obtenez une résistance à un type de dégâts pendant 1 heure. Le type est choisi par le MJ ou décidé aléatoirement. d10 Damage Type d10 Damage Type 1 Acide 6 Nécrotique 2 Froid 7 Poison 3 Feu 8 Psychique 4 Force 9 Radiant 5 Foudre 10 Tonnerre",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de respiration aquatique",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence élémentaire - Eau"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire, Abstracteur\nComposition : Baume d'altération (fluide) + Essence élémentaire - Eau\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun Après avoir bu cette potion, vous pouvez respirer sous l'eau pendant 1 heure. Une bulle semblable à une méduse flotte au milieu de liquide trouble vert à l'odeur iodée.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de ruse du renard",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Vibrisse de renard"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Vibrisse de renard (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide orangé. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour ses tests d'Intelligence.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de sagesse de la chouette",
+   "ingredients": [
+    "Baume d'altération",
+    "Essence de créature - Plume de chouette"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Baume d'altération (fluide) + Essence de créature - Plume de chouette (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide vert sauge. Ses effets durent 1 heure. Pendant ce temps, la créature bénéficie d'un avantage pour ses tests de Sagesse.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de santé",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Une créature peut dépenser une action pour boire ce liquide effervescent. Pendant une minute, la créature bénéficie d'un avantage pour les jets de sauvegarde visant à résister aux états aveuglé, assourdi, paralysé ou empoisonné.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de santé majeure",
+   "ingredients": [
+    "Décoction de guérison",
+    "Médicinal"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Médicinal\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour boire ce liquide effervescent. Pendant une minute, la créature bénéficie d'un avantage pour les jets de sauvegarde visant à résister aux états aveuglé, charmé, assourdi, paralysé, pétrifié ou empoisonné.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de vigueur",
+   "ingredients": [
+    "Décoction de guérison",
+    "Stimulant"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Apothicaire\nComposition : Décoction de guérison (fluide) + Stimulant\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 20\nPropriétés : fluide\nTemps de fabrication : 250 heures · Valeur : 5 500 po\nPotion, rare. Une créature peut dépenser une action pour boire cette potion et mettre fin à tout effet réduisant le total de ses points de vie.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de vitesse",
+   "ingredients": [
+    "Potion de mouvement",
+    "Stimulant"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Stimulant\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare Lorsque vous buvez cette potion, vous obtenez les effets du sort hâte pendant 1 minute (aucune concentration requise). Le liquide jaune de cette potion comporte des traînées noires et tourbillonne tout seul.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion de vol",
+   "ingredients": [
+    "Potion de mouvement",
+    "Plume"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Potion de mouvement (fluide) + Plumes (fragile)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare Lorsque vous buvez cette potion, vous obtenez une vitesse de vol égale à votre vitesse de marche pendant 1 heure et pouvez planer. Si vous êtes en l'air lorsque les effets de la potion se dissipent et que vous n'avez aucun autre moyen de voler, vous tombez. Le liquide transparent de cette potion flotte dans le haut du récipient et contient des impuretés blanches.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Potion instable",
+   "ingredients": [
+    "Eau",
+    "1 essence élémentaire, stupéfiant, médicinal, psychotrope, stimulant ou toxine aléatoire",
+    "1 autre essence élémentaire, stupéfiant, médicinal, psychotrope, stimulant ou toxine aléatoire"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit\nComposition : Eau (fluide) + 1 essence élémentaire, stupéfiant, médicinal, psychotrope, stimulant ou toxine aléatoire (propriétés diverses) + 1 autre essence élémentaire, stupéfiant, médicinal, psychotrope, stimulant ou toxine aléatoire (propriétés diverses)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fragile, Fluide, volatil\nTemps de fabrication : 10 heures · Valeur : 50 po\nPotion, peu commun. On sait peu de choses de ces décoctions vertes bouillonnantes. Vous pouvez utiliser une action pour jeter la fiole de potion sur une cible dans un rayon de 9 mètres autour de vous, auquel cas, elle se brisera à l'impact. Faites un jet sur la table ci- dessous pour découvrir le sort créé, sauvegarde contre les sorts DD 12 (le cas échéant), centré sur la cible. Si le sort nécessite habituellement de la concentration, l'effet dure 1d6 rounds et ne nécessite pas de concentration.",
+   "duration": null,
+   "fail": "Échec de fabrication, fragile : tous les ingrédients sont détruits; volatil : 3 (1d6) dégâts de force au créateur."
+  },
+  {
+   "name": "Poudre du polyglotte",
+   "ingredients": [
+    "Alcool",
+    "Essence de monstre - Lngue d'humanoïde"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Abstracteur\nComposition : Alcool (inflammable, fluide) + Essence de monstre - Lngue d'humanoïde (unique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 60 heures · Valeur : 180 po\nPotion, commun. Une créature peut dépenser une action pour consommer cette poudre. Ses effets durent 1 heure. Pendant ce temps, la créature comprend la signification littérale de tout langage qu'elle entend.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Poussière d'assèchement",
+   "ingredients": [
+    "Sable",
+    "Essence élémentaire - Terre Catalyste des arcanes"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Sable (fluide) + Essence élémentaire – Terre Catalyste des arcanes (fragile)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : aucune\nTemps de fabrication : 18 heures · Valeur : 175 po\nObjet merveilleux, peu commun Ce petit paquet contient 1d6 + 4 pincées de poussière. Vous pouvez dépenser une action pour la saupoudrer sur de l'eau. La poussière transforme un cube d'eau de 4,5 mètres de côté en granule de la taille d'une bille, qui flotte ou reste à proximité de l'endroit où la poussière a été saupoudrée. Le poids du granule est négligeable. Vous pouvez utiliser une action pour écraser le granule contre une surface solide, afin de libérer toute l'eau absorbée par la poussière. Cette action met fin aux propriétés magiques du granule. Un élémentaire composé principalement d'eau et exposé à une pincée de cette poussière doit réussir un jet de sauvegarde de Constitution DD 13. Il subit 35 (10d6) dégâts nécrotiques en cas d'échec au jet de sauvegarde, ou la moitié de ces dégâts en cas de réussite.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Poussière d’éternuement et d’étouffement",
+   "ingredients": [
+    "Sable",
+    "Toxine",
+    "Catalyste des arcanes"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest\nComposition : Sable (fluide) + Toxine (toxique) + Catalyste des arcanes (fragile)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : aucune\nTemps de fabrication : 18 heures · Valeur : 175 po\nObjet merveilleux, peu commun Stockée dans un petit paquet, cette poudre ressemble à du sable extrêmement fin. Elle a l'apparence de la poussière de disparition, et un sort d'identification la désigne comme telle. Il y en a juste assez pour une utilisation. Lorsque vous dépensez une action pour jeter une poignée de poussière en l'air, vous et chaque créature ayant besoin de respirer dans un rayon de 9 mètres autour de vous devez réussir un jet de sauvegarde de Constitution DD 15, sans quoi vous éternuez de façon incontrôlable au point de ne plus pouvoir respirer. Une créature touchée par ces effets est incapable d'agir et s'asphyxie. Tant qu'elle est consciente, elle peut recommencer le jet de sauvegarde à la fin de chaque tour. En cas de succès, l'effet est annulé. Le sort restauration partielle peut également annuler les effets sur une créature.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Poussière de disparition",
+   "ingredients": [
+    "Sable",
+    "Essence élémentaire - Terre Catalyste des arcanes"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Sable (fluide) + Essence élémentaire – Terre Catalyste des arcanes (fragile)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : aucune\nTemps de fabrication : 18 heures · Valeur : 175 po\nObjet merveilleux, peu commun Stockée dans un petit paquet, cette poudre ressemble à du sable extrêmement fin. Il y en a juste assez pour une utilisation. Lorsque vous dépensez une action pour jeter la poussière en l'air, vous et chaque créature dans un rayon de 3 mètres autour de vous devenez invisibles pendant 2d4 minutes. La durée des effets est la même pour chaque sujet, et la poussière est consommée lorsque sa magie fait effet. Si une créature sous les effets de la poussière attaque ou jette un sort, elle met fin à son invisibilité.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Sang d'assassin",
+   "ingredients": [
+    "Poison de base",
+    "Toxine"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit, ingestion\nComposition : Poison de base (fluide, toxique) + Toxine (toxique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 15\nPropriétés : fluide, toxique\nTemps de fabrication : 15 heures · Valeur : 150 po\nUne créature victime de ce poison doit effectuer un jet de sauvegarde de Constitution DD 10. En cas d'échec, elle reçoit 6 (1d12) dégâts de poison et reste empoisonnée pendant 24 heures. En cas de réussite, elle reçoit la moitié des dégâts et n'est pas empoisonnée.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Sang de troll",
+   "ingredients": [
+    "Décoction de guérison",
+    "Essence de monstre - Sang de troll"
+   ],
+   "text": "Rang : Maître · Spécialisation : Apothicaire · interdit\nComposition : Décoction de guérison (fluide) + Essence de monstre - Sang de troll (unique)\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nPotion, très rare. Une créature peut dépenser une action pour boire ce liquide épais au goût métallique et faire repousser plusieurs membres ayant été tranchés (doigts, jambes, queues, etc.). Faire repousser un membre prend 2 minutes. Si la créature a toujours le membre tranché et le maintient contre le moignon, la potion réattache instantanément le membre au moignon.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Savon",
+   "ingredients": [
+    "Parfum",
+    "Huile"
+   ],
+   "text": "Rang : Novice\nComposition : Parfum (fluide) + Huile (inflammable, fluide)\nOutils : matériel d'alchimiste, une source de chaleur\nTest : test de Sagesse DD 5\nPropriétés : aucune\nTemps de fabrication : 1 heure · Valeur : 2 pc\nLorsqu'elle est utilisée avec de l'eau, cette barre lisse produit une mousse riche qui permet d'éliminer la boue et la saleté.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Sérum de vérité",
+   "ingredients": [
+    "Eau",
+    "Stupéfiant"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest, Abstracteur · ingestion\nComposition : Eau (fluide) + Stupéfiant (étourdissant)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide, toxique\nTemps de fabrication : 18 heures · Valeur : 175 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 11, sans quoi elle est empoisonnée pendant 1 heure. La créature empoisonnée ne peut pas mentir consciemment, comme si elle était sous l'action du sort zone de vérité.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Solidité instantanée",
+   "ingredients": [
+    "Eau",
+    "Catalyste d'affliction",
+    "Essence de créature - Salive de cockatrice"
+   ],
+   "text": "Rang : Expert · Spécialisation : Abstracteur\nComposition : Eau (fluide) + Catalyste d'affliction (fragile) + Essence de créature - Salive de cockatrice (unique)\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide\nTemps de fabrication : 35 heures · Valeur : 350 po\nObjet merveilleux, peu commun Vous pouvez dépenser une action pour jeter cette gélatine bleue magique sur une vase à moins de 9 mètres de vous. Jetez une attaque de sort à distance. Si elle est touchée, la cible doit effectuer un jet de sauvegarde de Constitution DD 15. En cas d'échec, la vase est pétrifiée. À la fin de chacun de ses tours, la vase peut effectuer un autre jet de sauvegarde de Constitution. En cas de réussite, elle n'est plus pétrifiée. Cet objet n'a d'effet que sur les vases.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Solvant universel",
+   "ingredients": [
+    "Eau",
+    "Essence élémentaire - Eau"
+   ],
+   "text": "Rang : Maître · Spécialisation : Abstracteur\nComposition : Eau (fluide) + Essence élémentaire- Eau (volatil)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 25\nPropriétés : fluide\nTemps de fabrication : 500 heures · Valeur : 17 500 po\nObjet merveilleux, légendaire Ce tube contient un liquide laiteux avec une forte odeur d'alcool. Vous pouvez dépenser une action pour verser le contenu du tube sur une surface à proximité. Le liquide dissout instantanément jusqu'à un 0,10 mètre carré d'adhésif qu'il touche, y compris la colle universelle.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Teinture de fausse mort",
+   "ingredients": [
+    "Alcool",
+    "Stupéfiant",
+    "Médicinal"
+   ],
+   "text": "Rang : Expert · Spécialisation : Apothicaire\nComposition : Alcool (inflammable, fluide) + Stupéfiant (étourdissant) + Médicinal\nOutils : matériel d'alchimiste\nTest : test d'Intelligence DD 15\nPropriétés : fluide\nTemps de fabrication : 18 heures · Valeur : 175 po\nPotion, peu commun. Ce liquide sombre tourbillonnant est utilisé pour simuler la mort, tromper le système juridique ou terrifier ses beaux- parents. Vous pouvez utiliser une action pour boire la potion et plonger dans un profond sommeil semblable à la mort pendant 8 heures. Pendant ce temps, vous paraissez mort, peu importe si vous êtes examiné à l'aide de magie ou non. Malgré cet état, vous recevez toujours les dégâts normalement. À la fin du délai, vous vous réveillez et bénéficiez des avantages conférés par un long repos. Grand amour : Si votre grand amour vous embrasse lorsque vous êtes dans cet état, l'effet de la potion est immédiatement annulé et vous vous réveillez.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Teinture de langueliée",
+   "ingredients": [
+    "Alcool",
+    "Toxine"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest\nComposition : Alcool (inflammable, fluide) + Toxine (toxique)\nOutils : matériel d'alchimiste\nTest : test de Sagesse DD 15\nPropriétés : fluide\nTemps de fabrication : 60 heures · Valeur : 600 po\nPotion, commun. Une créature qui boit cette potion est incapable de parler pendant 1 heure. La potion semble se tordre à l'intérieur de sa bouteille lorsqu'elle est dérangée.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Teinture pâle",
+   "ingredients": [
+    "Poison de base",
+    "Toxine"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest · interdit, ingestion\nComposition : Poison de base (toxique, fluide) + Toxine (toxique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 20\nPropriétés : fluide, toxique\nTemps de fabrication : 12 heures · Valeur : 250 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 16, sans quoi elle reçoit 3 (1d6) dégâts de poison et est empoisonnée. Elle doit recommencer le jet de sauvegarde toutes les 24 heures et reçoit 3 (1d6) dégâts de poison en cas d'échec. Tant que le poison est actif, il est impossible de soigner les dégâts qu'il inflige. Après 7 jets de sauvegarde réussis, l'effet est annulé et la créature peut se soigner normalement.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Tonique auditif",
+   "ingredients": [
+    "Eau",
+    "Médicinal - bouchon de cire"
+   ],
+   "text": "Rang : Apprenti · Spécialisation : Apothicaire\nComposition : Eau (fluide) + Médicinal - bouchon de cire (unique)\nOutils : kit d'herboristerie\nTest : test de Sagesse DD 10\nPropriétés : fluide\nTemps de fabrication : 6 heures · Valeur : 20 po\nPotion, commun. Une créature assourdie peut appliquer ce baume cireux brun à ses oreilles au début d'un long repos. À son réveil, elle a retrouvé l'audition. Ce baume n'a aucun effet sur la surdité naturelle qui peut survenir à la naissance ou à un âge avancé.",
+   "duration": null,
+   "fail": ""
+  },
+  {
+   "name": "Torpeur",
+   "ingredients": [
+    "Poison de base",
+    "Psychotrope"
+   ],
+   "text": "Rang : Maître · Spécialisation : Alkahest · interdit, ingestion\nComposition : Poison de base (fluide, toxique) + Psychotrope (psychédélique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 25\nPropriétés : fluide, toxique\nTemps de fabrication : 18 heures · Valeur : 600 po\nUne créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 15, sans quoi elle est empoisonnée pendant 4d6 heures. La créature empoisonnée est incapable d'agir.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Venin de serpent",
+   "ingredients": [
+    "Eau",
+    "Toxine - Venin de serpent"
+   ],
+   "text": "Rang : Expert · Spécialisation : Alkahest · interdit, blessure\nComposition : Eau (fluide) + Toxine - Venin de serpent (fluide, toxique, unique)\nOutils : kit d'empoisonneur\nTest : test d'Intelligence DD 15\nPropriétés : fluide, toxique\nTemps de fabrication : 20 heures · Valeur : 200 po\nCette toxine doit être récoltée sur le corps d'un serpent venimeux géant mort ou incapable d'agir. Une créature victime de ce poison doit réussir un jet de sauvegarde de Constitution DD 11. Elle reçoit 10 (3d6) dégâts de poison en cas d'échec ou moitié moins de dégâts en cas de réussite.",
+   "duration": null,
+   "fail": "Échec de fabrication, toxique : le créateur est empoisonné jusqu'à un long repos."
+  },
+  {
+   "name": "Vie liquide",
+   "ingredients": [
+    "Essence de créature - Chair d'enfant tué",
+    "Eau bénite"
+   ],
+   "text": "Rang : Compagnon · Spécialisation : Alkahest, Apothicaire · interdit\nComposition : Essence de créature – Chair d'enfant tué (unique) + Eau bénite (fluide)\nSource : divine (mauvais)\nOutils : matériel d'alchimiste et kit d'alchimie\nTest : test d'Intelligence ou de Sagesse DD 20\nPropriétés : Fluide, unique\nTemps de fabrication : 14 heures · Valeur : 300 po\nPotion, rare. Cette fiole contient un liquide sombre et visqueux dans lequel flottent de minces filets argentés. Vous pouvez utiliser une action pour répandre cette potion sur le cadavre d'une créature morte depuis moins d'une heure. Si son âme n'a pas déjà été capturée par une divinité ou une entité, elle est ramenée des limbes et ressuscitée avec 1 point de vie. Ce décès a un impact sur l'esprit de la créature, et la mort laisse ses traces sur son corps. Faites un jet sur la table ci-dessous pour obtenir un effet secondaire lié au trépas. Le MJ peut aussi choisir ou substituer un effet désiré. Cet effet persiste sur la créature jusqu'à ce qu'un sort restauration suprême ou un effet magique de soin de niveau équivalent permette de le retirer.",
+   "duration": null,
+   "fail": ""
+  }
+ ]
+}

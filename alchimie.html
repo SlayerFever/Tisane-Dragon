@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr" data-app="alchimie">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Alchimie &amp; Dragon</title>
+<link rel="icon" type="image/png" href="T%26D_LOGO.png">
+<link rel="apple-touch-icon" href="T%26D_LOGO.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+
+  <main class="main">
+    <header class="top">
+      <h1 style="display:flex;align-items:center;gap:12px"><img class="logo" src="T%26D_LOGO.png" alt="" width="46" height="46">Alchimie &amp; Dragon</h1>
+      <label class="who">Personnage <input id="player" placeholder="Nom du PJ" autocomplete="off"></label>
+      <a class="swap" href="index.html" title="Retour aux tisanes" aria-label="Aller à Tisane &amp; Dragon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h11v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M15 10h1.5a2.5 2.5 0 0 1 0 5H15"/><path d="M8 3c-.8 1 .8 1.6 0 2.7M11.5 3c-.8 1 .8 1.6 0 2.7"/></svg></a>
+      <button type="button" id="lab-toggle" class="swap" title="Masquer / afficher le laboratoire" aria-label="Masquer ou afficher le laboratoire" aria-pressed="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.2 9.1A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-2.9L14 9V3"/><path d="M7.5 15h9"/></svg></button>
+    </header>
+    <div id="banner" class="banner hidden"></div>
+
+    <nav class="tabs" role="tablist">
+      <button id="tab-recette" role="tab" class="active">Atelier</button>
+      <button id="tab-grimoire" role="tab">Le Grimoire</button>
+      <button id="tab-mj" role="tab" class="hidden">MJ</button>
+    </nav>
+
+    <!-- ONGLET RECETTE -->
+    <section id="view-recette">
+      <div class="panel">
+        <svg id="socio" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Relations entre les ingrédients"></svg>
+        <div class="legend">
+          <span><span class="hubkey"></span>Concoction</span>
+          <span><span class="key ok"></span>Recette finie</span>
+          <span><span class="key unknown"></span>Effets à découvrir</span>
+          <span><span class="key untested"></span>À tester</span>
+          <span><span class="key ko"></span>Raté</span>
+          <span>Clique sur un ingrédient pour filtrer, sur un rond pour voir la concoction.</span>
+        </div>
+        <div id="cat-legend"></div>
+        <div id="socio-filter" class="row hidden" style="margin-top:8px"><span id="socio-filter-label" class="muted"></span><button id="socio-filter-clear" class="btn ghost small" type="button">Retirer le filtre</button></div>
+      </div>
+      <div class="duo">
+      <div>
+      <div class="panel">
+        <h2>Recettes favorites</h2>
+        <p class="muted" style="margin:-6px 0 10px">Tes recettes de tous les jours. Clique sur l'étoile ☆ d'une recette du Grimoire pour la mettre ici, puis sur la recette pour la refaire au laboratoire.</p>
+        <div id="recipes-known" class="recipes"></div>
+      </div>
+      <div class="panel">
+        <h2>Potions de <span id="tis-owner"></span></h2>
+        <div id="tisanes"></div>
+      </div>
+      <div class="panel">
+        <h2>Potions des autres PJ</h2>
+        <div id="tisanes-others"></div>
+      </div>
+      </div>
+      <div>
+      <div class="panel">
+        <div class="row between" style="margin-bottom:12px">
+          <h2 style="margin:0">Inventaire de <span id="inv-owner"></span></h2>
+          <button class="btn" id="add-ing" type="button">Ajouter un ingrédient</button>
+        </div>
+        <div class="row" style="margin-bottom:8px"><label class="muted" for="inv-sort">Trier par</label>
+          <select id="inv-sort" aria-label="Trier l'inventaire">
+            <option value="rarity">Qualité</option><option value="qty">Quantité</option>
+            <option value="propriete">Propriété</option><option value="classification">Classification</option><option value="environnement">Environnement</option>
+          </select></div>
+        <div id="inv-filter" class="fchips"></div>
+        <div id="inventory"></div>
+      </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ONGLET LE GRIMOIRE : recettes et ingrédients connus du PJ -->
+    <section id="view-grimoire" class="hidden">
+      <div class="panel">
+        <div class="row between" style="margin-bottom:6px">
+          <h2 style="margin:0">Recettes</h2>
+          <span class="row">
+            <button id="rec-add" class="btn small hidden" type="button">Ajouter une recette</button>
+            <span id="filter-label" class="muted"></span>
+            <button id="clear-filter" class="btn ghost small hidden">Retirer le filtre</button>
+          </span>
+        </div>
+        <div id="rec-tabs" class="subtabs" role="tablist"></div>
+        <div id="recipes" class="recipes"></div>
+        <details style="margin-top:16px"><summary class="muted" style="cursor:pointer">Historique de tous les essais</summary><div id="trials"></div></details>
+      </div>
+      <div class="panel">
+        <h2>Ingrédients connus de <span id="known-owner"></span></h2>
+        <p class="muted" style="margin:-6px 0 10px">Tous les ingrédients que tu connais, en stock ou non. Un ingrédient qui tombe à 0 sort de l'inventaire mais reste ici. Déroule une ligne (▸) pour voir où il a été récolté ou acheté, avec quoi il a été testé et les potions possibles.</p>
+        <div id="known"></div>
+      </div>
+      <div class="panel" id="qual-panel">
+        <h2>Qualité des ingrédients</h2>
+        <p class="muted" style="margin:0 0 8px">Chaque ingrédient a une qualité, ou aucune. Elle détermine ses DD et sa valeur.</p>
+        <div id="qual-table"></div>
+      </div>
+    </section>
+
+    <!-- ONGLET MJ : le « backend » de l'app (bibliothèque du MJ). L'onglet Ingrédient et le laboratoire sont le côté PJ. -->
+    <section id="view-mj" class="hidden">
+      <div class="panel hidden" id="mj-orphans"></div>
+      <div class="panel">
+        <div class="row between" style="margin-bottom:6px">
+          <h2 style="margin:0">Bibliothèque des ingrédients</h2>
+          <button class="btn" id="lib-add" type="button">Ajouter un ingrédient</button>
+        </div>
+        <p id="lib-ing-help" class="muted" style="margin:0 0 10px">La référence du MJ : famille, prix et description de chaque ingrédient. Le laboratoire des PJ s'appuie dessus pour répondre. Les PJ voient la description des ingrédients, mais ni leur classification, propriétés et environnement tant que tu ne les leur révèles pas, ni les effets des potions.</p>
+        <div id="lib-init"></div>
+        <input id="lib-ing-q" type="search" placeholder="Rechercher un ingrédient (nom, catégorie, description)…" autocomplete="off" style="margin-bottom:10px">
+        <div id="lib-ing"></div>
+      </div>
+      <div class="panel">
+        <div class="row between" style="margin-bottom:6px"><h2 style="margin:0">Bibliothèque des potions</h2><button class="btn hidden" id="lib-rec-add" type="button">Ajouter une potion</button></div>
+        <p id="lib-pot-help" class="muted" style="margin:0 0 10px">Un effet par paire de familles, en trois niveaux (somme des prix : 11 à 60 léger, 61 à 200 marqué, 201 et plus exceptionnel), plus les effets anecdotiques (ingrédient inerte ou somme ≤ 10).</p>
+        <input id="lib-pot-q" type="search" placeholder="Rechercher une potion (nom, ingrédient, effet)…" autocomplete="off" style="margin-bottom:10px">
+        <div id="lib-pot"></div>
+        <details id="lib-anec-wrap" style="margin-top:12px"><summary class="muted" style="cursor:pointer">Effets anecdotiques</summary><div id="lib-anec" style="margin-top:10px"></div></details>
+      </div>
+      <div class="panel">
+        <h2>Simulateur de mélange</h2>
+        <p id="mj-sim-help" class="muted" style="margin:-6px 0 10px">Ce que le laboratoire en mode automatique répondrait à un PJ, sans rien enregistrer.</p>
+        <div class="mjrow"><input id="mj-a" list="cat-ingredients" placeholder="Premier ingrédient" aria-label="Premier ingrédient"><input id="mj-b" list="cat-ingredients" placeholder="Second ingrédient" aria-label="Second ingrédient"><input id="mj-c" class="hidden" list="cat-ingredients" placeholder="Troisième (facultatif)" aria-label="Troisième ingrédient"><input id="mj-d" class="hidden" list="cat-ingredients" placeholder="Quatrième (facultatif)" aria-label="Quatrième ingrédient"></div>
+        <div id="mj-out"></div>
+      </div>
+      <div class="panel">
+        <h2>Propriétés et environnements</h2>
+        <p class="muted" style="margin:-6px 0 10px">Les catégories que tu peux attribuer aux ingrédients de la bibliothèque. Les PJ ne les voient que si tu les leur révèles.</p>
+        <div id="categories"></div>
+      </div>
+      <div class="panel">
+        <h2>Révélations aux PJ</h2>
+        <p class="muted" style="margin:-6px 0 10px">Un PJ ne voit ni la classification, ni les propriétés, ni l'environnement d'un ingrédient quand il le met dans son inventaire : il doit les découvrir. Coche ici ce que son personnage a appris. La description, elle, est visible d'office.</p>
+        <div class="row" style="margin-bottom:10px"><label class="muted" for="rv-player">PJ</label><select id="rv-player"></select></div>
+        <div id="rv-all" class="row hidden" style="margin-bottom:10px"><button type="button" class="btn ghost small" data-all="1">Tout révéler à ce PJ</button><button type="button" class="btn ghost small" data-all="0">Tout cacher</button></div>
+        <div id="rv-list"></div>
+      </div>
+      <div class="panel" id="mj-import-panel">
+        <h2 id="mj-file-title">Reprise des données des PJ</h2>
+        <p id="mj-file-help" class="muted" style="margin:-6px 0 10px">Les six familles du Grimoire remplacent les Classifications d'origine. Les propriétés et environnements que les PJ avaient saisis peuvent être repris dans la bibliothèque.</p>
+        <div id="mj-import"></div>
+      </div>
+    </section>
+    <p class="foot"><button type="button" class="linkbtn" id="mj-toggle"></button></p>
+  </main>
+
+  <!-- LABORATOIRE : colonne de droite, présente dans tous les onglets -->
+  <aside class="lab" id="lab" aria-label="Laboratoire">
+    <div class="row between" style="align-items:center"><h2>Laboratoire</h2><button type="button" id="lab-close" class="btn ghost icon" title="Masquer le laboratoire" aria-label="Masquer le laboratoire">✕</button></div>
+    <p class="hint">Propose deux ingrédients : le Grimoire dit ce qu'ils donnent. Ou note toi-même un essai.</p>
+    <form id="lab-form" autocomplete="off">
+      <div id="lab-rows"></div>
+      <button type="button" id="add-row" class="btn ghost small">Ajouter un ingrédient</button>
+
+      <div id="l-result-wrap">
+        <label class="field" for="l-result">Résultat obtenu</label>
+        <input id="l-result" placeholder="Ex : potion de soin">
+      </div>
+
+      <label class="field" for="l-status">État du mélange</label>
+      <select id="l-status" class="full">
+        <option value="auto">Automatique : le MJ tranche</option>
+        <option value="ok">Réussi : recette finie</option>
+        <option value="unknown">Testé, effets inconnus</option>
+        <option value="untested">Pas encore testé</option>
+        <option value="ko">Raté</option>
+      </select>
+      <label class="check" id="l-consume-wrap"><input type="checkbox" id="l-consume" checked><span>Retirer ces ingrédients de mon inventaire</span></label>
+
+      <div id="l-yield-wrap">
+        <label class="field" for="l-yield">Quantité de potion obtenue</label>
+        <input id="l-yield" type="number" min="0" value="1" style="width:90px">
+      </div>
+
+      <label class="field" for="l-notes">Notes</label>
+      <textarea id="l-notes" rows="3" placeholder="Goût, effet, température…"></textarea>
+
+      <div class="row actions">
+        <button class="btn" type="submit">Enregistrer l'essai</button>
+        <button class="btn ghost" type="button" id="lab-clear">Vider</button>
+      </div>
+    </form>
+    <div id="lab-last" class="hidden"></div>
+  </aside>
+
+</div>
+
+<datalist id="all-ingredients"></datalist>
+<datalist id="places"></datalist>
+<datalist id="cat-ingredients"></datalist>
+<div id="modal" class="modal hidden"><div class="box" id="modal-box"></div></div>
+<div id="toast" role="status"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>window.APP = { id: "alchimie" };</script>
+<script src="app.js"></script>
+</body>
+</html>
