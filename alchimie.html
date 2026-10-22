@@ -19,6 +19,7 @@
     <header class="top">
       <h1 style="display:flex;align-items:center;gap:12px"><img class="logo" src="T%26D_LOGO.png" alt="" width="46" height="46">Alchimie &amp; Dragon</h1>
       <label class="who">Personnage <input id="player" placeholder="Nom du PJ" autocomplete="off"></label>
+      <button type="button" id="fiche-btn" class="btn ghost small" title="Fiche de personnage">Fiche</button>
       <a class="swap" href="index.html" title="Retour aux tisanes" aria-label="Aller à Tisane &amp; Dragon">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h11v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M15 10h1.5a2.5 2.5 0 0 1 0 5H15"/><path d="M8 3c-.8 1 .8 1.6 0 2.7M11.5 3c-.8 1 .8 1.6 0 2.7"/></svg></a>
       <button type="button" id="lab-toggle" class="swap" title="Masquer / afficher le laboratoire" aria-label="Masquer ou afficher le laboratoire" aria-pressed="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.2 9.1A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-2.9L14 9V3"/><path d="M7.5 15h9"/></svg></button>
@@ -28,6 +29,7 @@
     <nav class="tabs" role="tablist">
       <button id="tab-recette" role="tab" class="active">Atelier</button>
       <button id="tab-grimoire" role="tab">Le Grimoire</button>
+      <button id="tab-recherche" role="tab">Recherche</button>
       <button id="tab-mj" role="tab" class="hidden">MJ</button>
     </nav>
 
@@ -66,7 +68,7 @@
       <div class="panel">
         <div class="row between" style="margin-bottom:12px">
           <h2 style="margin:0">Inventaire de <span id="inv-owner"></span></h2>
-          <button class="btn" id="add-ing" type="button">Ajouter un ingrédient</button>
+          <span class="row"><button class="btn ghost" id="inv-suggest" type="button">Que puis-je préparer ?</button><button class="btn" id="add-ing" type="button">Ajouter un ingrédient</button></span>
         </div>
         <div class="row" style="margin-bottom:8px"><label class="muted" for="inv-sort">Trier par</label>
           <select id="inv-sort" aria-label="Trier l'inventaire">
@@ -108,6 +110,9 @@
     </section>
 
     <!-- ONGLET MJ : le « backend » de l'app (bibliothèque du MJ). L'onglet Ingrédient et le laboratoire sont le côté PJ. -->
+    <!-- ONGLET RECHERCHE D'INGRÉDIENTS -->
+    <section id="view-recherche" class="hidden"><div class="panel"><h2>Recherche d'ingrédients</h2><div id="sr-root"></div></div></section>
+
     <section id="view-mj" class="hidden">
       <div class="panel hidden" id="mj-orphans"></div>
       <div class="panel">

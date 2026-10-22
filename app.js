@@ -50,6 +50,7 @@ if (useFirebase) {
   b.classList.remove("hidden");
 }
 
+const rawStore = store;   /* accès direct aux deux jeux de collections (transfert d'ingrédients, fiche de personnage commune) */
 if (COLP) {   /* l'alchimie lit et écrit dans ses propres collections */
   const raw = store;
   store = {
@@ -120,7 +121,10 @@ function applyCats() {
   const fromFile = ALCH && !libReady() ? new Map(DEFAULTS.categories.map(c => [c.id, c])) : null;
   const base = fromFile ? rawCats.map(c => fromFile.has(c.id) ? { ...c, name: fromFile.get(c.id).name, color: fromFile.get(c.id).color, group: fromFile.get(c.id).group } : c) : rawCats;
   categories = [...base, ...extra].filter(c => !c.deleted && !famIds.has(c.id));
+  /* Tisane reprend à l'identique les catégories d'Alchimie (classification, propriété, environnement), lues dans grimoire-alchimie.json */
+  if (!ALCH && SHARED_CATS) categories = SHARED_CATS.map(c => ({ ...c }));
 }
+let SHARED_CATS = null;
 const catMemo = new Map();
 function rebuildLib() {
   const L = libReady() ? { ingredients: libIng, potions: libPot, anecdotes: libAnec } : DEFAULTS;
@@ -288,11 +292,11 @@ const metaCatIds = m => !m ? [] : Array.isArray(m.categories) ? m.categories : (
    Un PJ ne voit, pour un ingrédient de son inventaire, que les groupes que le MJ lui a révélés. */
 const famCat = f => ({ id: famCatId(f), name: FAMILIES[f].name, color: FAMILIES[f].color, group: "classification" });
 const myItem = name => inventory.find(i => i.player === player() && i.name === name);
-const allCats = () => ALCH ? categories : [...categories, ...Object.keys(FAMILIES).map(famCat)];
+const allCats = () => categories;
 function catParts(name) {
   const it = myItem(name); if (!it) return { rev: [], own: [] };
   const ci = catalogItem(name), rv = it.reveal || {}, pool = allCats(), byId = id => pool.find(c => c.id === id);
-  const rev = ci ? [...(rv.classification ? (ALCH ? ci.clas.map(byId) : [famCat(ci.f)]) : []), ...(rv.propriete ? ci.props : []).map(byId), ...(rv.environnement ? ci.envs : []).map(byId)].filter(Boolean) : [];
+  const rev = ci ? [...(rv.classification ? ci.clas.map(byId) : []), ...(rv.propriete ? ci.props : []).map(byId), ...(rv.environnement ? ci.envs : []).map(byId)].filter(Boolean) : [];
   return { rev, own: (it.cats || []).map(byId).filter(Boolean) };
 }
 /* Ce que le PJ voit d'un de ses ingrédients : ce que le MJ lui a révélé, plus ce qu'il a noté lui-même */
@@ -303,7 +307,7 @@ function catsOf(name) {
 const catIdsOf = name => catsOf(name).map(c => c.id);
 /* Trois familles de catégories : Classification (celles d'origine), Propriété et Environnement (où cueillir l'ingrédient). Sans champ « group », une catégorie est une Classification. */
 const GROUPS = [{ id: "classification", label: "Classification" }, { id: "propriete", label: "Propriété" }, { id: "environnement", label: "Environnement" }];
-const MANAGED = ALCH ? ["classification", "propriete", "environnement"] : ["propriete", "environnement"];   // groupes de catégories que le MJ gère ; la classification = les familles fixes du Grimoire
+const MANAGED = ["classification", "propriete", "environnement"];   // groupes de catégories que le MJ gère ; la classification = les familles fixes du Grimoire
 const groupOf = c => c && GROUPS.some(g => g.id === c.group) ? c.group : "classification";
 const fmt = x => `${rarMark(x.name)}${esc(cap(x.name))} ×${x.qty}`;
 
@@ -330,16 +334,19 @@ function showTab(t) {
   $("view-recette").classList.toggle("hidden", t !== "recette");
   $("view-grimoire").classList.toggle("hidden", t !== "grimoire");
   $("view-mj").classList.toggle("hidden", t !== "mj");
-  ["recette", "grimoire", "mj"].forEach(x => {
+  if ($("view-recherche")) $("view-recherche").classList.toggle("hidden", t !== "recherche");
+  ["recette", "grimoire", "recherche", "mj"].filter(x => $("tab-" + x)).forEach(x => {
     $("tab-" + x).classList.toggle("active", t === x);
     $("tab-" + x).setAttribute("aria-selected", t === x);
   });
   if (t === "recette") renderSocio();
   if (t === "mj") renderMj();
+  if (t === "recherche") renderSearch();
 }
 $("tab-recette").onclick = () => showTab("recette");
 $("tab-grimoire").onclick = () => showTab("grimoire");
 $("tab-mj").onclick = () => showTab("mj");
+if ($("tab-recherche")) $("tab-recherche").onclick = () => showTab("recherche");
 
 /* ============================================================
    3. Inventaire
@@ -443,7 +450,7 @@ function invTable(items, detail) {
       ${detail ? "" : `<td class="tcenter"><span class="qwrap" data-qwrap="1">${open ? `<button class="btn ghost small" data-act="dec" data-id="${i.id}" aria-label="Retirer un" ${i.qty <= 0 ? "disabled" : ""}>−</button>` : ""}
         <button class="qnum${open ? " on" : ""}${i.qty <= 0 ? " zero" : ""}" data-act="qty" data-id="${i.id}" title="Cliquer pour modifier la quantité" aria-label="Quantité : ${i.qty}">${i.qty}</button>
         ${open ? `<button class="btn ghost small" data-act="inc" data-id="${i.id}" aria-label="Ajouter un">+</button>` : ""}</span></td>
-      <td class="tcenter"><button class="btn ghost small" data-act="lab" data-id="${i.id}">Au labo</button></td>`}
+      <td class="tcenter"><button class="btn ghost small" data-act="lab" data-id="${i.id}">Au labo</button> <button class="btn ghost small" data-act="xfer" data-id="${i.id}" title="Envoyer vers ${ALCH ? "Tisane" : "Alchimie"} &amp; Dragon">⇄</button></td>`}
       <td class="tcenter"><button class="btn ghost icon" data-act="edit" data-id="${i.id}" title="Modifier l'ingrédient" aria-label="Modifier ${esc(i.name)}">✎</button></td>${detail ? `<td class="tcenter"><button class="btn ghost icon" data-act="inc" data-id="${i.id}" title="Ajouter un à l'inventaire" aria-label="Ajouter ${esc(i.name)} à l'inventaire">+</button></td>` : ""}</tr>${detail && knownOpen.has(i.id) ? detailHTML(i) : ""}`;
   };
   const cols = detail
@@ -515,14 +522,14 @@ function editCategory(c) {
   $("ce-name").focus(); $("ce-name").select();
 }
 function renderCategories() {
-  $("categories").innerHTML = GROUPS.filter(g => MANAGED.includes(g.id)).map(g => {
+  $("categories").innerHTML = (ALCH ? "" : '<p class="muted" style="margin:0 0 8px">Ces catégories sont celles d\'Alchimie &amp; Dragon : pour en ajouter ou en modifier, passe par la page Alchimie.</p>') + GROUPS.filter(g => MANAGED.includes(g.id)).map(g => {
     const cs = categories.filter(c => groupOf(c) === g.id).sort(byLabel);
-    return `<div class="catgroup"><div class="row between"><h3>${g.label}</h3><button class="btn ghost small" type="button" data-newg="${g.id}">Nouvelle catégorie</button></div>
+    return `<div class="catgroup"><div class="row between"><h3>${g.label}</h3>${ALCH ? `<button class="btn ghost small" type="button" data-newg="${g.id}">Nouvelle catégorie</button>` : ""}</div>
       <div class="catlist">${cs.length ? cs.map(c => {
         const n = CATALOG.filter(x => x.clas.includes(c.id) || x.props.includes(c.id) || x.envs.includes(c.id)).length;
         return `<span class="catitem">${tag(c)}<span class="muted" style="margin-right:2px">${n}</span>
-          <button class="edit" data-act="edit" data-id="${esc(c.id)}" aria-label="Modifier la catégorie ${esc(c.name)}" title="Modifier le nom, la couleur ou la famille">✎</button>
-          <button data-act="del" data-id="${esc(c.id)}" aria-label="Supprimer la catégorie ${esc(c.name)}" title="Supprimer la catégorie">✕</button></span>`;
+          ${ALCH ? `<button class="edit" data-act="edit" data-id="${esc(c.id)}" aria-label="Modifier la catégorie ${esc(c.name)}" title="Modifier le nom, la couleur ou la famille">✎</button>
+          <button data-act="del" data-id="${esc(c.id)}" aria-label="Supprimer la catégorie ${esc(c.name)}" title="Supprimer la catégorie">✕</button>` : ""}</span>`;
       }).join("") : '<div class="empty" style="padding:0">Aucune catégorie.</div>'}</div></div>`;
   }).join("");
 }
@@ -1339,7 +1346,6 @@ function migrationModal() {
 const RV_GROUPS = [["classification", "Classification"], ["propriete", "Propriété"], ["environnement", "Environnement"]];
 let rvPlayer = null;
 function rvPreview(ci, g) {
-  if (g === "classification" && !ALCH) return famTag(ci.f);
   if (g === "classification") return catList(ci.clas) || '<span class="muted">aucune</span>';
   const ids = g === "propriete" ? ci.props : ci.envs, tags = ids.map(id => categories.find(c => c.id === id)).filter(Boolean);
   return tags.length ? tags.map(c => tag(c)).join("") : '<span class="muted">aucune</span>';
@@ -1524,7 +1530,7 @@ function renderLib() {
   const rows0 = [...CATALOG].sort((x, y) => ALCH ? x.name.localeCompare(y.name) : order.indexOf(x.f) - order.indexOf(y.f) || x.p - y.p || x.name.localeCompare(y.name));
   const rowsAll = rows0.filter(c => matchQ(libView.ing, `${c.name} ${c.desc} ${ALCH ? "" : (FAMILIES[c.f] || {}).name || ""} ${catNames([...c.clas, ...c.props, ...c.envs])}`)), rows = rowsAll.slice(0, libView.ingN);
   $("lib-ing").innerHTML = rows0.length && !rowsAll.length ? '<div class="empty" style="padding:0">Aucun ingrédient ne correspond à cette recherche.</div>' : rows.length ? countLine(rows.length, rowsAll.length, rows0.length) + '<table class="ctable"><tr><th>Ingrédient</th><th>Classification</th><th>Propriété</th><th>Environnement</th>' + (ALCH ? "" : '<th class="num">Prix</th>') + '<th></th></tr>'
-    + rows.map(c => `<tr><td>${esc(c.name)}<div class="muted">${descHTML(c.desc)}</div></td><td>${ALCH ? catList(c.clas) : famTag(c.f)}</td><td>${catList(c.props)}</td><td>${catList(c.envs)}</td>${ALCH ? "" : `<td class="num">${c.p}</td>`}
+    + rows.map(c => `<tr><td>${esc(c.name)}<div class="muted">${descHTML(c.desc)}</div></td><td>${ALCH ? catList(c.clas) : famTag(c.f) + catList(c.clas)}</td><td>${catList(c.props)}</td><td>${catList(c.envs)}</td>${ALCH ? "" : `<td class="num">${c.p}</td>`}
       <td class="tcenter">${ready ? `<button class="btn ghost icon" data-lib="ing" data-id="${esc(c.id)}" title="Modifier" aria-label="Modifier ${esc(c.name)}">✎</button>` : ""}</td></tr>`).join("") + "</table>" + moreBtn("ing", rows.length, rowsAll.length)
     : '<div class="empty">La bibliothèque est vide. Utilise « Ajouter un ingrédient ».</div>';
   if (ALCH) {   /* potions = recettes du MJ */
@@ -1551,7 +1557,7 @@ function libIngModal(it, form) {
     <form id="li-form" autocomplete="off">
       <label class="muted" for="li-name">Nom</label><input id="li-name" required value="${esc(f.name)}">
       ${ALCH ? `<input id="li-price" type="hidden" value="0"><label class="muted" for="li-q" style="display:block;margin-top:12px">Qualité (sert à la moyenne du résultat)</label><select id="li-q" class="full"><option value="">Aucune</option>${QL.slice(1).map(q => `<option${q === f.q ? " selected" : ""}>${q}</option>`).join("")}</select>` : `<div class="row" style="margin-top:12px;align-items:flex-start">
-        <div style="flex:1;min-width:150px"><label class="muted" for="li-fam">Classification (famille)</label>
+        <div style="flex:1;min-width:150px"><label class="muted" for="li-fam">Famille (sert aux mélanges)</label>
           <select id="li-fam" class="full">${Object.keys(FAMILIES).map(k => `<option value="${k}"${k === f.f ? " selected" : ""}>${FAMILIES[k].name}</option>`).join("")}</select></div>
         <div style="width:110px"><label class="muted" for="li-price">Prix</label><input id="li-price" type="number" min="0" required value="${esc(f.p)}"></div>
       </div>`}
@@ -1577,7 +1583,7 @@ function libIngModal(it, form) {
     if (CATALOG.some(c => c.id !== (it && it.id) && (c.id === id || c.key === stripKey(name)))) { toast("Un ingrédient de ce nom existe déjà."); return; }
     if (add && f.inv && !player()) { toast("Écris d'abord le nom de ton personnage (en haut de la page)."); return; }
     const ofGroup = g => f.sel.filter(cid => { const c = categories.find(x => x.id === cid); return c && groupOf(c) === g; });
-    store.set("grimoire_ingredients", id, { name, ...(ALCH ? { clas: ofGroup("classification"), q: f.q || "" } : { family: f.f }), price: Math.max(0, parseInt(f.p, 10) || 0), desc: f.desc.trim(), props: ofGroup("propriete"), envs: ofGroup("environnement") });
+    store.set("grimoire_ingredients", id, { name, clas: ofGroup("classification"), ...(ALCH ? { q: f.q || "" } : { family: f.f }), price: Math.max(0, parseInt(f.p, 10) || 0), desc: f.desc.trim(), props: ofGroup("propriete"), envs: ofGroup("environnement") });
     if (ALCH && !add && it.id !== id) libPot.filter(r => (r.ingredients || []).includes(it.id)).forEach(r => store.set("grimoire_potions", r.id, { ingredients: r.ingredients.map(x => x === it.id ? id : x) }));
     if (!add && it.id !== id) store.del("grimoire_ingredients", it.id);
     if (add && f.inv) {
@@ -1664,6 +1670,228 @@ $("view-mj").addEventListener("click", e => {
   else if (b.dataset.lib === "anec") libAnecModal(b.dataset.id);
 });
 
+
+/* ============================================================
+   Fiche de personnage (commune à Tisane et Alchimie), transfert d'ingrédients entre les deux pages, suggestions de recettes
+   La fiche est rangée dans la collection « alch_fiches » : les règles Firestore l'autorisent déjà pour les deux pages.
+   ============================================================ */
+let FICHES = [];
+const SPECS = ["", "Abstracteur", "Alkahest", "Apothicaire"];
+const ficheOf = () => FICHES.find(f => f.id === (player() || "").replace(/[\/\s]+/g, "_")) || null;
+const ficheId = () => (player() || "").replace(/[\/\s]+/g, "_");
+function ficheModal() {
+  const me = player(); if (!me) { toast("Écris d'abord le nom de ton personnage."); $("player").focus(); return; }
+  const f = ficheOf() || {};
+  openModal(`<h2>Fiche de ${esc(me)}</h2><p class="muted" style="margin:0 0 8px">Renseignée une fois, elle sert sur Tisane &amp; Dragon et sur Alchimie &amp; Dragon.</p>
+    <form id="fi-form" autocomplete="off"><label class="muted" for="fi-rank">Rang</label>
+    <select id="fi-rank" class="full">${SR_RANKS.map(r => `<option value="${r[0]}"${r[0] === (f.rank || "Novice") ? " selected" : ""}>${r[0]} (bonus +${r[1]})</option>`).join("")}</select>
+    <label class="muted" for="fi-spec" style="display:block;margin-top:12px">Spécialisation</label>
+    <select id="fi-spec" class="full">${SPECS.map(x => `<option value="${x}"${x === (f.spec || "") ? " selected" : ""}>${x || "Aucune"}</option>`).join("")}</select>
+    <label class="muted" for="fi-notes" style="display:block;margin-top:12px">Notes</label><textarea id="fi-notes" rows="4" style="width:100%">${esc(f.notes || "")}</textarea>
+    <div class="actions-row"><button type="button" class="btn ghost" id="fi-cancel">Annuler</button><button class="btn" type="submit">Enregistrer</button></div></form>`);
+  $("fi-cancel").onclick = closeModal;
+  $("fi-form").onsubmit = e => {
+    e.preventDefault();
+    rawStore.set("alch_fiches", ficheId(), { player: me, rank: $("fi-rank").value, spec: $("fi-spec").value, notes: $("fi-notes").value.trim() });
+    closeModal(); toast("Fiche enregistrée");
+  };
+}
+$("fiche-btn").onclick = ficheModal;
+
+/* Passer un ingrédient d'une page à l'autre : le PJ choisit au moment du clic la quantité et s'il copie ou déplace */
+function transferModal(it) {
+  const me = player(), other = ALCH ? "Tisane & Dragon" : "Alchimie & Dragon", col = (ALCH ? "" : "alch_") + "inventaire";
+  openModal(`<h2>Envoyer vers ${esc(other)}</h2><p class="muted" style="margin:0 0 8px">${esc(cap(it.name))} : ${it.qty} en stock ici.</p>
+    <form id="xf-form" autocomplete="off"><label class="muted" for="xf-qty">Quantité à envoyer</label><input id="xf-qty" type="number" min="1" max="${Math.max(1, it.qty)}" value="${Math.max(1, it.qty)}" style="width:100px">
+    <label class="check2"><input type="radio" name="xf-mode" value="copy" checked><span>Copier : il reste aussi ici</span></label>
+    <label class="check2"><input type="radio" name="xf-mode" value="move"><span>Déplacer : il sort de mon inventaire d'ici</span></label>
+    <div class="actions-row"><button type="button" class="btn ghost" id="xf-cancel">Annuler</button><button class="btn" type="submit">Envoyer</button></div></form>`);
+  $("xf-cancel").onclick = closeModal;
+  $("xf-form").onsubmit = async e => {
+    e.preventDefault();
+    const q = Math.max(1, parseInt($("xf-qty").value, 10) || 1), move = document.querySelector("input[name=xf-mode]:checked").value === "move", id = invId(me, it.name);
+    if (move && q > it.qty) { toast("Tu n'en as pas autant."); return; }
+    let ex = null;
+    try { ex = useFirebase ? await firebase.firestore().collection(col).doc(id).get().then(d => d.exists ? d.data() : null) : (JSON.parse(localStorage.getItem("tisane_" + col) || "{}")[id] || null); } catch (err) { ex = null; }
+    rawStore.set(col, id, { player: me, name: it.name, qty: (ex ? ex.qty || 0 : 0) + q, cats: [...new Set([...((ex && ex.cats) || []), ...(it.cats || [])])] });
+    if (move) store.set("inventaire", it.id, { qty: it.qty - q });
+    closeModal(); toast(`${cap(it.name)} × ${q} envoyé vers ${other}`);
+  };
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act=xfer]"); if (!b) return;
+  const it = inventory.find(i => i.id === b.dataset.id); if (it) transferModal(it);
+});
+if ($("inv-suggest")) $("inv-suggest").onclick = () => {
+  if (!player()) { toast("Écris d'abord le nom de ton personnage."); $("player").focus(); return; }
+  openModal(`<h2>Que puis-je préparer ?</h2><p class="muted" style="margin:0 0 4px">Tes recettes connues, d'après ton inventaire.</p>${srCraftHtml(null)}<div class="actions-row"><button type="button" class="btn ghost" id="sg-close">Fermer</button></div>`);
+  $("sg-close").onclick = closeModal;
+};
+
+/* ============================================================
+   6b. Recherche d'ingrédients (cueillette) : trois modes
+   Tableau « Recherche Ingrédient » : d20 + bonus de rang -> rareté ; dé de recherche = nombre d'ingrédients de cette rareté dans l'environnement.
+   Un PJ ne peut chercher que ce qu'il connaît (ingrédients de son inventaire, recettes qu'il a réussies).
+   ============================================================ */
+const SR_Q = ["Commun", "Peu commun", "Rare", "Épique", "Légendaire"];
+const SR_MIN = { "Commun": 5, "Peu commun": 11, "Rare": 16, "Épique": 20, "Légendaire": 21 };
+const SR_RANKS = [["Novice", 0], ["Apprenti", 1], ["Expert", 2], ["Compagnon", 3], ["Maître", 4]];
+const SR = { mode: "gen", env: "", rank: localStorage.getItem("tisane_rank") || "Novice", d20: "", die: "", rec: "", ing: "" };
+const srRank = () => { const f = ficheOf(); return f && f.rank ? f.rank : SR.rank; };
+const srBonus = () => (SR_RANKS.find(r => r[0] === srRank()) || [0, 0])[1];
+const srRarity = t => t >= 21 ? "Légendaire" : t >= 20 ? "Épique" : t >= 16 ? "Rare" : t >= 11 ? "Peu commun" : t >= 5 ? "Commun" : null;
+const srEnvs = () => categories.filter(c => groupOf(c) === "environnement");
+const srPool = (env, q) => CATALOG.filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
+const srKnown = () => { const me = player(); return inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean); };
+const srQty = die => Math.max(1, Math.floor(die / 2));
+function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'environnement choisi
+  if (!SR.env) return null;
+  if (!it.envs.includes(SR.env)) return { none: true };
+  const th = SR_MIN[it.q]; if (!th) return { none: true };
+  const d = Math.max(1, th - srBonus());
+  return { th, d, ok: d <= 20, n: srPool(SR.env, it.q).length, q: it.q };
+}
+const srNeedTxt = (it, nd) => !nd ? "" : nd.none ? `<span class="muted">${esc(cap(it.name))} : introuvable dans cet environnement.</span>`
+  : nd.ok ? `<b>${esc(cap(it.name))}</b> (${esc(nd.q)}) : d20 minimum <b>${nd.d}</b> <span class="muted">(total ${nd.th}${srBonus() ? ` − bonus ${srBonus()}` : ""}) · dé de recherche d${nd.n}</span>`
+  : `<b>${esc(cap(it.name))}</b> (${esc(nd.q)}) : <span style="color:#e8618c">impossible avec ton rang</span> <span class="muted">(total ${nd.th} requis)</span>`;
+function srSlotLines(rec) {
+  const lines = []; let worst = 0, blocked = false;
+  (rec.ingredients || []).forEach(id => {
+    const s = resolveSlot(id);
+    if (s.t === "prod" || s.t === "lit") { lines.push(`<div class="muted">${esc(slotRaw(id))} : à fabriquer ou à se procurer, pas de recherche.</div>`); return; }
+    const known = srKnown().filter(it => slotFits(s, it));
+    if (!known.length) { lines.push(`<div class="muted">${esc(s.t === "cls" ? slotRaw(id) : slotRaw(id))} : aucun ingrédient connu pour cet emplacement.</div>`); blocked = true; return; }
+    const opts = known.map(it => ({ it, nd: srNeed(it) })).filter(o => o.nd && !o.nd.none).sort((a, b) => a.nd.th - b.nd.th);
+    if (!opts.length) { lines.push(`<div class="muted">${esc(slotRaw(id))} : rien de connu à trouver ici.</div>`); blocked = true; return; }
+    lines.push(`<div>${opts.map(o => srNeedTxt(o.it, o.nd)).join("<br>")}</div>`);
+    if (!opts[0].nd.ok) blocked = true; else worst = Math.max(worst, opts[0].nd.d);
+  });
+  return { lines, worst, blocked };
+}
+
+/* Recettes connues réalisables avec le stock (et éventuellement l'ingrédient qui vient d'être trouvé), ou avec ce qu'il manque */
+function srCraft(extra) {
+  const me = player(); if (!me) return [];
+  const done = [...new Set(trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).map(t => t.result))];
+  const units = [];
+  inventory.filter(i => i.player === me && i.qty > 0).forEach(i => { const c = alchItem(i.name); if (c) for (let k = 0; k < Math.min(i.qty, 4); k++) units.push(c); });
+  if (extra) units.push(extra);
+  const out = [];
+  if (!ALCH) {   /* Tisane : une recette connue est un jeu d'ingrédients nommés */
+    const have = new Set(inventory.filter(i => i.player === me && i.qty > 0).map(i => i.name)); if (extra) have.add(norm(extra.name));
+    const seen = new Set();
+    trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).forEach(t => {
+      const names = [...new Set((t.ingredients || []).map(i => i.name))], key = setKey(t.ingredients || []); if (!names.length || seen.has(key)) return; seen.add(key);
+      const missing = names.filter(n => !have.has(n));
+      out.push({ name: t.result, missing, usesExtra: !!extra && names.includes(norm(extra.name)), total: names.length });
+    });
+    return out;
+  }
+  done.forEach(r => {
+    const rec = RECS.find(x => norm(x.name) === norm(r)); if (!rec || !(rec.ingredients || []).length) return;
+    const slots = rec.ingredients.map(id => ({ id, s: resolveSlot(id) })), owner = new Array(units.length).fill(-1);
+    const tryS = (k, seen) => { for (let j = 0; j < units.length; j++) if (!seen[j] && slotFits(slots[k].s, units[j])) { seen[j] = true; if (owner[j] < 0 || tryS(owner[j], seen)) { owner[j] = k; return true; } } return false; };
+    slots.forEach((_, k) => tryS(k, []));
+    const got = new Set(owner.filter(x => x >= 0)), missing = slots.filter((_, k) => !got.has(k)).map(x => slotRaw(x.id));
+    const usesExtra = !!extra && owner[units.length - 1] >= 0;
+    out.push({ name: rec.name, missing, usesExtra, total: slots.length });
+  });
+  return out;
+}
+const srRecLine = (r, full) => `<div class="mjfx"><b>${esc(cap(r.name))}</b>${full ? "" : ` <span class="muted">· il manque : ${r.missing.map(m => esc(cap(m))).join(", ")}</span>`}</div>`;
+function srCraftHtml(extra) {
+  const all = srCraft(extra), ok = all.filter(r => !r.missing.length), part = all.filter(r => r.missing.length && r.missing.length < r.total).sort((a, b) => a.missing.length - b.missing.length);
+  let h = "";
+  if (extra) {
+    const now = ok.filter(r => r.usesExtra);
+    h += `<h3 style="margin-top:16px">Recettes possibles avec ${esc(cap(extra.name))}</h3>` + (now.length ? now.map(r => srRecLine(r, true)).join("") : `<p class="muted">Aucune recette connue ne devient réalisable avec cet ingrédient.</p>`);
+  } else {
+    h += `<h3 style="margin-top:16px">Réalisables avec ton stock</h3>` + (ok.length ? ok.map(r => srRecLine(r, true)).join("") : `<p class="muted">Aucune recette connue n'est réalisable pour l'instant.</p>`);
+  }
+  const part2 = extra ? part.filter(r => !r.usesExtra || true) : part;
+  h += `<h3 style="margin-top:16px">Presque réalisables${extra ? " (avec ce que tu as + cet ingrédient)" : ""}</h3>` + (part2.length ? part2.slice(0, 15).map(r => srRecLine(r, false)).join("") : `<p class="muted">Rien à proposer.</p>`);
+  return h;
+}
+function renderSearch() {
+  const root = $("sr-root"); if (!root) return;
+  const envs = srEnvs(), me = player();
+  if (SR.env && !envs.some(e => e.id === SR.env)) SR.env = "";
+  const sel = (id, opts, val, ph) => `<select id="${id}">${ph ? `<option value="">${ph}</option>` : ""}${opts.map(o => `<option value="${esc(o[0])}"${o[0] === val ? " selected" : ""}>${esc(o[1])}</option>`).join("")}</select>`;
+  let h = `<div class="subtabs">${[["gen", "Recherche générale"], ["rec", "Par recette"], ["ing", "Par ingrédient"], ["mine", "Mes recettes"]].map(m => `<button type="button" class="subtab${SR.mode === m[0] ? " active" : ""}" data-srmode="${m[0]}">${m[1]}</button>`).join("")}</div>
+    <div class="row" style="gap:12px;flex-wrap:wrap;align-items:end">
+      <label>Environnement ${sel("sr-env", envs.map(e => [e.id, e.name]), SR.env, "— choisir —")}</label>
+      <label>Rang ${sel("sr-rank", SR_RANKS.map(r => [r[0], `${r[0]} (+${r[1]})`]), srRank())}</label></div>`;
+  if (SR.mode === "mine") { h = h.replace(/<div class="row"[\s\S]*$/, ""); h += me ? srCraftHtml(null) : `<p class="muted">Écris d'abord le nom de ton personnage.</p>`; root.innerHTML = h; return; }
+  if (!envs.length) h += `<p class="muted">Le grimoire n'a pas encore d'environnements.</p>`;
+  else if (!SR.env) h += `<p class="muted">Choisis l'environnement dans lequel tu cherches.</p>`;
+  else if (SR.mode === "gen") {
+    const d20 = parseInt(SR.d20, 10), ok = d20 >= 1 && d20 <= 20, tot = ok ? d20 + srBonus() : null, q = ok ? srRarity(tot) : null;
+    h += `<div class="row" style="gap:12px;flex-wrap:wrap;align-items:end;margin-top:10px"><label>Ton jet de d20 <input id="sr-d20" type="number" min="1" max="20" value="${esc(SR.d20)}" style="width:90px"></label></div>`;
+    if (ok) {
+      h += `<p>Total <b>${tot}</b> (${d20}${srBonus() ? ` + ${srBonus()}` : ""}) : `;
+      if (!q) h += `<b>rien</b> n'est trouvé.</p>`;
+      else {
+        const pool = srPool(SR.env, q), n = pool.length;
+        h += `rareté <b>${q}</b>.</p>`;
+        if (!n) h += `<p class="muted">Aucun ingrédient ${q} n'existe dans cet environnement : rien trouvé.</p>`;
+        else {
+          h += `<p>Lance ton <b>dé de recherche d${n}</b> :</p><label>Résultat <input id="sr-die" type="number" min="1" max="${n}" value="${esc(SR.die)}" style="width:90px"></label>`;
+          const die = parseInt(SR.die, 10);
+          if (die >= 1 && die <= n) { const it = pool[die - 1], qt = srQty(die);
+            h += `<div class="card" style="margin-top:12px;padding:12px"><div class="muted">Tu as trouvé</div><div style="font-size:1.3rem"><b>${esc(cap(it.name))}</b> × ${qt}</div>
+              <div class="muted">${esc(it.q)}${it.desc ? " · " + esc(it.desc) : ""}</div>
+              <button type="button" class="btn" id="sr-add" style="margin-top:8px">Ajouter à mon inventaire</button></div>` + (me ? srCraftHtml(it) : "");
+          } else if (SR.die !== "") h += `<p class="muted">Le dé doit être entre 1 et ${n}.</p>`;
+        }
+      }
+    } else h += `<p class="muted">Entre ton jet de d20 (1 à 20).</p>`;
+  } else if (!me) h += `<p class="muted">Écris d'abord le nom de ton personnage.</p>`;
+  else if (SR.mode === "rec") {
+    const done = [...new Set(trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).map(t => t.result))].filter(r => RECS.some(x => norm(x.name) === norm(r))).sort((a, b) => a.localeCompare(b, "fr"));
+    h += `<div style="margin-top:10px"><label>Recette ${sel("sr-rec", done.map(r => [r, cap(r)]), SR.rec, "— choisir —")}</label></div>`;
+    const rec = SR.rec && RECS.find(x => norm(x.name) === norm(SR.rec));
+    if (!done.length) h += `<p class="muted">Tu ne connais encore aucune recette réussie (ou elles n'ont pas de fiche dans la bibliothèque).</p>`;
+    else if (rec) { const r = srSlotLines(rec);
+      h += `<div style="margin-top:10px">${r.lines.join("")}</div>` + (r.blocked ? `<p class="muted">Tu ne peux pas réunir tous les ingrédients ici.</p>` : `<p style="margin-top:10px">Pour viser le plus rare, il te faut au minimum <b>${r.worst || "—"}</b> au d20.</p>`); }
+  } else {
+    const known = [...new Map(srKnown().map(c => [c.id, c])).values()].sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    h += `<div style="margin-top:10px"><label>Ingrédient ${sel("sr-ing", known.map(c => [c.id, cap(c.name)]), SR.ing, "— choisir —")}</label></div>`;
+    const it = known.find(c => c.id === SR.ing);
+    if (!known.length) h += `<p class="muted">Aucun ingrédient connu dans ton inventaire.</p>`;
+    else if (it) h += `<p style="margin-top:10px">${srNeedTxt(it, srNeed(it))}</p>`;
+  }
+  root.innerHTML = h;
+}
+const srVisible = () => $("view-recherche") && !$("view-recherche").classList.contains("hidden");
+const srRefresh = () => { if (srVisible() && !(document.activeElement && document.activeElement.type === "number")) renderSearch(); };
+rawStore.subscribe("alch_fiches", d => { FICHES = d; srRefresh(); });
+if ($("sr-root")) {
+  $("sr-root").addEventListener("click", e => {
+    const m = e.target.closest("[data-srmode]"); if (m) { SR.mode = m.dataset.srmode; renderSearch(); return; }
+    if (e.target.id === "sr-add") {
+      const me = player(); if (!me) { toast("Écris d'abord le nom de ton personnage."); $("player").focus(); return; }
+      const pool = srPool(SR.env, srRarity(parseInt(SR.d20, 10) + srBonus())), die = parseInt(SR.die, 10), it = pool[die - 1]; if (!it) return;
+      const name = norm(it.name), id = invId(me, name), ex = inventory.find(i => i.id === id), qt = srQty(die);
+      store.set("inventaire", id, { player: me, name, qty: (ex ? ex.qty : 0) + qt, cats: (ex && ex.cats) || [] });
+      toast(`${cap(it.name)} × ${qt} ajouté à ton inventaire`);
+    }
+  });
+  $("sr-root").addEventListener("change", e => {
+    const t = e.target;
+    if (t.id === "sr-env") { SR.env = t.value; SR.die = ""; }
+    else if (t.id === "sr-rank") { SR.rank = t.value; localStorage.setItem("tisane_rank", t.value); SR.die = ""; if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: t.value }); }
+    else if (t.id === "sr-rec") SR.rec = t.value;
+    else if (t.id === "sr-ing") SR.ing = t.value;
+    else return;
+    renderSearch();
+  });
+  $("sr-root").addEventListener("input", e => {
+    const t = e.target;
+    if (t.id === "sr-d20") { SR.d20 = t.value; SR.die = ""; } else if (t.id === "sr-die") SR.die = t.value; else return;
+    const id = t.id, pos = t.selectionStart; renderSearch(); const n = $(id); if (n) { n.focus(); }
+  });
+}
+
 /* ============================================================
    7. Démarrage
    ============================================================ */
@@ -1687,6 +1915,11 @@ $("lib-rec-add").classList.toggle("hidden", !ALCH);
 $("qual-panel").classList.toggle("hidden", ALCH);   // le tableau de qualités (DD, valeurs) est une règle des tisanes
 $("lib-anec-wrap").classList.toggle("hidden", ALCH);
 ["c", "d"].forEach(k => $("mj-" + k).classList.toggle("hidden", !ALCH));
+if (!ALCH) fetch(GRIMOIRE_FILE, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(d => {
+  if (!d || !Array.isArray(d.categories)) return;
+  SHARED_CATS = d.categories.filter(c => c && c.id && c.name).map(c => ({ id: c.id, name: c.name, color: HEX.test(c.color) ? c.color : PALETTE[0], group: MANAGED.includes(c.group) ? c.group : "propriete" }));
+  applyCats(); renderCategories(); renderInventory(); renderSocio(); renderMj(); renderLib();
+}).catch(() => {});
 if (ALCH) {
   document.querySelector("#lab .hint").textContent = "Propose des ingrédients : le MJ dit ce qu'ils donnent. Ou note toi-même un essai.";
   $("mj-file-title").textContent = "Fichier du grimoire d'alchimie";
@@ -1697,12 +1930,12 @@ if (ALCH) {
   $("lib-ing-help").textContent = "La référence du MJ : description et catégories de chaque ingrédient. Les PJ voient la description, mais ni les catégories tant que tu ne les leur révèles pas, ni les effets des potions.";
 }
 resetLabRows(); syncLab(); applyMj();
-store.subscribe("inventaire", d => { inventory = d; renderInventory(); renderSocio(); renderMj(); });
+store.subscribe("inventaire", d => { inventory = d; renderInventory(); renderSocio(); renderMj(); srRefresh(); });
 store.subscribe("essais", d => { trials = d; renderRecipes(); renderSocio(); renderInventory(); });
 store.subscribe("tisanes", d => { tisanes = d; renderTisanes(); });
 store.subscribe("ingredients", d => { ingMeta = d; renderInventory(); renderCategories(); renderSocio(); renderRecipes(); renderTisanes(); renderMj(); });
 store.subscribe("categories", d => { rawCats = d; applyCats(); renderCategories(); renderInventory(); renderSocio(); cleanOldEpic(); renderMj(); });
-const onLib = () => { rebuildLib(); renderMj(); renderInventory(); };
+const onLib = () => { rebuildLib(); renderMj(); renderInventory(); srRefresh(); };
 store.subscribe("grimoire_ingredients", d => { libIng = d; onLib(); });
 store.subscribe("grimoire_potions", d => { libPot = d; onLib(); });
 store.subscribe("grimoire_anecdotes", d => { libAnec = d; onLib(); });
