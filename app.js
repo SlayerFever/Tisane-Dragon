@@ -115,7 +115,11 @@ let CATALOG = [], POT = {}, ANEC = {};
 /* Catégories : celles de Firestore ; tant que l'alchimie n'est pas initialisée, celles du fichier grimoire-alchimie.json s'y ajoutent */
 function applyCats() {
   const extra = ALCH ? DEFAULTS.categories.filter(c => !rawCats.some(x => x.id === c.id)) : [];
-  categories = [...rawCats, ...extra].filter(c => !c.deleted && !famIds.has(c.id));
+  /* Tant que la bibliothèque n'est pas initialisée, le fichier fait foi : une ancienne catégorie de même identifiant gardée dans Firebase
+     (par exemple « Médicinal » rangé à l'époque en Classification) ne doit pas écraser son groupe, son nom ni sa couleur. */
+  const fromFile = ALCH && !libReady() ? new Map(DEFAULTS.categories.map(c => [c.id, c])) : null;
+  const base = fromFile ? rawCats.map(c => fromFile.has(c.id) ? { ...c, name: fromFile.get(c.id).name, color: fromFile.get(c.id).color, group: fromFile.get(c.id).group } : c) : rawCats;
+  categories = [...base, ...extra].filter(c => !c.deleted && !famIds.has(c.id));
 }
 const catMemo = new Map();
 function rebuildLib() {
