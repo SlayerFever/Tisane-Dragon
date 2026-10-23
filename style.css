@@ -176,7 +176,7 @@
   .banner{background:#2a2412;border:1px solid #5b4c1d;border-radius:6px;padding:8px 12px;font-size:.92rem;margin-bottom:16px;color:#e8d79b}
 
   /* ---------- Sociogramme ---------- */
-  #socio{width:100%;height:auto;display:block}
+  #socio{width:50%;height:auto;display:block;margin:0 auto}
   #socio .node{cursor:pointer}
   #socio .node rect{fill:var(--leaf);stroke:var(--cat,var(--sage));stroke-width:1.6}
   #socio .node text{fill:var(--ink);font:500 13px var(--sans)}
@@ -258,3 +258,5 @@
     --night:#13111d; --bench:#1a1727; --leaf:#262238; --line:#38324f; --ink:#e6e1f0; --muted:#9a93b8;
     --sage:#8fd0c4; --rose:#e08f9f; --lamp:#d9b25f; --lamp-bg:#1f1a14; --lamp-line:#4a3a22;
   }
+
+  .srbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}

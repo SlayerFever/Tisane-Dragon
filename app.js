@@ -947,10 +947,12 @@ function recipeModal(r) {
       <button class="btn ghost danger" id="m-del">Supprimer la recette</button>
       <button class="btn ghost" id="m-fav">${isFav(r) ? "★ Retirer des favoris" : "☆ Mettre en favori"}</button>
       <button class="btn ghost" id="m-close">Fermer</button>
+      ${RECS.some(x => norm(x.name) === norm(r.result || "")) ? `<button class="btn ghost" id="m-search">Chercher les ingrédients</button>` : ""}
       ${r.status === "ok" ? `<button class="btn ghost" id="m-add">Ajouter 1 à mes ${T}s</button>` : ""}
       <button class="btn" id="m-redo">${r.status === "ok" ? "Refaire au laboratoire" : "Tester au laboratoire"}</button></div>`);
   $("m-close").onclick = closeModal;
   $("m-fav").onclick = () => { toggleFav(r); closeModal(); };
+  if ($("m-search")) $("m-search").onclick = () => { SR.mode = "rec"; SR.rec = r.result; closeModal(); showTab("recherche"); };
   $("m-del").onclick = () => deleteRecipe(r);
   if ($("m-add")) $("m-add").onclick = () => {
     if (!player()) { toast("Écris d'abord le nom de ton personnage."); return; }
@@ -1736,17 +1738,18 @@ if ($("inv-suggest")) $("inv-suggest").onclick = () => {
 const SR_Q = ["Commun", "Peu commun", "Rare", "Épique", "Légendaire"];
 const SR_MIN = { "Commun": 5, "Peu commun": 11, "Rare": 16, "Épique": 20, "Légendaire": 21 };
 const SR_RANKS = [["Novice", 0], ["Apprenti", 1], ["Expert", 2], ["Compagnon", 3], ["Maître", 4]];
-const SR = { mode: "gen", env: "", rank: localStorage.getItem("tisane_rank") || "Novice", d20: "", die: "", rec: "", ing: "" };
+const SR = { mode: "gen", env: "", rank: localStorage.getItem("tisane_rank") || "Novice", d20: "", die: "", rec: "", ing: "", prop: "" };
 const srRank = () => { const f = ficheOf(); return f && f.rank ? f.rank : SR.rank; };
 const srBonus = () => (SR_RANKS.find(r => r[0] === srRank()) || [0, 0])[1];
 const srRarity = t => t >= 21 ? "Légendaire" : t >= 20 ? "Épique" : t >= 16 ? "Rare" : t >= 11 ? "Peu commun" : t >= 5 ? "Commun" : null;
-const srEnvs = () => categories.filter(c => groupOf(c) === "environnement");
-const srPool = (env, q) => CATALOG.filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
+const srEnvs = () => { const l = categories.filter(c => groupOf(c) === "environnement"); return l.some(c => c.id === "partout") ? l : [...l, { id: "partout", name: "Partout", group: "environnement" }]; };
+const inEnv = (it, env) => it.envs.includes(env) || it.envs.includes("partout");
+const srPool = (env, q) => CATALOG.filter(c => inEnv(c, env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
 const srKnown = () => { const me = player(); return inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean); };
-const srQty = die => Math.max(1, Math.floor(die / 2));
+const srQty = d20 => Math.max(1, Math.floor(d20 / 2));
 function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'environnement choisi
   if (!SR.env) return null;
-  if (!it.envs.includes(SR.env)) return { none: true };
+  if (!inEnv(it, SR.env)) return { none: true };
   const th = SR_MIN[it.q]; if (!th) return { none: true };
   const d = Math.max(1, th - srBonus());
   return { th, d, ok: d <= 20, n: srPool(SR.env, it.q).length, q: it.q };
@@ -1816,11 +1819,11 @@ function renderSearch() {
   const root = $("sr-root"); if (!root) return;
   const envs = srEnvs(), me = player();
   if (SR.env && !envs.some(e => e.id === SR.env)) SR.env = "";
-  const sel = (id, opts, val, ph) => `<select id="${id}">${ph ? `<option value="">${ph}</option>` : ""}${opts.map(o => `<option value="${esc(o[0])}"${o[0] === val ? " selected" : ""}>${esc(o[1])}</option>`).join("")}</select>`;
-  let h = `<div class="subtabs">${[["gen", "Recherche générale"], ["rec", "Par recette"], ["ing", "Par ingrédient"], ["mine", "Mes recettes"]].map(m => `<button type="button" class="subtab${SR.mode === m[0] ? " active" : ""}" data-srmode="${m[0]}">${m[1]}</button>`).join("")}</div>
+  const sel = (id, opts, val) => `<div class="srbtns" data-srsel="${id}">${opts.map(o => `<button type="button" class="subtab${o[0] === val ? " active" : ""}" data-v="${esc(o[0])}">${esc(o[1])}</button>`).join("")}</div>`;
+  let h = `<div class="subtabs">${[["gen", "Recherche générale"], ["rec", "Par recette"], ["ing", "Par ingrédient"], ["prop", "Par propriété"], ["mine", "Mes recettes"]].map(m => `<button type="button" class="subtab${SR.mode === m[0] ? " active" : ""}" data-srmode="${m[0]}">${m[1]}</button>`).join("")}</div>
     <div class="row" style="gap:12px;flex-wrap:wrap;align-items:end">
-      <label>Environnement ${sel("sr-env", envs.map(e => [e.id, e.name]), SR.env, "— choisir —")}</label>
-      <label>Rang ${sel("sr-rank", SR_RANKS.map(r => [r[0], `${r[0]} (+${r[1]})`]), srRank())}</label></div>`;
+      <div><div class="muted">Environnement</div>${sel("sr-env", envs.map(e => [e.id, e.name]), SR.env)}</div>
+      <div><div class="muted">Rang</div>${sel("sr-rank", SR_RANKS.map(r => [r[0], `${r[0]} (+${r[1]})`]), srRank())}</div></div>`;
   if (SR.mode === "mine") { h = h.replace(/<div class="row"[\s\S]*$/, ""); h += me ? srCraftHtml(null) : `<p class="muted">Écris d'abord le nom de ton personnage.</p>`; root.innerHTML = h; return; }
   if (!envs.length) h += `<p class="muted">Le grimoire n'a pas encore d'environnements.</p>`;
   else if (!SR.env) h += `<p class="muted">Choisis l'environnement dans lequel tu cherches.</p>`;
@@ -1837,7 +1840,7 @@ function renderSearch() {
         else {
           h += `<p>Lance ton <b>dé de recherche d${n}</b> :</p><label>Résultat <input id="sr-die" type="number" min="1" max="${n}" value="${esc(SR.die)}" style="width:90px"></label>`;
           const die = parseInt(SR.die, 10);
-          if (die >= 1 && die <= n) { const it = pool[die - 1], qt = srQty(die);
+          if (die >= 1 && die <= n) { const it = pool[die - 1], qt = srQty(d20);
             h += `<div class="card" style="margin-top:12px;padding:12px"><div class="muted">Tu as trouvé</div><div style="font-size:1.3rem"><b>${esc(cap(it.name))}</b> × ${qt}</div>
               <div class="muted">${esc(it.q)}${it.desc ? " · " + esc(it.desc) : ""}</div>
               <button type="button" class="btn" id="sr-add" style="margin-top:8px">Ajouter à mon inventaire</button></div>` + (me ? srCraftHtml(it) : "");
@@ -1847,17 +1850,32 @@ function renderSearch() {
     } else h += `<p class="muted">Entre ton jet de d20 (1 à 20).</p>`;
   } else if (!me) h += `<p class="muted">Écris d'abord le nom de ton personnage.</p>`;
   else if (SR.mode === "rec") {
-    const done = [...new Set(trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).map(t => t.result))].filter(r => RECS.some(x => norm(x.name) === norm(r))).sort((a, b) => a.localeCompare(b, "fr"));
-    h += `<div style="margin-top:10px"><label>Recette ${sel("sr-rec", done.map(r => [r, cap(r)]), SR.rec, "— choisir —")}</label></div>`;
+    const stock = new Set(inventory.filter(i => i.player === me && i.qty > 0).map(i => catalogItem(i.name)).filter(Boolean).map(c => c.id)), kn = srKnown();
+    const feasible = rec => (rec.ingredients || []).every(id => { const sl = resolveSlot(id); return sl.t === "prod" || sl.t === "lit" || [...stock].some(cid => slotFits(sl, CATALOG.find(c => c.id === cid))) || kn.some(it => slotFits(sl, it) && inEnv(it, SR.env)); });
+    const done = [...new Set(trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).map(t => t.result))].filter(r => { const rec = RECS.find(x => norm(x.name) === norm(r)); return rec && feasible(rec); }).sort((a, b) => a.localeCompare(b, "fr"));
+    if (SR.rec && !done.some(r => norm(r) === norm(SR.rec))) SR.rec = "";
+    h += `<div style="margin-top:10px"><div><div class="muted">Recette</div>${sel("sr-rec", done.map(r => [r, cap(r)]), SR.rec)}</div></div>`;
     const rec = SR.rec && RECS.find(x => norm(x.name) === norm(SR.rec));
-    if (!done.length) h += `<p class="muted">Tu ne connais encore aucune recette réussie (ou elles n'ont pas de fiche dans la bibliothèque).</p>`;
+    if (!done.length) h += `<p class="muted">Aucune de tes recettes connues n'est réalisable ici (ingrédients introuvables dans cet environnement et absents de ton inventaire).</p>`;
     else if (rec) { const r = srSlotLines(rec);
       h += `<div style="margin-top:10px">${r.lines.join("")}</div>` + (r.blocked ? `<p class="muted">Tu ne peux pas réunir tous les ingrédients ici.</p>` : `<p style="margin-top:10px">Pour viser le plus rare, il te faut au minimum <b>${r.worst || "—"}</b> au d20.</p>`); }
+  } else if (SR.mode === "prop") {
+    const kn = [...new Map(srKnown().map(c => [c.id, c])).values()];
+    const seenProps = new Map(); kn.forEach(c => catsOf(c.name).filter(x => groupOf(x) === "propriete").forEach(x => seenProps.set(x.id, x.name)));
+    const props = [...seenProps].sort((a, b) => a[1].localeCompare(b[1], "fr"));
+    if (SR.prop && !seenProps.has(SR.prop)) SR.prop = "";
+    h += `<div style="margin-top:10px"><div><div class="muted">Propriété</div>${sel("sr-prop", props, SR.prop)}</div></div>`;
+    if (!props.length) h += `<p class="muted">Tu n'as encore découvert aucune propriété sur tes ingrédients.</p>`;
+    else if (SR.prop) {
+      const hits = kn.filter(c => inEnv(c, SR.env) && catsOf(c.name).some(x => x.id === SR.prop)).sort((a, b) => a.name.localeCompare(b.name, "fr"));
+      h += hits.length ? `<div style="margin-top:10px">${hits.map(c => `<div class="mjfx">${srNeedTxt(c, srNeed(c))}</div>`).join("")}</div>` : `<p class="muted">Aucun ingrédient que tu connais avec cette propriété ne se trouve ici.</p>`;
+    }
   } else {
-    const known = [...new Map(srKnown().map(c => [c.id, c])).values()].sort((a, b) => a.name.localeCompare(b.name, "fr"));
-    h += `<div style="margin-top:10px"><label>Ingrédient ${sel("sr-ing", known.map(c => [c.id, cap(c.name)]), SR.ing, "— choisir —")}</label></div>`;
+    const known = [...new Map(srKnown().map(c => [c.id, c])).values()].filter(c => inEnv(c, SR.env)).sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    if (SR.ing && !known.some(c => c.id === SR.ing)) SR.ing = "";
+    h += `<div style="margin-top:10px"><div><div class="muted">Ingrédient</div>${sel("sr-ing", known.map(c => [c.id, cap(c.name)]), SR.ing)}</div></div>`;
     const it = known.find(c => c.id === SR.ing);
-    if (!known.length) h += `<p class="muted">Aucun ingrédient connu dans ton inventaire.</p>`;
+    if (!known.length) h += `<p class="muted">Aucun ingrédient que tu connais ne se trouve dans cet environnement.</p>`;
     else if (it) h += `<p style="margin-top:10px">${srNeedTxt(it, srNeed(it))}</p>`;
   }
   root.innerHTML = h;
@@ -1867,11 +1885,19 @@ const srRefresh = () => { if (srVisible() && !(document.activeElement && documen
 rawStore.subscribe("alch_fiches", d => { FICHES = d; srRefresh(); });
 if ($("sr-root")) {
   $("sr-root").addEventListener("click", e => {
+    const sb = e.target.closest("[data-srsel] [data-v]");
+    if (sb) {
+      const id = sb.parentNode.dataset.srsel, v = sb.dataset.v, cur = { "sr-env": SR.env, "sr-rank": srRank(), "sr-rec": SR.rec, "sr-ing": SR.ing, "sr-prop": SR.prop }[id], nv = id === "sr-rank" || cur !== v ? v : "";
+      if (id === "sr-env") { SR.env = nv; SR.die = ""; }
+      else if (id === "sr-rank") { SR.rank = nv; localStorage.setItem("tisane_rank", nv); SR.die = ""; if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: nv }); }
+      else if (id === "sr-rec") SR.rec = nv; else if (id === "sr-ing") SR.ing = nv; else SR.prop = nv;
+      renderSearch(); return;
+    }
     const m = e.target.closest("[data-srmode]"); if (m) { SR.mode = m.dataset.srmode; renderSearch(); return; }
     if (e.target.id === "sr-add") {
       const me = player(); if (!me) { toast("Écris d'abord le nom de ton personnage."); $("player").focus(); return; }
       const pool = srPool(SR.env, srRarity(parseInt(SR.d20, 10) + srBonus())), die = parseInt(SR.die, 10), it = pool[die - 1]; if (!it) return;
-      const name = norm(it.name), id = invId(me, name), ex = inventory.find(i => i.id === id), qt = srQty(die);
+      const name = norm(it.name), id = invId(me, name), ex = inventory.find(i => i.id === id), qt = srQty(parseInt(SR.d20, 10));
       store.set("inventaire", id, { player: me, name, qty: (ex ? ex.qty : 0) + qt, cats: (ex && ex.cats) || [] });
       toast(`${cap(it.name)} × ${qt} ajouté à ton inventaire`);
     }
@@ -1882,6 +1908,7 @@ if ($("sr-root")) {
     else if (t.id === "sr-rank") { SR.rank = t.value; localStorage.setItem("tisane_rank", t.value); SR.die = ""; if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: t.value }); }
     else if (t.id === "sr-rec") SR.rec = t.value;
     else if (t.id === "sr-ing") SR.ing = t.value;
+    else if (t.id === "sr-prop") SR.prop = t.value;
     else return;
     renderSearch();
   });
@@ -1918,13 +1945,13 @@ $("lib-anec-wrap").classList.toggle("hidden", ALCH);
 if (!ALCH) fetch(GRIMOIRE_FILE, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(d => {
   if (!d || !Array.isArray(d.categories)) return;
   SHARED_CATS = d.categories.filter(c => c && c.id && c.name).map(c => ({ id: c.id, name: c.name, color: HEX.test(c.color) ? c.color : PALETTE[0], group: MANAGED.includes(c.group) ? c.group : "propriete" }));
-  applyCats(); renderCategories(); renderInventory(); renderSocio(); renderMj(); renderLib();
+  applyCats(); renderCategories(); renderInventory(); renderSocio(); renderMj(); renderLib(); srRefresh();
 }).catch(() => {});
 if (ALCH) {
   document.querySelector("#lab .hint").textContent = "Propose des ingrédients : le MJ dit ce qu'ils donnent. Ou note toi-même un essai.";
   $("mj-file-title").textContent = "Fichier du grimoire d'alchimie";
   $("mj-file-help").textContent = "Tout ce que tu saisis pour l'alchimie (ingrédients, catégories, recettes) s'exporte dans " + GRIMOIRE_FILE + ". Remplace ce fichier dans ton dossier avant de redéployer : il devient le grimoire de départ du site. Tu peux aussi importer un fichier pour remplir la bibliothèque.";
-  fetch(GRIMOIRE_FILE, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(d => { if (d) { fileToDefaults(d); rebuildLib(); renderMj(); renderInventory(); renderCategories(); } }).catch(() => {});
+  fetch(GRIMOIRE_FILE, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(d => { if (d) { fileToDefaults(d); rebuildLib(); renderMj(); renderInventory(); renderCategories(); srRefresh(); } }).catch(() => {});
   $("lib-pot-help").textContent = "Une potion est une recette : un jeu d'ingrédients précis, ses effets, sa durée et un éventuel effet secondaire. Un mélange qui ne correspond à aucune recette ne donne rien.";
   $("mj-sim-help").textContent = "Ce que le laboratoire en mode automatique répondrait à un PJ pour ces ingrédients, sans rien enregistrer.";
   $("lib-ing-help").textContent = "La référence du MJ : description et catégories de chaque ingrédient. Les PJ voient la description, mais ni les catégories tant que tu ne les leur révèles pas, ni les effets des potions.";
@@ -1934,9 +1961,10 @@ store.subscribe("inventaire", d => { inventory = d; renderInventory(); renderSoc
 store.subscribe("essais", d => { trials = d; renderRecipes(); renderSocio(); renderInventory(); });
 store.subscribe("tisanes", d => { tisanes = d; renderTisanes(); });
 store.subscribe("ingredients", d => { ingMeta = d; renderInventory(); renderCategories(); renderSocio(); renderRecipes(); renderTisanes(); renderMj(); });
-store.subscribe("categories", d => { rawCats = d; applyCats(); renderCategories(); renderInventory(); renderSocio(); cleanOldEpic(); renderMj(); });
+store.subscribe("categories", d => { rawCats = d; applyCats(); renderCategories(); renderInventory(); renderSocio(); cleanOldEpic(); renderMj(); srRefresh(); });
 const onLib = () => { rebuildLib(); renderMj(); renderInventory(); srRefresh(); };
 store.subscribe("grimoire_ingredients", d => { libIng = d; onLib(); });
 store.subscribe("grimoire_potions", d => { libPot = d; onLib(); });
 store.subscribe("grimoire_anecdotes", d => { libAnec = d; onLib(); });
 renderQualTable(); renderInventory(); renderRecipes(); renderTisanes(); renderCategories();
+showTab("recherche");

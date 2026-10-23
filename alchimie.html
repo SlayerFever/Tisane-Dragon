@@ -27,14 +27,14 @@
     <div id="banner" class="banner hidden"></div>
 
     <nav class="tabs" role="tablist">
-      <button id="tab-recette" role="tab" class="active">Atelier</button>
+      <button id="tab-recherche" role="tab" class="active">Recherche</button>
+      <button id="tab-recette" role="tab">Atelier</button>
       <button id="tab-grimoire" role="tab">Le Grimoire</button>
-      <button id="tab-recherche" role="tab">Recherche</button>
       <button id="tab-mj" role="tab" class="hidden">MJ</button>
     </nav>
 
     <!-- ONGLET RECETTE -->
-    <section id="view-recette">
+    <section id="view-recette" class="hidden">
       <div class="panel">
         <svg id="socio" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Relations entre les ingrédients"></svg>
         <div class="legend">
@@ -111,7 +111,7 @@
 
     <!-- ONGLET MJ : le « backend » de l'app (bibliothèque du MJ). L'onglet Ingrédient et le laboratoire sont le côté PJ. -->
     <!-- ONGLET RECHERCHE D'INGRÉDIENTS -->
-    <section id="view-recherche" class="hidden"><div class="panel"><h2>Recherche d'ingrédients</h2><div id="sr-root"></div></div></section>
+    <section id="view-recherche"><div class="panel"><h2>Recherche d'ingrédients</h2><div id="sr-root"></div></div></section>
 
     <section id="view-mj" class="hidden">
       <div class="panel hidden" id="mj-orphans"></div>
