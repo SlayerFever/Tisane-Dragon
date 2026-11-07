@@ -306,3 +306,14 @@
   @media (prefers-reduced-motion:reduce){.qk-card.pop,.qk-slots.fresh .qk-slot{animation:none}}
   .qk-rank{margin-left:auto;font:400 .95rem var(--sans);color:var(--muted);display:flex;align-items:center;gap:8px}
   .qk-info{background:var(--lamp-bg);border:1px solid var(--lamp-line);border-radius:8px;padding:8px 12px;margin:0 0 12px;font-size:.95rem}
+
+  /* ---------- Saisie des dés réels (mode « je lance mes dés moi-même ») ---------- */
+  .qk-rollrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 12px;font-size:1.05rem}
+  .qk-dice{display:inline-flex;align-items:center;gap:0;border:1px solid var(--lamp-line);border-radius:12px;background:var(--lamp-bg);overflow:hidden}
+  .qk-dface{padding:8px 12px;font:700 .9rem var(--sans);color:var(--lamp);border-right:1px solid var(--lamp-line);background:rgba(0,0,0,.18)}
+  .qk-dinput{width:64px;border:0;background:transparent;text-align:center;font:400 1.5rem var(--serif);color:var(--ink);padding:6px 4px;outline:none;-moz-appearance:textfield;appearance:textfield}
+  .qk-dice:focus-within{border-color:var(--lamp);box-shadow:0 0 0 2px rgba(217,178,95,.2)}
+  .qk-dinput::placeholder{color:var(--muted);opacity:.6}
+  .qk-total{display:flex;align-items:center;gap:14px;margin:4px 0 14px;font-size:1.05rem}
+  .qk-tn{display:inline-flex;align-items:center;justify-content:center;min-width:54px;height:54px;border-radius:50%;border:2px solid var(--sage);font:400 1.6rem var(--serif);color:var(--ink)}
+  .qk-slotdice{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
