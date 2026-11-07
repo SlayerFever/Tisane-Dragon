@@ -1985,9 +1985,10 @@ function qkReady(rec, extras) {
 /* Que peut-on chercher pour un emplacement manquant, ici, avec ce rang ? */
 function qkTarget(slot) {
   if (slot.t === "prod" || slot.t === "lit") return { kind: "craft" };
-  const cands = CATALOG.filter(c => slotFits(slot, c));
+  /* seuls comptent les ingrédients que le personnage connaît (ceux de son inventaire), dont il connaît la catégorie demandée et le lieu où ils poussent */
+  const mine = srKnown(), cands = mine.filter(c => qkFits(slot, c));
   if (!cands.length) return { kind: "unknown" };
-  const here = cands.filter(c => c.envs.includes(QK.env) && SR_MIN[c.q]);
+  const here = cands.filter(c => (c.envs.includes(QK.env) || c.envs.includes("partout")) && (qkKnownIds(c).includes(QK.env) || qkKnownIds(c).includes("partout")) && SR_MIN[c.q]);
   if (!here.length) return { kind: "elsewhere" };
   const th = Math.min(...here.map(c => SR_MIN[c.q])), pool = here.filter(c => SR_MIN[c.q] === th), d = Math.max(1, th - srBonus());
   return { kind: "roll", pool, it: pool[0], th, d, ok: d <= 20 };
@@ -2051,8 +2052,8 @@ function qkSlotRow(rec, k, r, fresh) {
   if (rl) return `<div class="qk-slot ko"><span class="qk-st">❌</span><span><b>${label}</b> <span class="muted">pas trouvé (il fallait ${rl.t.d} au d20)</span></span>${qkDie(rl.d20, srBonus())}</div>`;
   const t = qkTarget(rec.slots[k]);
   const why = t.kind === "roll" ? (t.ok ? `à chercher ici : ${t.d} minimum au d20` : "trop rare pour ton rang")
-    : t.kind === "elsewhere" ? "introuvable dans cet endroit"
-    : t.kind === "unknown" ? "aucun ingrédient de ce type dans le grimoire"
+    : t.kind === "elsewhere" ? "tu ne sais pas où la trouver ici"
+    : t.kind === "unknown" ? "tu ne connais aucun ingrédient pour cet emplacement"
     : "à préparer ou à te procurer (pas de dé)";
   const sub = rec.slots[k].t === "prod" ? qkRecipes().find(x => stripKey(x.name) === rec.slots[k].key) : null;
   return `<div class="qk-slot"><span class="qk-st">${t.kind === "roll" && t.ok ? "🎲" : "➖"}</span><span><b>${label}</b> <span class="muted">${sub ? "une potion à préparer d'abord (pas de dé)" : why}</span></span>${sub ? `<button type="button" class="btn ghost small" style="margin-left:auto" data-qk-open="${esc(sub.key)}">Voir la recette</button>` : ""}</div>`;
@@ -2090,10 +2091,11 @@ function qkSlotText(rec, k, r) {
   const label = esc(qkLabel(rec, k)), rl = (QK.rolls || {})[k], j = r.su[k];
   if (j >= 0) return `<div class="qk-slot ok"><span class="qk-st">${r.units[j].from === "find" ? "✨" : "✅"}</span><span><b>${label}</b> <span class="muted">${r.units[j].from === "find" ? "trouvé : " + esc(cap(r.units[j].it.name)) : "dans ton sac : " + esc(cap(r.units[j].it.name))}</span></span></div>`;
   if (rl && rl.pendingDie) return `<div class="qk-slot"><span class="qk-st">🎲</span><span><b>${label}</b> <span class="muted">réussi : entre ton dé de recherche pour savoir lequel tu trouves</span></span></div>`;
+  if (rl && rl.other && rl.it) return `<div class="qk-slot ko"><span class="qk-st">❌</span><span><b>${label}</b> <span class="muted">tu trouves ${esc(cap(rl.it.name))}, qui ne convient pas</span></span></div>`;
   if (rl && rl.found && rl.it) return `<div class="qk-slot ok"><span class="qk-st">✨</span><span><b>${label}</b> <span class="muted">trouvé : ${esc(cap(rl.it.name))}</span></span></div>`;
   if (rl) return `<div class="qk-slot ko"><span class="qk-st">❌</span><span><b>${label}</b> <span class="muted">pas trouvé (d20 : ${rl.d20}, il fallait ${rl.t.d} au minimum)</span></span></div>`;
   const t = qkTarget(rec.slots[k]);
-  const why = t.kind === "roll" ? (t.ok ? `à chercher ici : d20 minimum ${t.d}` : "trop rare pour ton rang") : t.kind === "elsewhere" ? "introuvable dans cet environnement" : t.kind === "unknown" ? "aucun ingrédient de ce type dans le grimoire" : "à préparer ou à te procurer (pas de dé)";
+  const why = t.kind === "roll" ? (t.ok ? `à chercher ici : d20 minimum ${t.d}` : "trop rare pour ton rang") : t.kind === "elsewhere" ? "tu ne sais pas où la trouver ici" : t.kind === "unknown" ? "tu ne connais aucun ingrédient pour cet emplacement" : "à préparer ou à te procurer (pas de dé)";
   return `<div class="qk-slot"><span class="qk-st">➖</span><span><b>${label}</b> <span class="muted">${why}</span></span></div>`;
 }
 function qkManual(me, fresh) {
@@ -2135,9 +2137,10 @@ function qkManual(me, fresh) {
   const rolls = {};
   miss.forEach(k => {
     const t = qkTarget(rec.slots[k]), m = QK.man.slots[k] || {}, d20 = okN(m.d20, 20); if (!d20) return;
-    const found = d20 + srBonus() >= t.th, n = t.pool.length, die = n === 1 ? 1 : okN(m.die, n);
-    if (found && !die) { rolls[k] = { d20, t, found: false, pendingDie: true }; return; }
-    rolls[k] = { d20, t, found, it: found ? t.pool[die - 1] : null };
+    const reach = d20 + srBonus() >= t.th, full = srPool(QK.env, t.it.q), n = full.length, die = n === 1 ? 1 : okN(m.die, n);
+    if (reach && !die) { rolls[k] = { d20, t, found: false, pendingDie: true }; return; }
+    const got = reach ? full[die - 1] : null;   // le dé de recherche désigne l'ingrédient parmi tous ceux de cette rareté ici
+    rolls[k] = { d20, t, found: !!got && qkFits(rec.slots[k], got), it: got, other: !!got && !qkFits(rec.slots[k], got) };
   });
   if (Object.keys(rolls).length) QK.rolls = rolls;
   const extras = qkRollExtras(), r = qkReady(rec, extras);
@@ -2147,9 +2150,9 @@ function qkManual(me, fresh) {
   h += `<h3 style="margin-top:14px">Tes jets pour ce qui manque</h3>`;
   h += `<div class="qk-slots">`;
   miss.forEach(k => {
-    const t = qkTarget(rec.slots[k]), m = QK.man.slots[k] || {}, rl = rolls[k], n = t.pool.length;
+    const t = qkTarget(rec.slots[k]), m = QK.man.slots[k] || {}, rl = rolls[k], n = srPool(QK.env, t.it.q).length;
     h += `<div class="qk-slot"><span class="qk-st">🎲</span><span><b>${esc(qkLabel(rec, k))}</b> <span class="muted">${t.d} minimum au d20</span></span>
-      <span class="qk-slotdice">${num(`qk-ms-${k}-d20`, m.d20 || "", 20)}${rl && (rl.found || rl.pendingDie) && n > 1 ? num(`qk-ms-${k}-die`, m.die || "", n) : ""}</span></div>`;
+      <span class="qk-slotdice">${num(`qk-ms-${k}-d20`, m.d20 || "", 20)}${rl && (rl.found || rl.pendingDie || rl.other) && n > 1 ? num(`qk-ms-${k}-die`, m.die || "", n) : ""}</span></div>`;
   });
   h += `</div>`;
   if (rec && r.missing.length === 0) h += `<p style="margin-top:10px">Tu as de quoi la préparer.</p><button type="button" class="btn" data-qk="prep">Ranger mes trouvailles et préparer</button>`;
