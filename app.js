@@ -271,7 +271,7 @@ const allCats = () => categories;
    Ce que le MJ révèle d'autre (ingrédients plus rares, autres propriétés) s'ajoute à ce précis. */
 const KNOW_LIMIT = { Novice: 0, Apprenti: 1, Expert: 2, Compagnon: 3, "Maître": 4 };   // niveau de rareté connu (1 Commun … 4 Épique)
 const KNOW_PROPS = {
-  "Général": ["fluide", "inflammable", "unique", "psychotrope", "stupéfiant"],
+  "Général": ["fluide", "inflammable", "unique", "psychotrope", "stupéfiant", "durable"],
   Abstracteur: ["stimulant", "volatil", "fragile", "tâchant", "résonnant"],
   Alkahest: ["toxine", "corrosif", "volatil", "tranchant"],
   Apothicaire: ["médicinal", "toxine", "stimulant", "fragile"]
