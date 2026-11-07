@@ -1873,7 +1873,7 @@ if ($("sr-root")) {
    Mêmes règles que l'onglet Recherche (rareté selon le d20 + bonus de rang) ; les dés sont lancés par l'appli.
    ============================================================ */
 var qkOn = false;
-const QK = { mode: "cueillir", env: localStorage.getItem("tisane_env") || "", finds: null, added: false, rec: "", rolls: null, fresh: false, view: localStorage.getItem("tisane_qkview") === "classique" ? "classique" : "parcours" };
+const QK = { mode: "cueillir", env: localStorage.getItem("tisane_env") || "", finds: null, added: false, rec: "", rolls: null, fresh: false, man: { d20: "", die: "", slots: {} }, view: localStorage.getItem("tisane_qkview") === "classique" ? "classique" : "parcours" };
 SR.env = QK.env;
 const qkD = n => 1 + Math.floor(Math.random() * n);
 const qkClean = s => String(s || "").replace(/\*\*/g, "");
@@ -1987,7 +1987,7 @@ function qkRollRecipe(rec) {
   QK.rolls = rolls; QK.fresh = true;
 }
 const qkPending = () => QK.added ? [] : qkFound();
-const qkRollExtras = () => Object.values(QK.rolls || {}).filter(r => r.found).map(r => ({ it: r.it, qt: 1 }));
+const qkRollExtras = () => Object.values(QK.rolls || {}).filter(r => r.found && r.it).map(r => ({ it: r.it, qt: 1 }));
 
 function qkBag(list) {   // range des trouvailles dans l'inventaire (cumul si le même ingrédient sort deux fois)
   const me = player(); if (!me) { toast("Choisis d'abord ton personnage."); $("player").focus(); return false; }
@@ -2076,6 +2076,8 @@ const qkViewBox = () => `<label class="qk-rank qk-viewbox" style="margin-left:0"
 function qkSlotText(rec, k, r) {
   const label = esc(qkLabel(rec, k)), rl = (QK.rolls || {})[k], j = r.su[k];
   if (j >= 0) return `<div class="mjfx">✔ <b>${label}</b> <span class="muted">${r.units[j].from === "find" ? "trouvé : " + esc(cap(r.units[j].it.name)) : "dans ton sac : " + esc(cap(r.units[j].it.name))}</span></div>`;
+  if (rl && rl.pendingDie) return `<div class="mjfx">🎲 <b>${label}</b> <span class="muted">réussi : entre ton dé de recherche pour savoir lequel tu trouves</span></div>`;
+  if (rl && rl.found && rl.it) return `<div class="mjfx">✨ <b>${label}</b> <span class="muted">trouvé : ${esc(cap(rl.it.name))}</span></div>`;
   if (rl) return `<div class="mjfx">✖ <b>${label}</b> <span class="muted">pas trouvé (d20 : ${rl.d20}, il fallait ${rl.t.d} au minimum)</span></div>`;
   const t = qkTarget(rec.slots[k]);
   const why = t.kind === "roll" ? (t.ok ? `à chercher ici : d20 minimum ${t.d}` : "trop rare pour ton rang") : t.kind === "elsewhere" ? "introuvable dans cet environnement" : t.kind === "unknown" ? "aucun ingrédient de ce type dans le grimoire" : "à préparer ou à te procurer (pas de dé)";
@@ -2094,17 +2096,27 @@ function qkClassic(envs, me, fresh) {
   if (!envs.length) return h + `<p class="muted">Le grimoire n'a pas encore d'environnements.</p>`;
   if (!QK.env) return h + `<p class="muted">Choisis l'environnement dans lequel tu cherches.</p>`;
   if (!gatherSrc().some(c => c.envs.includes(QK.env))) return h + `<p class="muted">Aucun ingrédient n'est encore associé à cet endroit : le MJ doit les renseigner.</p>`;
+  const num = (id, val, max, w) => `<input id="${id}" type="number" min="1" max="${max}" value="${esc(val)}" style="width:${w || 80}px">`;
+  const okN = (v, max) => { const n = parseInt(v, 10); return n >= 1 && n <= max ? n : 0; };
   if (QK.mode === "cueillir") {
-    h += `<div style="margin-top:12px"><button type="button" class="btn" data-qk="roll">${QK.finds ? "Chercher à nouveau" : "Lancer la recherche"}</button></div>`;
-    (QK.finds || []).forEach(f => {
-      const tot = f.d20 + srBonus();
-      h += f.none ? `<p>Total <b>${tot}</b> (d20 : ${f.d20}${srBonus() ? " " + sgn(srBonus()) : ""}) : <b>rien</b> n'est trouvé.</p>`
-        : `<p>Total <b>${tot}</b> (d20 : ${f.d20}${srBonus() ? " " + sgn(srBonus()) : ""}) : rareté <b>${esc(f.q)}</b>, dé de recherche d${f.n} : <b>${f.die}</b>.</p>
-          <div class="card" style="margin-top:8px;padding:12px"><div class="muted">Tu as trouvé</div><div style="font-size:1.3rem"><b>${esc(cap(f.it.name))}</b> × ${f.qt}</div>
-          <div class="muted">${esc(f.q)}${f.it.desc ? " · " + esc(qkClean(f.it.desc)) : ""}</div>
-          ${QK.added ? `<div class="muted" style="margin-top:8px">✓ Rangé dans ton sac</div>` : `<button type="button" class="btn" data-qk="bag" style="margin-top:8px">Ajouter à mon inventaire</button>`}</div>`;
-    });
-    if (QK.finds && me) h += `<div style="margin-top:16px">${qkGatherOut()}</div>`;
+    const d20 = okN(QK.man.d20, 20);
+    h += `<div class="row" style="gap:12px;flex-wrap:wrap;align-items:end;margin-top:10px"><label>Ton jet de d20 ${num("qk-m-d20", QK.man.d20, 20)}</label></div>`;
+    QK.finds = null;
+    if (!d20) return h + `<p class="muted">Entre le résultat de ton d20 (1 à 20).</p>`;
+    const tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [], n = pool.length;
+    h += `<p>Total <b>${tot}</b> (${d20}${srBonus() ? " " + sgn(srBonus()) : ""}) : `;
+    if (!q) return h + `<b>rien</b> n'est trouvé.</p>`;
+    h += `rareté <b>${esc(q)}</b>.</p>`;
+    if (!n) return h + `<p class="muted">Aucun ingrédient ${esc(q)} n'existe ici : rien trouvé.</p>`;
+    const die = n === 1 ? 1 : okN(QK.man.die, n);
+    if (n > 1) h += `<p>Lance ton <b>dé de recherche d${n}</b> :</p><label>Résultat ${num("qk-m-die", QK.man.die, n)}</label>`;
+    if (!die) return h + (QK.man.die !== "" ? `<p class="muted">Le dé doit être entre 1 et ${n}.</p>` : "");
+    const it = pool[die - 1], qt = srQty(die);
+    QK.finds = [{ d20, q, it, qt, die, n }];
+    h += `<div class="card" style="margin-top:12px;padding:12px"><div class="muted">Tu as trouvé</div><div style="font-size:1.3rem"><b>${esc(cap(it.name))}</b> × ${qt}</div>
+      <div class="muted">${esc(q)}${it.desc ? " · " + esc(qkClean(it.desc)) : ""}</div>
+      ${QK.added ? `<div class="muted" style="margin-top:8px">✓ Rangé dans ton sac</div>` : `<button type="button" class="btn" data-qk="bag" style="margin-top:8px">Ajouter à mon inventaire</button>`}</div>`;
+    if (me) h += `<div style="margin-top:16px">${qkGatherOut()}</div>`;
     return h;
   }
   const recs = qkRecipes();
@@ -2112,13 +2124,30 @@ function qkClassic(envs, me, fresh) {
   if (!recs.length) return h + `<p class="muted">Tu ne connais pas encore de recette.</p>`;
   h += `<div style="margin-top:10px"><label>Recette <select id="qk-rec"><option value="">— choisir —</option>${opt(recs.map(r => [r.key, (r.fav ? "★ " : "") + cap(r.name) + (r.apo ? " · " + SR_RANKS[r.apo.r][0] : "")]), QK.rec)}</select></label></div>`;
   const rec = recs.find(r => r.key === QK.rec); if (!rec) return h;
-  const pend = qkPending(), extras = [...pend, ...qkRollExtras()], r = qkReady(rec, extras), plain = qkReady(rec, pend);
-  const nRoll = plain.missing.filter(k => qkRollable(rec, k)).length, rolled = !!QK.rolls;
-  h += `<h3 style="margin-top:14px">« ${esc(cap(rec.name))} » demande ${rec.slots.length} ingrédient${qkS(rec.slots.length)}</h3>${qkInfo(rec, plain, !plain.missing.length)}<div>${rec.slots.map((_, k) => qkSlotText(rec, k, r)).join("")}</div>`;
+  const plain = qkReady(rec, []), miss = plain.missing.filter(k => qkRollable(rec, k));
+  QK.rolls = null;   // les jets saisis à la main sont relus à chaque affichage
+  const rolls = {};
+  miss.forEach(k => {
+    const t = qkTarget(rec.slots[k]), m = QK.man.slots[k] || {}, d20 = okN(m.d20, 20); if (!d20) return;
+    const found = d20 + srBonus() >= t.th, n = t.pool.length, die = n === 1 ? 1 : okN(m.die, n);
+    if (found && !die) { rolls[k] = { d20, t, found: false, pendingDie: true }; return; }
+    rolls[k] = { d20, t, found, it: found ? t.pool[die - 1] : null };
+  });
+  if (Object.keys(rolls).length) QK.rolls = rolls;
+  const extras = qkRollExtras(), r = qkReady(rec, extras);
+  h += `<h3 style="margin-top:14px">« ${esc(cap(rec.name))} » demande ${rec.slots.length} ingrédient${qkS(rec.slots.length)}</h3>${qkInfo(rec, r, !plain.missing.length)}<div>${rec.slots.map((_, k) => qkSlotText(rec, k, r)).join("")}</div>`;
   if (!plain.missing.length) return h + `<p style="margin-top:10px">Tu as déjà tout pour la préparer.</p><button type="button" class="btn" data-qk="prep">Préparer au laboratoire</button>`;
-  if (!rolled) return h + (nRoll ? `<div style="margin-top:10px"><button type="button" class="btn" data-qk="rollrec">Lancer ${nRoll} dé${qkS(nRoll)} pour ce qui manque</button></div>` : `<p class="muted" style="margin-top:10px">Rien de ce qui manque ne peut se chercher ici.</p>`);
-  h += r.missing.length ? `<p style="margin-top:10px">Il te manque encore : ${r.missing.map(k => esc(qkLabel(rec, k))).join(", ")}.</p>` : `<p style="margin-top:10px">Tu as de quoi la préparer.</p><button type="button" class="btn" data-qk="prep">Ranger mes trouvailles et préparer</button>`;
-  return h + `<div class="row" style="margin-top:8px">${extras.length && r.missing.length ? `<button type="button" class="btn" data-qk="bagrec">Ranger ce que j'ai trouvé</button>` : ""}<button type="button" class="btn ghost" data-qk="rollrec">Recommencer les dés</button></div>`;
+  if (!miss.length) return h + `<p class="muted" style="margin-top:10px">Rien de ce qui manque ne peut se chercher ici.</p>`;
+  h += `<h3 style="margin-top:14px">Tes jets pour ce qui manque</h3>`;
+  miss.forEach(k => {
+    const t = qkTarget(rec.slots[k]), m = QK.man.slots[k] || {}, rl = rolls[k], n = t.pool.length;
+    h += `<div class="row" style="gap:12px;flex-wrap:wrap;align-items:end;margin:6px 0"><span style="min-width:150px"><b>${esc(qkLabel(rec, k))}</b> <span class="muted">(${t.d} minimum au d20)</span></span>
+      <label>d20 ${num(`qk-ms-${k}-d20`, m.d20 || "", 20)}</label>${rl && (rl.found || rl.pendingDie) && n > 1 ? `<label>dé de recherche d${n} ${num(`qk-ms-${k}-die`, m.die || "", n)}</label>` : ""}</div>`;
+  });
+  if (rec && r.missing.length === 0) h += `<p style="margin-top:10px">Tu as de quoi la préparer.</p><button type="button" class="btn" data-qk="prep">Ranger mes trouvailles et préparer</button>`;
+  else if (Object.keys(rolls).length) h += `<p style="margin-top:10px">Il te manque encore : ${r.missing.map(k => esc(qkLabel(rec, k))).join(", ")}.</p>`;
+  const extra = qkRollExtras().length && r.missing.length;
+  return h + `<div class="row" style="margin-top:8px">${extra ? `<button type="button" class="btn" data-qk="bagrec">Ranger ce que j'ai trouvé</button>` : ""}${Object.keys(rolls).length ? `<button type="button" class="btn ghost" data-qk="clearman">Effacer mes jets</button>` : ""}</div>`;
 }
 function renderQuick() {
   const root = $("qk-root"); if (!root) return;
@@ -2161,15 +2190,22 @@ if ($("qk-root")) {
     else if (d.qk === "bag") { if (!qkBag(qkFound())) return; QK.added = true; toast("Trouvailles rangées dans ton sac"); }
     else if (d.qk === "rollrec") { const rec = qkRecipes().find(r => r.key === QK.rec); if (rec) qkRollRecipe(rec); }
     else if (d.qk === "bagrec") { if (!qkBag([...qkPending(), ...qkRollExtras()])) return; QK.added = true; toast("Trouvailles rangées dans ton sac"); QK.rolls = null; }
+    else if (d.qk === "clearman") { QK.man = { d20: QK.man.d20, die: QK.man.die, slots: {} }; QK.rolls = null; }
     else if (d.qk === "prep") { const rec = qkRecipes().find(r => r.key === QK.rec); if (rec) qkPrep(rec); return; }
     else return;
     renderQuick();
   });
+  $("qk-root").addEventListener("input", e => {   // vue classique : jets saisis à la main
+    const t = e.target, m = /^qk-m(?:s-(\d+))?-(d20|die)$/.exec(t.id || ""); if (!m) return;
+    if (m[1] === undefined) { QK.man[m[2]] = t.value; if (m[2] === "d20") QK.man.die = ""; QK.added = false; }
+    else { const k = m[1]; QK.man.slots[k] = { ...(QK.man.slots[k] || {}), [m[2]]: t.value }; if (m[2] === "d20") QK.man.slots[k].die = ""; QK.added = false; }
+    const id = t.id; renderQuick(); const n = $(id); if (n) n.focus();
+  });
   $("qk-root").addEventListener("change", e => {
     const t = e.target;
-    if (t.id === "qk-view") { QK.view = t.checked ? "classique" : "parcours"; try { localStorage.setItem("tisane_qkview", QK.view); } catch (x) { /* ignoré */ } }
-    else if (t.id === "qk-env") { QK.env = t.value; try { localStorage.setItem("tisane_env", QK.env); } catch (x) { /* ignoré */ } QK.finds = null; QK.rolls = null; QK.added = false; }
-    else if (t.id === "qk-rec") { QK.rec = t.value; QK.rolls = null; }
+    if (t.id === "qk-view") { QK.view = t.checked ? "classique" : "parcours"; QK.finds = null; QK.rolls = null; QK.added = false; try { localStorage.setItem("tisane_qkview", QK.view); } catch (x) { /* ignoré */ } }
+    else if (t.id === "qk-env") { QK.env = t.value; try { localStorage.setItem("tisane_env", QK.env); } catch (x) { /* ignoré */ } QK.finds = null; QK.rolls = null; QK.added = false; QK.man.slots = {}; }
+    else if (t.id === "qk-rec") { QK.rec = t.value; QK.rolls = null; QK.man.slots = {}; }
     else if (t.id === "qk-rank") { SR.rank = t.value; try { localStorage.setItem("tisane_rank", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: t.value }); QK.finds = null; QK.rolls = null; }
     else if (t.id === "qk-spec") { SR.spec = t.value; try { localStorage.setItem("tisane_spec", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), spec: t.value }); QK.rec = ""; QK.rolls = null; }
     else return;
