@@ -2039,7 +2039,7 @@ function qkGatherOut() {
   if (QK.added) h += before.length ? before.map(r => qkRecLine(r)).join("") : `<p class="muted">Rien pour l'instant avec ton sac.</p>`;
   else {
     h += now.map(r => qkRecLine(r, ` <span class="qk-new">✨ grâce à ta récolte</span>`)).join("") + before.map(r => qkRecLine(r)).join("");
-    if (!now.length && !before.length) h += `<p class="muted">Aucune recette complète pour l'instant.</p>`;
+    if (!now.length && !before.length) h += `<p class="muted">Aucune recette complète pour l'instant avec cet ingrédient.</p>`;
   }
   if (almost.length) h += `<h3 style="margin-top:14px">Il ne manque presque rien</h3>` + almost.slice(0, 5).map(a => qkRecLine(a.r, ` <span class="muted">· il manque : ${esc(qkLabel(a.r, a.k))}</span>`)).join("");
   return h;
