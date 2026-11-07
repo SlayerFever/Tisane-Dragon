@@ -266,11 +266,33 @@ const metaCatIds = m => !m ? [] : Array.isArray(m.categories) ? m.categories : (
 const famCat = f => ({ id: famCatId(f), name: FAMILIES[f].name, color: FAMILIES[f].color, group: "classification" });
 const myItem = name => inventory.find(i => i.player === player() && i.name === name);
 const allCats = () => categories;
+/* Précis d'alchimie du personnage : son rang lui fait connaître tous les ingrédients jusqu'à une certaine rareté, mais seulement ceux qui ont une propriété de sa spécialisation
+   (ou une propriété générale). Novice : rien · Apprenti : Commun · Expert : Peu commun · Compagnon : Rare · Maître : Épique. Les Légendaires ne sont connus que si le MJ les révèle.
+   Ce que le MJ révèle d'autre (ingrédients plus rares, autres propriétés) s'ajoute à ce précis. */
+const KNOW_LIMIT = { Novice: 0, Apprenti: 1, Expert: 2, Compagnon: 3, "Maître": 4 };   // niveau de rareté connu (1 Commun … 4 Épique)
+const KNOW_PROPS = {
+  "Général": ["fluide", "inflammable", "unique", "psychotrope", "stupéfiant"],
+  Abstracteur: ["stimulant", "volatil", "fragile", "tâchant", "résonnant"],
+  Alkahest: ["toxine", "corrosif", "volatil", "tranchant"],
+  Apothicaire: ["médicinal", "toxine", "stimulant", "fragile"]
+};
+function knowSet() {   // { limit, props:Set } du personnage choisi ; null si rien à connaître
+  let rank, spec;
+  try { rank = srRank(); spec = srSpec(); } catch (e) { return null; }
+  const limit = KNOW_LIMIT[rank] || 0; if (!limit || !player()) return null;
+  return { limit, rank, spec, props: new Set([...KNOW_PROPS["Général"], ...(KNOW_PROPS[spec] || [])]) };
+}
+function autoKnows(ci) {   // l'ingrédient figure-t-il dans le précis du personnage ?
+  const k = ci && knowSet(); if (!k || !ci.q || !QN[ci.q] || QN[ci.q] > k.limit) return false;
+  return (ci.props || []).some(id => k.props.has(id));
+}
 function catParts(name) {
-  const it = myItem(name); if (!it) return { rev: [], own: [] };
-  const ci = catalogItem(name), rv = it.reveal || {}, pool = allCats(), byId = id => pool.find(c => c.id === id);
-  const rev = ci ? [...(rv.classification ? ci.clas.map(byId) : []), ...(rv.propriete ? ci.props : []).map(byId), ...(rv.environnement ? ci.envs : []).map(byId)].filter(Boolean) : [];
-  return { rev, own: (it.cats || []).map(byId).filter(Boolean) };
+  const it = myItem(name), ci = catalogItem(name), pool = allCats(), byId = id => pool.find(c => c.id === id);
+  if (!it && !ci) return { rev: [], own: [] };
+  const rv = (it && it.reveal) || {};
+  const auto = autoKnows(ci), all = ci ? [...ci.clas, ...ci.props, ...ci.envs] : [];
+  const rev = ci ? (auto ? all.map(byId) : [...(rv.classification ? ci.clas.map(byId) : []), ...(rv.propriete ? ci.props : []).map(byId), ...(rv.environnement ? ci.envs : []).map(byId)]).filter(Boolean) : [];
+  return { rev, own: ((it && it.cats) || []).map(byId).filter(Boolean) };
 }
 /* Ce que le PJ voit d'un de ses ingrédients : ce que le MJ lui a révélé, plus ce qu'il a noté lui-même */
 function catsOf(name) {
@@ -1726,7 +1748,7 @@ const srRarity = t => t >= 23 ? "Légendaire" : t >= 20 ? "Épique" : t >= 16 ? 
 const srEnvs = () => categories.filter(c => groupOf(c) === "environnement");
 const gatherSrc = () => CATALOG;
 const srPool = (env, q) => gatherSrc().filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
-const srKnown = () => { const me = player(); return inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean); };
+const srKnown = () => { const me = player(); return [...new Map([...inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean), ...CATALOG.filter(autoKnows)].map(c => [c.id, c])).values()]; };
 /* Quantité trouvée = la valeur maximale du dé de recherche divisée par 2 (arrondie à l'inférieur), au moins 1 : d10 → 5, d6 → 3, d4 → 2, d2 ou d1 → 1 */
 const srQty = n => Math.max(1, Math.floor(n / 2));
 function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'environnement choisi
@@ -1895,7 +1917,8 @@ const qkFits = (s, it) => s.t === "cls" ? (!it.prod && !it.lit && qkKnownIds(it)
 function qkKnowHtml(it) {
   const cats = catsOf(norm(it.name)), inBag = !!myItem(norm(it.name));
   const rows = GROUPS.map(g => ({ g, l: cats.filter(c => groupOf(c) === g.id) })).filter(x => x.l.length);
-  return `<div class="qk-know"><div class="qk-knowh">🔎 Ce que ton personnage sait</div>` + (rows.length
+  const ci = catalogItem(norm(it.name)), k = knowSet(), auto = !!ci && autoKnows(ci);
+  return `<div class="qk-know"><div class="qk-knowh">🔎 Ce que ton personnage sait</div>` + (auto ? `<div class="muted">📚 Figure dans ton précis d'alchimie (${esc(k.rank)}, ${esc(k.spec)}).</div>` : "") + (rows.length
     ? rows.map(x => `<div><span class="muted">${esc(x.g.label)} :</span> ${x.l.map(c => tag(c)).join("")}</div>`).join("")
     : `<div class="muted">Rien pour l'instant : ton personnage ne sait encore rien de cet ingrédient${inBag ? "." : " (une fois rangé dans ton sac, le MJ pourra te révéler ses catégories)."}</div>`) + `</div>`;
 }
