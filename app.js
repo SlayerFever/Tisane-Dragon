@@ -1874,7 +1874,7 @@ if ($("sr-root")) {
    Mêmes règles que l'onglet Recherche (rareté selon le d20 + bonus de rang) ; les dés sont lancés par l'appli.
    ============================================================ */
 var qkOn = false;
-const QK = { mode: "cueillir", env: localStorage.getItem("tisane_env") || "", finds: null, added: false, rec: "", rolls: null, fresh: false, man: { d20: "", die: "", slots: {} }, view: localStorage.getItem("tisane_qkview") === "classique" ? "classique" : "parcours" };
+const QK = { mode: "cueillir", env: localStorage.getItem("tisane_env") || "", finds: null, added: false, rec: "", rolls: null, fresh: false, open: {}, man: { d20: "", die: "", slots: {} }, view: localStorage.getItem("tisane_qkview") === "classique" ? "classique" : "parcours" };
 SR.env = QK.env;
 const qkD = n => 1 + Math.floor(Math.random() * n);
 const qkClean = s => String(s || "").replace(/\*\*/g, "");
@@ -2028,7 +2028,17 @@ function qkFindCard(f, i, fresh) {   // « Vous trouvez 5 champignourets (d20 : 
     <div class="muted">(d20 : ${f.d20} puis d${f.n} : ${f.die})</div>
     <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}${qkKnowHtml(f.it)}</div>`;
 }
-function qkRecLine(r, extra) { return `<div class="qk-rec"><span><b>${esc(cap(r.name))}</b>${extra || ""}</span><button type="button" class="btn ghost small" data-qk-open="${esc(r.key)}">Voir</button></div>`; }
+function qkDetail(r) {   // ce que le personnage sait d'une recette qu'il connaît : sa fiche et l'état de ses ingrédients
+  const rec = RECS.find(x => norm(x.name) === norm(r.name)), lines = rec && rec.text ? rec.text.split("\n").map(l => l.trim()).filter(Boolean) : [];
+  const facts = [], prose = [];
+  lines.forEach(l => { const m = /^([^:·]{3,28})\s*:\s*(.+)$/.exec(l); if (m && /^(Rang|Spécialisation|Outils|Test|Propriétés|Temps de fabrication)/.test(m[1])) facts.push(`<div><span class="muted">${esc(m[1])} :</span> ${esc(m[2])}</div>`); else if (!/^Composition\s*:/.test(l)) prose.push(l); });
+  const rd = qkReady(r, QK.added ? [] : qkFound());
+  return `<div class="qk-detail"><div class="qk-knowh">📖 Ce que ton personnage sait de « ${esc(cap(r.name))} »</div>
+    ${facts.join("")}${prose.length ? `<p class="qk-desc" style="margin:6px 0">${prose.map(esc).join("<br>")}</p>` : ""}
+    <div class="qk-knowh" style="margin-top:8px">Ingrédients demandés</div><div class="qk-slots">${r.slots.map((_, k) => qkSlotText(r, k, rd)).join("")}</div>
+    <button type="button" class="btn ghost small" data-qk-go="${esc(r.key)}">Préparer cette recette</button></div>`;
+}
+function qkRecLine(r, extra) { const open = !!QK.open[r.key]; return `<div class="qk-rec"><span><b>${esc(cap(r.name))}</b>${extra || ""}</span><button type="button" class="btn ghost small" data-qk-open="${esc(r.key)}" aria-expanded="${open}">${open ? "Masquer" : "Voir"}</button></div>${open ? qkDetail(r) : ""}`; }
 function qkGatherOut() {
   const me = player(); if (!me) return "";
   const recs = qkRecipes();
@@ -2196,7 +2206,8 @@ if ($("qk-root")) {
     if (d.qkEnv !== undefined) { QK.env = d.qkEnv; try { localStorage.setItem("tisane_env", QK.env); } catch (x) { /* ignoré */ } QK.finds = null; QK.rolls = null; QK.added = false; }
     else if (d.qkMode) { QK.mode = d.qkMode; }
     else if (d.qkRec !== undefined) { QK.rec = d.qkRec; QK.rolls = null; }
-    else if (d.qkOpen !== undefined) { QK.mode = "recette"; QK.rec = d.qkOpen; QK.rolls = null; }
+    else if (d.qkOpen !== undefined) { QK.open[d.qkOpen] = !QK.open[d.qkOpen]; }
+    else if (d.qkGo !== undefined) { QK.mode = "recette"; QK.rec = d.qkGo; QK.rolls = null; }
     else if (d.qk === "name") { $("player").focus(); return; }
     else if (d.qk === "roll") qkRollGather();
     else if (d.qk === "bag") { if (!qkBag(qkFound())) return; QK.added = true; toast("Trouvailles rangées dans ton sac"); }
