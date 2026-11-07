@@ -317,3 +317,6 @@
   .qk-total{display:flex;align-items:center;gap:14px;margin:4px 0 14px;font-size:1.05rem}
   .qk-tn{display:inline-flex;align-items:center;justify-content:center;min-width:54px;height:54px;border-radius:50%;border:2px solid var(--sage);font:400 1.6rem var(--serif);color:var(--ink)}
   .qk-slotdice{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+  .qk-know{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:.95rem}
+  .qk-knowh{font:400 1.05rem var(--serif);color:var(--ink);margin-bottom:4px}

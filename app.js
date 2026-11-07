@@ -1887,6 +1887,18 @@ function qkRollGather() {   // une récolte = un seul jet : d20 + modificateur d
 }
 const qkFound = () => (QK.finds || []).filter(f => !f.none);
 
+/* Ce que le personnage sait d'un ingrédient : les catégories que le MJ lui a révélées et celles qu'il a notées lui-même.
+   Un emplacement « catégorie » d'une recette n'accepte un ingrédient que si le personnage connaît cette catégorie. */
+const qkKnownIds = it => (it.prod || it.lit) ? [] : catIdsOf(norm(it.name));
+const qkFits = (s, it) => s.t === "cls" ? (!it.prod && !it.lit && qkKnownIds(it).includes(s.cid) && (!s.spec || it.key.includes(s.spec))) : slotFits(s, it);
+function qkKnowHtml(it) {
+  const cats = catsOf(norm(it.name)), inBag = !!myItem(norm(it.name));
+  const rows = GROUPS.map(g => ({ g, l: cats.filter(c => groupOf(c) === g.id) })).filter(x => x.l.length);
+  return `<div class="qk-know"><div class="qk-knowh">🔎 Ce que ton personnage sait</div>` + (rows.length
+    ? rows.map(x => `<div><span class="muted">${esc(x.g.label)} :</span> ${x.l.map(c => tag(c)).join("")}</div>`).join("")
+    : `<div class="muted">Rien pour l'instant : ton personnage ne sait encore rien de cet ingrédient${inBag ? "." : " (une fois rangé dans ton sac, le MJ pourra te révéler ses catégories)."}</div>`) + `</div>`;
+}
+
 /* Le sac du PJ sous forme d'unités (comme le fait Recherche), plus d'éventuelles trouvailles pas encore rangées */
 function qkUnits(extras) {
   const me = player(), u = [];
@@ -1900,7 +1912,7 @@ function qkUnits(extras) {
 }
 function qkMatch(slots, units) {   // chaque emplacement de la recette reçoit au plus une unité (couplage maximal)
   const owner = new Array(units.length).fill(-1);
-  const go = (k, seen) => { for (let j = 0; j < units.length; j++) if (!seen[j] && slotFits(slots[k], units[j].it)) { seen[j] = true; if (owner[j] < 0 || go(owner[j], seen)) { owner[j] = k; return true; } } return false; };
+  const go = (k, seen) => { for (let j = 0; j < units.length; j++) if (!seen[j] && qkFits(slots[k], units[j].it)) { seen[j] = true; if (owner[j] < 0 || go(owner[j], seen)) { owner[j] = k; return true; } } return false; };
   slots.forEach((_, k) => go(k, []));
   const su = new Array(slots.length).fill(-1);
   owner.forEach((k, j) => { if (k >= 0) su[k] = j; });
@@ -2012,7 +2024,7 @@ function qkFindCard(f, i, fresh) {   // « Vous trouvez 5 champignourets (d20 : 
   if (f.none) return `<div class="qk-card none${cls}"><div class="qk-name">🍂 Vous ne trouvez rien</div><div class="muted">(d20 : ${f.d20})</div></div>`;
   return `<div class="qk-card${cls}"><div class="qk-name">Vous trouvez ${f.qt} ${esc(qkPlural(f.it.name.toLowerCase(), f.qt))}</div>
     <div class="muted">(d20 : ${f.d20} puis d${f.n} : ${f.die})</div>
-    <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}</div>`;
+    <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}${qkKnowHtml(f.it)}</div>`;
 }
 function qkRecLine(r, extra) { return `<div class="qk-rec"><span><b>${esc(cap(r.name))}</b>${extra || ""}</span><button type="button" class="btn ghost small" data-qk-open="${esc(r.key)}">Voir</button></div>`; }
 function qkGatherOut() {
@@ -2105,7 +2117,7 @@ function qkManual(me, fresh) {
     const it = pool[die - 1], qt = srQty(die);
     QK.finds = [{ d20, q, it, qt, die, n }];
     h += `<div class="qk-card" style="margin-top:14px"><div class="qk-name">Vous trouvez ${qt} ${esc(qkPlural(it.name.toLowerCase(), qt))}</div>
-      <div class="muted">(d20 : ${d20} puis d${n} : ${die})</div><div class="qk-q">${esc(q)}</div>${it.desc ? `<div class="muted qk-desc">${esc(qkClean(it.desc))}</div>` : ""}
+      <div class="muted">(d20 : ${d20} puis d${n} : ${die})</div><div class="qk-q">${esc(q)}</div>${it.desc ? `<div class="muted qk-desc">${esc(qkClean(it.desc))}</div>` : ""}${qkKnowHtml(it)}
       ${QK.added ? `<div class="muted" style="margin-top:8px">✓ Rangé dans ton sac</div>` : `<button type="button" class="btn" data-qk="bag" style="margin-top:8px">Ajouter à mon inventaire</button>`}</div>`;
     if (me) h += `<div style="margin-top:16px">${qkGatherOut()}</div>`;
     return h;
