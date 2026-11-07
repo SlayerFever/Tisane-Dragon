@@ -2072,7 +2072,8 @@ function qkRecipeOut(fresh) {
 }
 
 /* ---------- Vue « classique » : mêmes fonctions que la Récolte, avec la mise en page de l'ancien onglet Recherche (Alchimie uniquement) ---------- */
-const qkViewBox = () => `<label class="qk-rank qk-viewbox" style="margin-left:0"><input type="checkbox" id="qk-view"${QK.view === "classique" ? " checked" : ""}> Vue classique</label>`;
+const manualOn = () => PAGE_ALCH && QK.view === "classique";
+const qkViewBox = () => `<label class="qk-rank qk-viewbox" style="margin-left:0"><input type="checkbox" id="qk-view"${QK.view === "classique" ? " checked" : ""}> Je lance mes dés moi-même</label>`;
 function qkSlotText(rec, k, r) {
   const label = esc(qkLabel(rec, k)), rl = (QK.rolls || {})[k], j = r.su[k];
   if (j >= 0) return `<div class="mjfx">✔ <b>${label}</b> <span class="muted">${r.units[j].from === "find" ? "trouvé : " + esc(cap(r.units[j].it.name)) : "dans ton sac : " + esc(cap(r.units[j].it.name))}</span></div>`;
@@ -2083,24 +2084,14 @@ function qkSlotText(rec, k, r) {
   const why = t.kind === "roll" ? (t.ok ? `à chercher ici : d20 minimum ${t.d}` : "trop rare pour ton rang") : t.kind === "elsewhere" ? "introuvable dans cet environnement" : t.kind === "unknown" ? "aucun ingrédient de ce type dans le grimoire" : "à préparer ou à te procurer (pas de dé)";
   return `<div class="mjfx">• <b>${label}</b> <span class="muted">${why}</span></div>`;
 }
-function qkClassic(envs, me, fresh) {
+function qkManual(me, fresh) {
+  let h = "";
   const opt = (list, val) => list.map(o => `<option value="${esc(o[0])}"${o[0] === val ? " selected" : ""}>${esc(o[1])}</option>`).join("");
-  let h = `<h2>Recherche d'ingrédients</h2>`;
-  if (!me) h += `<p class="muted">Choisis d'abord ton personnage en haut de la page.</p>`;
-  h += `<div class="subtabs">${[["cueillir", "Je pars cueillir"], ["recette", "Je prépare une recette"]].map(m => `<button type="button" class="subtab${QK.mode === m[0] ? " active" : ""}" data-qk-mode="${m[0]}">${m[1]}</button>`).join("")}</div>
-    <div class="row" style="gap:12px;flex-wrap:wrap;align-items:end">
-      <label>Environnement <select id="qk-env"><option value="">— choisir —</option>${opt(envs.map(e => [e.id, e.name]), QK.env)}</select></label>
-      <label>Rang <select id="qk-rank">${opt(SR_RANKS.map(r => [r[0], `${r[0]} (${sgn(r[1])})`]), srRank())}</select></label>
-      <label>Spécialisation <select id="qk-spec">${opt(SPECS.map(x => [x, x]), srSpec())}</select></label>
-      ${qkViewBox()}</div>`;
-  if (!envs.length) return h + `<p class="muted">Le grimoire n'a pas encore d'environnements.</p>`;
-  if (!QK.env) return h + `<p class="muted">Choisis l'environnement dans lequel tu cherches.</p>`;
-  if (!gatherSrc().some(c => c.envs.includes(QK.env))) return h + `<p class="muted">Aucun ingrédient n'est encore associé à cet endroit : le MJ doit les renseigner.</p>`;
   const num = (id, val, max, w) => `<input id="${id}" type="number" min="1" max="${max}" value="${esc(val)}" style="width:${w || 80}px">`;
   const okN = (v, max) => { const n = parseInt(v, 10); return n >= 1 && n <= max ? n : 0; };
   if (QK.mode === "cueillir") {
     const d20 = okN(QK.man.d20, 20);
-    h += `<div class="row" style="gap:12px;flex-wrap:wrap;align-items:end;margin-top:10px"><label>Ton jet de d20 ${num("qk-m-d20", QK.man.d20, 20)}</label></div>`;
+    h += `<div class="qk-step"><span class="qk-n">3</span> Lance ton d20</div><div class="row" style="gap:12px;flex-wrap:wrap;align-items:end"><label>Résultat de ton d20 ${num("qk-m-d20", QK.man.d20, 20)}</label></div>`;
     QK.finds = null;
     if (!d20) return h + `<p class="muted">Entre le résultat de ton d20 (1 à 20).</p>`;
     const tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [], n = pool.length;
@@ -2109,7 +2100,7 @@ function qkClassic(envs, me, fresh) {
     h += `rareté <b>${esc(q)}</b>.</p>`;
     if (!n) return h + `<p class="muted">Aucun ingrédient ${esc(q)} n'existe ici : rien trouvé.</p>`;
     const die = n === 1 ? 1 : okN(QK.man.die, n);
-    if (n > 1) h += `<p>Lance ton <b>dé de recherche d${n}</b> :</p><label>Résultat ${num("qk-m-die", QK.man.die, n)}</label>`;
+    if (n > 1) h += `<div class="qk-step"><span class="qk-n">4</span> Lance ton dé de recherche : <b>d${n}</b></div><label>Résultat de ton d${n} ${num("qk-m-die", QK.man.die, n)}</label>`;
     if (!die) return h + (QK.man.die !== "" ? `<p class="muted">Le dé doit être entre 1 et ${n}.</p>` : "");
     const it = pool[die - 1], qt = srQty(die);
     QK.finds = [{ d20, q, it, qt, die, n }];
@@ -2122,7 +2113,10 @@ function qkClassic(envs, me, fresh) {
   const recs = qkRecipes();
   if (!me) return h;
   if (!recs.length) return h + `<p class="muted">Tu ne connais pas encore de recette.</p>`;
-  h += `<div style="margin-top:10px"><label>Recette <select id="qk-rec"><option value="">— choisir —</option>${opt(recs.map(r => [r.key, (r.fav ? "★ " : "") + cap(r.name) + (r.apo ? " · " + SR_RANKS[r.apo.r][0] : "")]), QK.rec)}</select></label></div>`;
+  const sel = (id, opts, val, ph) => `<select id="${id}"><option value="">${ph}</option>${opts.map(o => `<option value="${esc(o[0])}"${o[0] === val ? " selected" : ""}>${esc(o[1])}</option>`).join("")}</select>`;
+  h += `<div class="qk-step"><span class="qk-n">3</span> Quelle recette ?</div>` + (recs.length > 10
+    ? sel("qk-rec", recs.map(r => [r.key, (r.fav ? "★ " : "") + cap(r.name) + (r.apo ? " · " + SR_RANKS[r.apo.r][0] : "")]), QK.rec, "— choisir —")
+    : `<div class="fchips qk-recs">${recs.map(r => `<button type="button" class="fchip qk-pill${QK.rec === r.key ? " on" : ""}" data-qk-rec="${esc(r.key)}">${r.fav ? "★ " : ""}${esc(cap(r.name))}</button>`).join("")}</div>`);
   const rec = recs.find(r => r.key === QK.rec); if (!rec) return h;
   const plain = qkReady(rec, []), miss = plain.missing.filter(k => qkRollable(rec, k));
   QK.rolls = null;   // les jets saisis à la main sont relus à chaque affichage
@@ -2154,7 +2148,6 @@ function renderQuick() {
   const envs = srEnvs(), me = player(), fresh = QK.fresh; QK.fresh = false;
   if (QK.env && !envs.some(e => e.id === QK.env)) QK.env = "";
   SR.env = QK.env;
-  if (PAGE_ALCH && QK.view === "classique") { root.innerHTML = qkClassic(envs, me, fresh); return; }
   let h = `<h2>Que veux-tu faire aujourd'hui ?</h2>`;
   if (!me) h += `<div class="qk-note">👤 Commence par choisir ton personnage. <button type="button" class="btn small" data-qk="name">Choisir mon personnage</button></div>`;
   h += `<div class="qk-step"><span class="qk-n">1</span> Où es-tu ?<span style="margin-left:auto;display:flex;gap:14px;flex-wrap:wrap"><label class="qk-rank" style="margin-left:0">Rang <select id="qk-rank">${SR_RANKS.map(r => `<option value="${esc(r[0])}"${r[0] === srRank() ? " selected" : ""}>${esc(r[0])} (${sgn(r[1])})</option>`).join("")}</select></label>${PAGE_ALCH ? `<label class="qk-rank" style="margin-left:0">Spécialisation <select id="qk-spec">${SPECS.map(x => `<option${x === srSpec() ? " selected" : ""}>${x}</option>`).join("")}</select></label>${qkViewBox()}` : ""}</span></div>`;
@@ -2165,6 +2158,7 @@ function renderQuick() {
     <button type="button" class="qk-mode${QK.mode === "recette" ? " on" : ""}" data-qk-mode="recette"><span class="qk-ico">📜</span><b>Je prépare une recette</b><small>Je choisis, puis je cherche ce qui me manque</small></button></div>`;
   if (!QK.env) h += `<p class="muted qk-hint">👆 Choisis d'abord l'endroit où tu te trouves.</p>`;
   else if (!gatherSrc().some(c => c.envs.includes(QK.env))) h += `<p class="muted qk-hint">Aucun ingrédient n'est encore associé à cet endroit : le MJ doit les renseigner (onglet MJ, bibliothèque des ingrédients).</p>`;
+  else if (manualOn() && me) h += qkManual(me, fresh);
   else if (QK.mode === "cueillir") {
     if (!QK.finds) h += `<button type="button" class="btn qk-go" data-qk="roll">🎲 Partir cueillir</button>`;
     else {
