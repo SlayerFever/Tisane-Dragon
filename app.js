@@ -1,7 +1,8 @@
-/* Une seule application pour deux pages : « Tisane & Dragon » (index.html) et « Alchimie & Dragon » (alchimie.html).
-   Même code, mêmes principes ; l'alchimie a ses propres collections (préfixe alch_) et sa propre bibliothèque de recettes du MJ. */
-const APP = window.APP || { id: "tisane" }, ALCH = APP.id === "alchimie", COLP = ALCH ? "alch_" : "";
-const T = ALCH ? "potion" : "tisane";   // le mot employé pour le produit fini
+/* Une seule application pour deux pages : « Tisane & Dragon » (index.html, alchimiste apothicaire) et « Alchimie & Dragon » (alchimie.html, toutes les spécialisations).
+   Même code ; l'alchimie a ses propres collections (préfixe alch_). */
+const APP = window.APP || { id: "tisane" }, PAGE_ALCH = APP.id === "alchimie", ALCH = true, COLP = PAGE_ALCH ? "alch_" : "alch_apo_";   /* chaque page a ses propres collections ; « alch_apo_ » est couvert par la règle « alch_.* » de firestore.rules, sans redéploiement. Les anciennes collections de tisanes ne sont plus lues. */
+/* Tisane & Dragon (index.html) fonctionne comme un alchimiste apothicaire ; Alchimie & Dragon propose toutes les spécialisations. Les tisanes seront réimplantées plus tard. */
+const T = "potion";   // le mot employé pour le produit fini
 document.documentElement.dataset.app = APP.id;
 
 /* ============================================================
@@ -51,7 +52,7 @@ if (useFirebase) {
 }
 
 const rawStore = store;   /* accès direct aux deux jeux de collections (transfert d'ingrédients, fiche de personnage commune) */
-if (COLP) {   /* l'alchimie lit et écrit dans ses propres collections */
+if (COLP) {   /* chaque page lit et écrit dans ses propres collections */
   const raw = store;
   store = {
     subscribe: (c, cb) => raw.subscribe(COLP + c, cb), add: (c, o) => raw.add(COLP + c, o), set: (c, i, o) => raw.set(COLP + c, i, o),
@@ -82,19 +83,12 @@ const HEX = /^#[0-9a-f]{6}$/i;
 
 /* ============================================================
    2b. Grimoire du MJ : familles, catalogue, effets et moteur de résolution.
-   Les données (RULES) viennent du dépôt « Grimoire du tisanier ». Le laboratoire en mode automatique joue le rôle du MJ.
+   Le laboratoire en mode automatique joue le rôle du MJ à partir des recettes de l'alchimie.
    ============================================================ */
-/* Les règles du Grimoire (grimoire-tisane.js) ne sont chargées que par la page des tisanes : l'alchimie repart de zéro. */
-const RULES = window.RULES || { F: {}, X: {}, Y: {}, Z: {}, D: [], DD: [], DI: [], TN: [], DU: [] };
-
-/* Les six familles du Grimoire remplacent les Classifications de l'app (identifiants fixes, pour qu'un réimport ne crée pas de doublon) */
-const FAMILIES = ALCH ? {} : {
-  A: { name: "Apaisantes", color: "#e08fb4" }, V: { name: "Vigoureuses", color: "#e0916a" }, E: { name: "Écorces et feuillages", color: "#a3c4a0" },
-  L: { name: "Lunaires", color: "#9aa9c9" }, M: { name: "Mythalliques", color: "#6fcdbf" }, N: { name: "Inertes", color: "#a8a99a" }
-};
-const famCatId = f => catId(FAMILIES[f].name);
-const famIds = new Set(Object.keys(FAMILIES).map(f => catId(FAMILIES[f].name)));   // identifiants réservés : ces catégories ne sont jamais montrées aux PJ
-const famOfName = {}; Object.keys(RULES.F).forEach(f => RULES.F[f][1].forEach(([n]) => { famOfName[n] = f; }));
+/* Plus de règles de tisane : le MJ automatique ne s'appuie que sur les recettes de l'alchimie. */
+const RULES = { F: {}, X: {}, Y: {}, Z: {}, D: [], DD: [], DI: [], TN: [], DU: [] };   // plus de règles de tisane
+const FAMILIES = {}, famOfName = {}, famCatId = f => f;
+const famIds = new Set();
 const stripKey = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 /* Bibliothèque du MJ (le « backend ») : ingrédients, potions (un effet par paire de familles) et effets anecdotiques.
    Elle vit dans Firestore et se modifie dans l'onglet MJ. Tant qu'elle n'est pas initialisée, ce sont les données du Grimoire qui servent. */
@@ -103,14 +97,10 @@ const QL = ["", "Commun", "Peu commun", "Rare", "Épique", "Légendaire"];
 const QN = {}; QL.forEach((q, i) => { if (q) QN[q] = i; });
 const Q_ALIAS = { basse: "Commun", commun: "Commun", commune: "Commun", moyenne: "Peu commun", "peu commun": "Peu commun", "peu commune": "Peu commun", "élevée": "Rare", elevee: "Rare", rare: "Rare", "épique": "Épique", epique: "Épique", "suprême": "Légendaire", supreme: "Légendaire", "légendaire": "Légendaire", legendaire: "Légendaire" };
 const normQ = q => QN[q] ? q : (Q_ALIAS[String(q || "").trim().toLowerCase()] || "");
-const DEFAULTS = ALCH ? { ingredients: [], potions: [], anecdotes: [], categories: [] } : {
-  ingredients: RULES.D.map(([name, desc, price]) => ({ name, desc, price, family: famOfName[name] })),
-  potions: Object.keys(RULES.X).map(k => ({ key: k, name: RULES.X[k][0], tiers: RULES.X[k][1], duration: RULES.X[k][2] || null, fail: RULES.Z[k] })),
-  anecdotes: Object.keys(RULES.Y).map(k => ({ key: k, name: RULES.Y[k][0], text: RULES.Y[k][1], type: RULES.Y[k][2] }))
-};
+const DEFAULTS = { ingredients: [], potions: [], anecdotes: [], categories: [] };   // rempli par grimoire-alchimie.json
 let libIng = [], libPot = [], libAnec = [];
-/* Tisanes : prête dès que les potions sont enregistrées. Alchimie : prête dès qu'elle contient quelque chose, ou si le fichier grimoire-alchimie.json est vide (rien à initialiser). */
-const libReady = () => ALCH ? (libIng.length + libPot.length > 0 || DEFAULTS.ingredients.length + DEFAULTS.potions.length === 0) : libPot.length > 0;
+/* Bibliothèque prête dès qu'elle contient quelque chose, ou si le fichier grimoire-alchimie.json est vide (rien à initialiser). */
+const libReady = () => libIng.length + libPot.length > 0 || DEFAULTS.ingredients.length + DEFAULTS.potions.length === 0;
 let rawCats = [], RECS = [];
 let CATALOG = [], POT = {}, ANEC = {};
 /* Catégories : celles de Firestore ; tant que l'alchimie n'est pas initialisée, celles du fichier grimoire-alchimie.json s'y ajoutent */
@@ -122,9 +112,7 @@ function applyCats() {
   const base = fromFile ? rawCats.map(c => fromFile.has(c.id) ? { ...c, name: fromFile.get(c.id).name, color: fromFile.get(c.id).color, group: fromFile.get(c.id).group } : c) : rawCats;
   categories = [...base, ...extra].filter(c => !c.deleted && !famIds.has(c.id));
   /* Tisane reprend à l'identique les catégories d'Alchimie (classification, propriété, environnement), lues dans grimoire-alchimie.json */
-  if (!ALCH && SHARED_CATS) categories = SHARED_CATS.map(c => ({ ...c }));
 }
-let SHARED_CATS = null;
 const catMemo = new Map();
 function rebuildLib() {
   const L = libReady() ? { ingredients: libIng, potions: libPot, anecdotes: libAnec } : DEFAULTS;
@@ -166,16 +154,6 @@ function catalogItem(name) {
   }
   catMemo.set(k, found);
   return found;
-}
-/* Règles du MJ pour deux ingrédients : inerte ou somme des prix ≤ 10 = effet anecdotique, sinon effet de la paire de familles selon la somme (≤60 léger, ≤200 marqué, au-delà exceptionnel) */
-function mixOutcome(a, b) {
-  const s = a.p + b.p, key = [a.f, b.f].sort().join("");
-  if (a.f === "N" || b.f === "N" || s <= 10) {
-    const y = ANEC[key]; if (!y) return null;
-    return { potion: false, name: y.name, text: y.text, type: y.type, duration: y.type === "0" ? null : "1 heure", names: [a.name, b.name], a, b, s };
-  }
-  const t = s <= 60 ? 0 : s <= 200 ? 1 : 2, e = POT[key]; if (!e) return null;
-  return { potion: true, name: e.name, t, tier: RULES.TN[t], duration: e.duration || RULES.DU[t], text: e.tiers[t], dd: RULES.DD[t], fail: (e.fail || "").replace(/\{d\}/g, RULES.DI[t]), names: [a.name, b.name], a, b, s };
 }
 /* Alchimie : une recette du MJ est un jeu de 2 à 4 « emplacements ». Un emplacement est :
    - un ingrédient précis de la bibliothèque,
@@ -232,11 +210,6 @@ function autoOutcome(ings) {
     if (new Set(items).size !== items.length) return { error: "Deux de ces noms désignent le même ingrédient." };
     return alchOutcome(items);
   }
-  if (ings.length !== 2) return { error: "Le MJ automatique ne tranche que les mélanges de deux ingrédients. Retire-en un, ou choisis un état à la main." };
-  const items = ings.map(i => catalogItem(i.name)), miss = ings.find((_, k) => !items[k]);
-  if (miss) return { error: `« ${cap(miss.name)} » est inconnu du MJ. Choisis un état à la main.` };
-  if (items[0] === items[1]) return { error: "Ces deux noms désignent le même ingrédient." };
-  return mixOutcome(items[0], items[1]) || { error: "Le MJ n'a pas d'effet pour cette paire de familles." };
 }
 const outcomeName = o => o.potion && o.tier ? `${o.name} (${o.tier})` : o.name;
 const outcomeKind = o => o.potion ? "Potion" : o.type === "b" ? "Désastre mineur" : o.type === "f" ? "Effet anecdotique amusant" : "Aucun effet";
@@ -456,7 +429,7 @@ function invTable(items, detail) {
       ${detail ? "" : `<td class="tcenter"><span class="qwrap" data-qwrap="1">${open ? `<button class="btn ghost small" data-act="dec" data-id="${i.id}" aria-label="Retirer un" ${i.qty <= 0 ? "disabled" : ""}>−</button>` : ""}
         <button class="qnum${open ? " on" : ""}${i.qty <= 0 ? " zero" : ""}" data-act="qty" data-id="${i.id}" title="Cliquer pour modifier la quantité" aria-label="Quantité : ${i.qty}">${i.qty}</button>
         ${open ? `<button class="btn ghost small" data-act="inc" data-id="${i.id}" aria-label="Ajouter un">+</button>` : ""}</span></td>
-      <td class="tcenter"><button class="btn ghost small" data-act="lab" data-id="${i.id}">Au labo</button> <button class="btn ghost small" data-act="xfer" data-id="${i.id}" title="Envoyer vers ${ALCH ? "Tisane" : "Alchimie"} &amp; Dragon">⇄</button></td>`}
+      <td class="tcenter"><button class="btn ghost small" data-act="lab" data-id="${i.id}">Au labo</button> <button class="btn ghost small" data-act="xfer" data-id="${i.id}" title="Envoyer vers ${PAGE_ALCH ? "Tisane" : "Alchimie"} &amp; Dragon">⇄</button></td>`}
       <td class="tcenter"><button class="btn ghost icon" data-act="edit" data-id="${i.id}" title="Modifier l'ingrédient" aria-label="Modifier ${esc(i.name)}">✎</button></td>${detail ? `<td class="tcenter"><button class="btn ghost icon" data-act="inc" data-id="${i.id}" title="Ajouter un à l'inventaire" aria-label="Ajouter ${esc(i.name)} à l'inventaire">+</button></td>` : ""}</tr>${detail && knownOpen.has(i.id) ? detailHTML(i) : ""}`;
   };
   const cols = detail
@@ -1462,7 +1435,7 @@ function mjSim() {
   const items = vals.map(ALCH ? alchItem : catalogItem), miss = vals.find((_, k) => !items[k]);
   if (miss) return msg(`« ${esc(miss)} » n'est pas dans la bibliothèque.`);
   if (new Set(items).size !== items.length) return msg("Choisis des ingrédients différents.");
-  const o = ALCH ? alchOutcome(items) : mixOutcome(items[0], items[1]);
+  const o = alchOutcome(items);
   if (o && o.error) return msg(esc(o.error));
   out.innerHTML = o ? outcomeHTML(o, true) : '<div class="empty" style="padding:0">Pas d\'effet défini pour cette paire.</div>';
 }
@@ -1682,23 +1655,23 @@ $("view-mj").addEventListener("click", e => {
    La fiche est rangée dans la collection « alch_fiches » : les règles Firestore l'autorisent déjà pour les deux pages.
    ============================================================ */
 let FICHES = [];
-const SPECS = ["", "Abstracteur", "Alkahest", "Apothicaire"];
+const SPECS = ["Apothicaire", "Abstracteur", "Alkahest"];   // Apothicaire par défaut
 const ficheOf = () => FICHES.find(f => f.id === (player() || "").replace(/[\/\s]+/g, "_")) || null;
 const ficheId = () => (player() || "").replace(/[\/\s]+/g, "_");
 function ficheModal() {
   const me = player(); if (!me) { toast("Choisis d'abord ton personnage."); $("player").focus(); return; }
   const f = ficheOf() || {};
-  openModal(`<h2>Fiche de ${esc(me)}</h2><p class="muted" style="margin:0 0 8px">Renseignée une fois, elle sert sur Tisane &amp; Dragon et sur Alchimie &amp; Dragon.</p>
+  openModal(`<h2>Fiche de ${esc(me)}</h2><p class="muted" style="margin:0 0 8px">Renseignée une fois, elle sert sur Tisane &amp; Dragon et sur Alchimie &amp; Dragon (la spécialisation, uniquement sur Alchimie &amp; Dragon : Tisane &amp; Dragon est réservé à l'apothicaire).</p>
     <form id="fi-form" autocomplete="off"><label class="muted" for="fi-rank">Rang</label>
-    <select id="fi-rank" class="full">${SR_RANKS.map(r => `<option value="${r[0]}"${r[0] === (f.rank || "Novice") ? " selected" : ""}>${r[0]} (bonus +${r[1]})</option>`).join("")}</select>
-    <label class="muted" for="fi-spec" style="display:block;margin-top:12px">Spécialisation</label>
-    <select id="fi-spec" class="full">${SPECS.map(x => `<option value="${x}"${x === (f.spec || "") ? " selected" : ""}>${x || "Aucune"}</option>`).join("")}</select>
+    <select id="fi-rank" class="full">${SR_RANKS.map(r => `<option value="${r[0]}"${r[0] === (f.rank || "Novice") ? " selected" : ""}>${r[0]} (modificateur ${sgn(r[1])})</option>`).join("")}</select>
+    ${PAGE_ALCH ? `<label class="muted" for="fi-spec" style="display:block;margin-top:12px">Spécialisation</label>
+    <select id="fi-spec" class="full">${SPECS.map(x => `<option value="${x}"${x === (f.spec || "Apothicaire") ? " selected" : ""}>${x}</option>`).join("")}</select>` : ""}
     <label class="muted" for="fi-notes" style="display:block;margin-top:12px">Notes</label><textarea id="fi-notes" rows="4" style="width:100%">${esc(f.notes || "")}</textarea>
     <div class="actions-row"><button type="button" class="btn ghost" id="fi-cancel">Annuler</button><button class="btn" type="submit">Enregistrer</button></div></form>`);
   $("fi-cancel").onclick = closeModal;
   $("fi-form").onsubmit = e => {
     e.preventDefault();
-    rawStore.set("alch_fiches", ficheId(), { player: me, rank: $("fi-rank").value, spec: $("fi-spec").value, notes: $("fi-notes").value.trim() });
+    rawStore.set("alch_fiches", ficheId(), { player: me, rank: $("fi-rank").value, ...(PAGE_ALCH ? { spec: $("fi-spec").value } : {}), notes: $("fi-notes").value.trim() });
     closeModal(); toast("Fiche enregistrée");
   };
 }
@@ -1706,7 +1679,7 @@ $("fiche-btn").onclick = ficheModal;
 
 /* Passer un ingrédient d'une page à l'autre : le PJ choisit au moment du clic la quantité et s'il copie ou déplace */
 function transferModal(it) {
-  const me = player(), other = ALCH ? "Tisane & Dragon" : "Alchimie & Dragon", col = (ALCH ? "" : "alch_") + "inventaire";
+  const me = player(), other = PAGE_ALCH ? "Tisane & Dragon" : "Alchimie & Dragon", col = (PAGE_ALCH ? "alch_apo_" : "alch_") + "inventaire";
   openModal(`<h2>Envoyer vers ${esc(other)}</h2><p class="muted" style="margin:0 0 8px">${esc(cap(it.name))} : ${it.qty} en stock ici.</p>
     <form id="xf-form" autocomplete="off"><label class="muted" for="xf-qty">Quantité à envoyer</label><input id="xf-qty" type="number" min="1" max="${Math.max(1, it.qty)}" value="${Math.max(1, it.qty)}" style="width:100px">
     <label class="check2"><input type="radio" name="xf-mode" value="copy" checked><span>Copier : il reste aussi ici</span></label>
@@ -1740,14 +1713,19 @@ if ($("inv-suggest")) $("inv-suggest").onclick = () => {
    Un PJ ne peut chercher que ce qu'il connaît (ingrédients de son inventaire, recettes qu'il a réussies).
    ============================================================ */
 const SR_Q = ["Commun", "Peu commun", "Rare", "Épique", "Légendaire"];
-const SR_MIN = { "Commun": 5, "Peu commun": 11, "Rare": 16, "Épique": 20, "Légendaire": 21 };
-const SR_RANKS = [["Novice", 0], ["Apprenti", 1], ["Expert", 2], ["Compagnon", 3], ["Maître", 4]];
+const SR_MIN = { "Commun": 5, "Peu commun": 11, "Rare": 16, "Épique": 20, "Légendaire": 23 };   // total (d20 + modificateur de rang) minimum pour chaque rareté ; en dessous de 5 : rien
+/* Modificateur du d20 de recherche selon le rang (l'ordre sert aussi à débloquer les recettes par rang, 0 à 4) */
+const SR_RANKS = [["Novice", -3], ["Apprenti", -1], ["Expert", 0], ["Compagnon", 1], ["Maître", 3]];
+const sgn = n => n > 0 ? "+" + n : n < 0 ? "−" + (-n) : "0";
 const SR = { mode: "gen", env: "", rank: localStorage.getItem("tisane_rank") || "Novice", d20: "", die: "", rec: "", ing: "" };
 const srRank = () => { const f = ficheOf(); return f && f.rank ? f.rank : SR.rank; };
+const srSpec = () => { if (!PAGE_ALCH) return "Apothicaire"; const f = ficheOf(); return f && f.spec ? f.spec : (localStorage.getItem("tisane_spec") || "Apothicaire"); };
+const qkSpecOk = sp => { const l = String(sp || "").split(",").map(x => x.trim()).filter(Boolean); return !l.length || l.includes(srSpec()); };   // sans spécialisation : pour tous
 const srBonus = () => (SR_RANKS.find(r => r[0] === srRank()) || [0, 0])[1];
-const srRarity = t => t >= 21 ? "Légendaire" : t >= 20 ? "Épique" : t >= 16 ? "Rare" : t >= 11 ? "Peu commun" : t >= 5 ? "Commun" : null;
+const srRarity = t => t >= 23 ? "Légendaire" : t >= 20 ? "Épique" : t >= 16 ? "Rare" : t >= 11 ? "Peu commun" : t >= 5 ? "Commun" : null;   // 0-4 rien · 5-10 commun · 11-15 peu commun · 16-19 rare · 20-22 épique · 23+ légendaire
 const srEnvs = () => categories.filter(c => groupOf(c) === "environnement");
-const srPool = (env, q) => CATALOG.filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
+const gatherSrc = () => CATALOG;
+const srPool = (env, q) => gatherSrc().filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
 const srKnown = () => { const me = player(); return inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean); };
 const srQty = die => Math.max(1, Math.floor(die / 2));
 function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'environnement choisi
@@ -1758,7 +1736,7 @@ function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'envi
   return { th, d, ok: d <= 20, n: srPool(SR.env, it.q).length, q: it.q };
 }
 const srNeedTxt = (it, nd) => !nd ? "" : nd.none ? `<span class="muted">${esc(cap(it.name))} : introuvable dans cet environnement.</span>`
-  : nd.ok ? `<b>${esc(cap(it.name))}</b> (${esc(nd.q)}) : d20 minimum <b>${nd.d}</b> <span class="muted">(total ${nd.th}${srBonus() ? ` − bonus ${srBonus()}` : ""}) · dé de recherche d${nd.n}</span>`
+  : nd.ok ? `<b>${esc(cap(it.name))}</b> (${esc(nd.q)}) : d20 minimum <b>${nd.d}</b> <span class="muted">(total ${nd.th}${srBonus() ? (srBonus() > 0 ? ` − bonus ${srBonus()}` : ` + malus ${-srBonus()}`) : ""}) · dé de recherche d${nd.n}</span>`
   : `<b>${esc(cap(it.name))}</b> (${esc(nd.q)}) : <span style="color:#e8618c">impossible avec ton rang</span> <span class="muted">(total ${nd.th} requis)</span>`;
 function srSlotLines(rec) {
   const lines = []; let worst = 0, blocked = false;
@@ -1783,16 +1761,6 @@ function srCraft(extra) {
   inventory.filter(i => i.player === me && i.qty > 0).forEach(i => { const c = alchItem(i.name); if (c) for (let k = 0; k < Math.min(i.qty, 4); k++) units.push(c); });
   if (extra) units.push(extra);
   const out = [];
-  if (!ALCH) {   /* Tisane : une recette connue est un jeu d'ingrédients nommés */
-    const have = new Set(inventory.filter(i => i.player === me && i.qty > 0).map(i => i.name)); if (extra) have.add(norm(extra.name));
-    const seen = new Set();
-    trials.filter(t => t.player === me && statusOf(t) === "ok" && t.result).forEach(t => {
-      const names = [...new Set((t.ingredients || []).map(i => i.name))], key = setKey(t.ingredients || []); if (!names.length || seen.has(key)) return; seen.add(key);
-      const missing = names.filter(n => !have.has(n));
-      out.push({ name: t.result, missing, usesExtra: !!extra && names.includes(norm(extra.name)), total: names.length });
-    });
-    return out;
-  }
   done.forEach(r => {
     const rec = RECS.find(x => norm(x.name) === norm(r)); if (!rec || !(rec.ingredients || []).length) return;
     const slots = rec.ingredients.map(id => ({ id, s: resolveSlot(id) })), owner = new Array(units.length).fill(-1);
@@ -1826,7 +1794,7 @@ function renderSearch() {
   let h = `<div class="subtabs">${[["gen", "Recherche générale"], ["rec", "Par recette"], ["ing", "Par ingrédient"], ["mine", "Mes recettes"]].map(m => `<button type="button" class="subtab${SR.mode === m[0] ? " active" : ""}" data-srmode="${m[0]}">${m[1]}</button>`).join("")}</div>
     <div class="row" style="gap:12px;flex-wrap:wrap;align-items:end">
       <label>Environnement ${sel("sr-env", envs.map(e => [e.id, e.name]), SR.env, "— choisir —")}</label>
-      <label>Rang ${sel("sr-rank", SR_RANKS.map(r => [r[0], `${r[0]} (+${r[1]})`]), srRank())}</label></div>`;
+      <label>Rang ${sel("sr-rank", SR_RANKS.map(r => [r[0], `${r[0]} (${sgn(r[1])})`]), srRank())}</label></div>`;
   if (SR.mode === "mine") { h = h.replace(/<div class="row"[\s\S]*$/, ""); h += me ? srCraftHtml(null) : `<p class="muted">Choisis d'abord ton personnage.</p>`; root.innerHTML = h; return; }
   if (!envs.length) h += `<p class="muted">Le grimoire n'a pas encore d'environnements.</p>`;
   else if (!SR.env) h += `<p class="muted">Choisis l'environnement dans lequel tu cherches.</p>`;
@@ -1834,7 +1802,7 @@ function renderSearch() {
     const d20 = parseInt(SR.d20, 10), ok = d20 >= 1 && d20 <= 20, tot = ok ? d20 + srBonus() : null, q = ok ? srRarity(tot) : null;
     h += `<div class="row" style="gap:12px;flex-wrap:wrap;align-items:end;margin-top:10px"><label>Ton jet de d20 <input id="sr-d20" type="number" min="1" max="20" value="${esc(SR.d20)}" style="width:90px"></label></div>`;
     if (ok) {
-      h += `<p>Total <b>${tot}</b> (${d20}${srBonus() ? ` + ${srBonus()}` : ""}) : `;
+      h += `<p>Total <b>${tot}</b> (${d20}${srBonus() ? ` ${srBonus() > 0 ? "+" : "−"} ${Math.abs(srBonus())}` : ""}) : `;
       if (!q) h += `<b>rien</b> n'est trouvé.</p>`;
       else {
         const pool = srPool(SR.env, q), n = pool.length;
@@ -1900,7 +1868,7 @@ if ($("sr-root")) {
 
 /* ============================================================
    6b. Récolte : le parcours express des débutants.
-   Deux gestes : « je pars cueillir » (3 récoltes au hasard, puis les recettes qu'elles rendent possibles)
+   Deux gestes : « je pars cueillir » (une récolte au hasard, puis les recettes qu'elle rend possibles)
    et « je veux préparer une recette » (un jet de d20 par ingrédient manquant, puis le verdict).
    Mêmes règles que l'onglet Recherche (rareté selon le d20 + bonus de rang) ; les dés sont lancés par l'appli.
    ============================================================ */
@@ -1911,15 +1879,11 @@ const qkD = n => 1 + Math.floor(Math.random() * n);
 const qkClean = s => String(s || "").replace(/\*\*/g, "");
 const qkS = n => n > 1 ? "s" : "";
 
-function qkRollGather() {
-  const out = [];
-  for (let k = 0; k < 3; k++) {
-    const d20 = qkD(20), tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [];
-    if (!pool.length) { out.push({ d20, none: true }); continue; }
-    const die = qkD(pool.length), it = pool[die - 1];
-    out.push({ d20, q, it, qt: srQty(die) });
-  }
-  QK.finds = out; QK.added = false; QK.fresh = true;
+function qkRollGather() {   // une récolte = un seul jet : d20 + modificateur de rang -> rareté, puis dé de recherche -> ingrédient et quantité
+  const d20 = qkD(20), tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [];
+  if (!pool.length) QK.finds = [{ d20, none: true }];
+  else { const die = qkD(pool.length), it = pool[die - 1]; QK.finds = [{ d20, q, it, qt: srQty(die), die, n: pool.length }]; }
+  QK.added = false; QK.fresh = true;
 }
 const qkFound = () => (QK.finds || []).filter(f => !f.none);
 
@@ -1947,6 +1911,16 @@ function qkMatch(slots, units) {   // chaque emplacement de la recette reçoit a
    Les ingrédients viennent de la bibliothèque du MJ ; le fichier recettes-apothicaire.js ne sert qu'à choisir les recettes et à donner outils, DD, durée et valeur. */
 const APO = window.APO || [];
 const qkApoOf = name => APO.find(a => norm(a.n) === norm(name)) || null;
+/* Rang, outils, test, durée et valeur d'une recette de la bibliothèque, lus dans sa fiche (« Rang : Apprenti · Spécialisation : … », « Test : test d'Intelligence DD 10 »…).
+   Une recette interdite ou sans rang lisible n'est pas proposée. */
+function qkFromText(rec) {
+  const t = rec.text || "", g = re => { const m = re.exec(t); return m ? m[1].trim() : ""; };
+  const r = SR_RANKS.findIndex(x => x[0] === g(/Rang\s*:\s*([^\s·\n]+)/));
+  if (r < 0 || /interdit/i.test(g(/Spécialisation\s*:\s*([^\n]+)/))) return null;
+  const test = g(/Test\s*:\s*([^\n]+)/), hm = /Temps de fabrication\s*:\s*(\d+)\s*(heure|jour)/i.exec(t), dm = /DD\s*(\d+)/.exec(test), sm = /test d(?:e|['’])\s*([^\s]+)/i.exec(test), o = g(/Outils\s*:\s*([^\n]+)/), v = g(/Valeur\s*:\s*([^\n·]+)/);
+  const sp = g(/Spécialisation\s*:\s*([^\n·]+)/);
+  return hm && dm && sm && o && v ? { r, sp, h: +hm[1] * (/jour/i.test(hm[2]) ? 24 : 1), dd: +dm[1], s: sm[1], o, v } : { r, sp };
+}
 function qkRecipes() {
   const me = player(); if (!me) return [];
   const seen = new Map(), favOf = name => trials.some(x => norm(x.result || "") === norm(name) && (x.favs || []).includes(me));
@@ -1961,11 +1935,18 @@ function qkRecipes() {
   });
   if (ALCH) {
     const idx = Math.max(0, SR_RANKS.findIndex(x => x[0] === srRank()));
-    APO.filter(a => !a.f && a.r <= idx).forEach(a => {
+    APO.filter(a => !a.f && a.r <= idx && qkSpecOk(a.sp)).forEach(a => {
       const key = norm(a.n); if (seen.has(key)) return;
       const rec = RECS.find(x => norm(x.name) === key);
       const ids = rec && (rec.ingredients || []).length ? rec.ingredients : a.i.map(([c, sp]) => sp ? c + " - " + sp : c);
       seen.set(key, { key, name: a.n, ids, slots: ids.map(resolveSlot), fav: favOf(a.n), apo: a });
+    });
+    /* Puis toutes les autres recettes de la bibliothèque, de la spécialisation du personnage (ou sans spécialisation), dont le rang (lu dans leur fiche) est inférieur ou égal à celui du personnage ; les recettes interdites restent cachées */
+    RECS.forEach(x => {
+      const key = norm(x.name); if (seen.has(key) || !(x.ingredients || []).length) return;
+      const ap = qkApoOf(x.name); if (ap && ap.f) return;
+      const a = ap || qkFromText(x); if (!a || a.r > idx || !qkSpecOk(a.sp)) return;
+      seen.set(key, { key, name: x.name, ids: x.ingredients, slots: x.ingredients.map(resolveSlot), fav: favOf(x.name), apo: a });
     });
   }
   return [...seen.values()].sort((a, b) => (b.fav - a.fav) || ((a.apo ? a.apo.r : 0) - (b.apo ? b.apo.r : 0)) || a.name.localeCompare(b.name, "fr"));
@@ -1979,7 +1960,7 @@ const QK_STAT = { Int: "Intelligence", Sag: "Sagesse", Dex: "Dextérité", For: 
 const qkHours = h => h >= 16 ? `${h} h (≈ ${Math.ceil(h / 8)} jours à 8 h)` : `${h} h`;
 function qkMod(it) { const m = /modificateur du DD de fabrication\s*([−+-]?\s*\d+)/.exec(it.desc || ""); return m ? parseInt(m[1].replace("−", "-").replace(/\s/g, ""), 10) : 0; }
 function qkInfo(rec, r, complete) {
-  const a = rec.apo; if (!a) return "";
+  const a = rec.apo; if (!a || a.dd === undefined) return "";
   const sum = complete ? r.su.map(j => r.units[j].it).filter(it => !it.prod && !it.lit).reduce((t, it) => t + qkMod(it), 0) : 0, dd = a.dd + sum;
   const note = !complete ? ` <span class="muted">(de base ; selon la qualité des ingrédients)</span>` : sum ? ` <span class="muted">(base ${a.dd}, ${sum > 0 ? "+" : "−"}${Math.abs(sum)} selon tes ingrédients)</span>` : "";
   return `<div class="qk-info">⚗️ ${esc(cap(a.o))} · test de ${esc(QK_STAT[a.s] || a.s)} <b>DD ${dd}</b>${note} · ${qkHours(a.h)} · valeur ${esc(a.v)}</div>`;
@@ -2024,11 +2005,13 @@ function qkPrep(rec) {   // range ce qui a été trouvé, puis remplit le labora
 }
 
 /* ---------- Affichage ---------- */
-const qkDie = (d, bonus) => `<span class="qk-die" title="d20">🎲 ${d}${bonus ? `<small> +${bonus}</small>` : ""}</span>`;
-function qkFindCard(f, i, fresh) {
-  const style = fresh ? ` style="animation-delay:${i * 0.15}s"` : "";
-  if (f.none) return `<div class="qk-card none${fresh ? " pop" : ""}"${style}>${qkDie(f.d20, srBonus())}<div class="qk-name">🍂 Rien cette fois</div><div class="muted">Les environs restent muets.</div></div>`;
-  return `<div class="qk-card${fresh ? " pop" : ""}"${style}>${qkDie(f.d20, srBonus())}<div class="qk-name">${esc(cap(f.it.name))} <span class="qk-x">×${f.qt}</span></div>
+const qkDie = (d, bonus) => `<span class="qk-die" title="d20">🎲 ${d}${bonus ? `<small> ${sgn(bonus)}</small>` : ""}</span>`;
+const qkPlural = (name, n) => n > 1 && /^[^\s-]+$/.test(name) && !/[sxz]$/i.test(name) ? name + "s" : name;
+function qkFindCard(f, i, fresh) {   // « Vous trouvez 5 champignourets (d20 : 11 puis d10 : 3) »
+  const cls = fresh ? " pop" : "";
+  if (f.none) return `<div class="qk-card none${cls}"><div class="qk-name">🍂 Vous ne trouvez rien</div><div class="muted">(d20 : ${f.d20})</div></div>`;
+  return `<div class="qk-card${cls}"><div class="qk-name">Vous trouvez ${f.qt} ${esc(qkPlural(f.it.name.toLowerCase(), f.qt))}</div>
+    <div class="muted">(d20 : ${f.d20} puis d${f.n} : ${f.die})</div>
     <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}</div>`;
 }
 function qkRecLine(r, extra) { return `<div class="qk-rec"><span><b>${esc(cap(r.name))}</b>${extra || ""}</span><button type="button" class="btn ghost small" data-qk-open="${esc(r.key)}">Voir</button></div>`; }
@@ -2094,23 +2077,23 @@ function renderQuick() {
   SR.env = QK.env;
   let h = `<h2>Que veux-tu faire aujourd'hui ?</h2>`;
   if (!me) h += `<div class="qk-note">👤 Commence par choisir ton personnage. <button type="button" class="btn small" data-qk="name">Choisir mon personnage</button></div>`;
-  h += `<div class="qk-step"><span class="qk-n">1</span> Où es-tu ?<label class="qk-rank">Rang <select id="qk-rank">${SR_RANKS.map(r => `<option value="${esc(r[0])}"${r[0] === srRank() ? " selected" : ""}>${esc(r[0])} (+${r[1]})</option>`).join("")}</select></label></div>`;
+  h += `<div class="qk-step"><span class="qk-n">1</span> Où es-tu ?<span style="margin-left:auto;display:flex;gap:14px;flex-wrap:wrap"><label class="qk-rank" style="margin-left:0">Rang <select id="qk-rank">${SR_RANKS.map(r => `<option value="${esc(r[0])}"${r[0] === srRank() ? " selected" : ""}>${esc(r[0])} (${sgn(r[1])})</option>`).join("")}</select></label>${PAGE_ALCH ? `<label class="qk-rank" style="margin-left:0">Spécialisation <select id="qk-spec">${SPECS.map(x => `<option${x === srSpec() ? " selected" : ""}>${x}</option>`).join("")}</select></label>` : ""}</span></div>`;
   h += envs.length ? `<div class="fchips qk-envs">${envs.map(e => `<button type="button" class="fchip qk-pill${QK.env === e.id ? " on" : ""}" data-qk-env="${esc(e.id)}"><span class="dot" style="background:${esc(e.color)}"></span>${esc(e.name)}</button>`).join("")}</div>`
     : `<p class="muted">Le grimoire n'a pas encore d'environnements : le MJ doit en créer.</p>`;
   h += `<div class="qk-step"><span class="qk-n">2</span> Que fais-tu ?</div><div class="qk-modes">
     <button type="button" class="qk-mode${QK.mode === "cueillir" ? " on" : ""}" data-qk-mode="cueillir"><span class="qk-ico">🧺</span><b>Je pars cueillir</b><small>Je tente ma chance et je vois ce que je trouve</small></button>
     <button type="button" class="qk-mode${QK.mode === "recette" ? " on" : ""}" data-qk-mode="recette"><span class="qk-ico">📜</span><b>Je prépare une recette</b><small>Je choisis, puis je cherche ce qui me manque</small></button></div>`;
   if (!QK.env) h += `<p class="muted qk-hint">👆 Choisis d'abord l'endroit où tu te trouves.</p>`;
-  else if (!CATALOG.some(c => c.envs.includes(QK.env))) h += `<p class="muted qk-hint">Aucun ingrédient n'est encore associé à cet endroit : le MJ doit les renseigner (onglet MJ, bibliothèque des ingrédients).</p>`;
+  else if (!gatherSrc().some(c => c.envs.includes(QK.env))) h += `<p class="muted qk-hint">Aucun ingrédient n'est encore associé à cet endroit : le MJ doit les renseigner (onglet MJ, bibliothèque des ingrédients).</p>`;
   else if (QK.mode === "cueillir") {
-    if (!QK.finds) h += `<button type="button" class="btn qk-go" data-qk="roll">🎲 Partir cueillir (3 récoltes)</button>`;
+    if (!QK.finds) h += `<button type="button" class="btn qk-go" data-qk="roll">🎲 Partir cueillir</button>`;
     else {
       h += `<h3 style="margin-top:6px">Ta récolte</h3><div class="qk-finds">${QK.finds.map((f, i) => qkFindCard(f, i, fresh)).join("")}</div><div class="row" style="margin-top:10px">`;
       if (qkFound().length) h += QK.added ? `<span class="qk-okline">✓ Rangé dans ton sac</span>` : `<button type="button" class="btn qk-go" data-qk="bag">🎒 Tout ranger dans mon sac</button>`;
       h += `<button type="button" class="btn ghost" data-qk="roll">Cueillir à nouveau</button></div><div style="margin-top:16px">${qkGatherOut()}</div>`;
     }
   } else h += qkRecipeOut(fresh);
-  h += `<p class="qk-foot muted">Pour lancer tes propres dés ou explorer plus loin, va dans l'onglet Recherche.</p>`;
+
   root.innerHTML = h;
 }
 function qkRefresh() { if (!qkOn) return; const v = $("view-accueil"); if (v && !v.classList.contains("hidden")) renderQuick(); }
@@ -2135,6 +2118,7 @@ if ($("qk-root")) {
     const t = e.target;
     if (t.id === "qk-rec") { QK.rec = t.value; QK.rolls = null; }
     else if (t.id === "qk-rank") { SR.rank = t.value; try { localStorage.setItem("tisane_rank", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: t.value }); QK.finds = null; QK.rolls = null; }
+    else if (t.id === "qk-spec") { SR.spec = t.value; try { localStorage.setItem("tisane_spec", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), spec: t.value }); QK.rec = ""; QK.rolls = null; }
     else return;
     renderQuick();
   });
@@ -2164,11 +2148,6 @@ $("lib-rec-add").classList.toggle("hidden", !ALCH);
 $("qual-panel").classList.toggle("hidden", ALCH);   // le tableau de qualités (DD, valeurs) est une règle des tisanes
 $("lib-anec-wrap").classList.toggle("hidden", ALCH);
 ["c", "d"].forEach(k => $("mj-" + k).classList.toggle("hidden", !ALCH));
-if (!ALCH) fetch(GRIMOIRE_FILE, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(d => {
-  if (!d || !Array.isArray(d.categories)) return;
-  SHARED_CATS = d.categories.filter(c => c && c.id && c.name).map(c => ({ id: c.id, name: c.name, color: HEX.test(c.color) ? c.color : PALETTE[0], group: MANAGED.includes(c.group) ? c.group : "propriete" }));
-  applyCats(); renderCategories(); renderInventory(); renderSocio(); renderMj(); renderLib(); qkRefresh();
-}).catch(() => {});
 if (ALCH) {
   document.querySelector("#lab .hint").textContent = "Propose des ingrédients : le MJ dit ce qu'ils donnent. Ou note toi-même un essai.";
   $("mj-file-title").textContent = "Fichier du grimoire d'alchimie";
