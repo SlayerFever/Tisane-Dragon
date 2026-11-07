@@ -2024,9 +2024,9 @@ const qkPlural = (name, n) => n > 1 && /^[^\s-]+$/.test(name) && !/[sxz]$/i.test
 function qkFindCard(f, i, fresh) {   // « Vous trouvez 5 champignourets (d20 : 11 puis d10 : 3) »
   const cls = fresh ? " pop" : "";
   if (f.none) return `<div class="qk-card none${cls}"><div class="qk-name">🍂 Vous ne trouvez rien</div><div class="muted">(d20 : ${f.d20})</div></div>`;
-  return `<div class="qk-card${cls}"><div class="qk-name">Vous trouvez ${f.qt} ${esc(qkPlural(f.it.name.toLowerCase(), f.qt))}</div>
+  return `<div class="qk-card${cls}"><div class="qk-cardgrid"><div><div class="qk-name">Vous trouvez ${f.qt} ${esc(qkPlural(f.it.name.toLowerCase(), f.qt))}</div>
     <div class="muted">(d20 : ${f.d20} puis d${f.n} : ${f.die})</div>
-    <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}${qkKnowHtml(f.it)}</div>`;
+    <div class="qk-q">${esc(f.q)}</div>${f.it.desc ? `<div class="muted qk-desc">${esc(qkClean(f.it.desc))}</div>` : ""}</div>${qkKnowHtml(f.it)}</div></div>`;
 }
 function qkDetail(r) {   // ce que le personnage sait d'une recette qu'il connaît : sa fiche et l'état de ses ingrédients
   const rec = RECS.find(x => norm(x.name) === norm(r.name)), lines = rec && rec.text ? rec.text.split("\n").map(l => l.trim()).filter(Boolean) : [];
@@ -2116,22 +2116,23 @@ function qkManual(me, fresh) {
   const okN = (v, max) => { const n = parseInt(v, 10); return n >= 1 && n <= max ? n : 0; };
   if (QK.mode === "cueillir") {
     const d20 = okN(QK.man.d20, 20);
-    h += `<div class="qk-step"><span class="qk-n">3</span> Lance ton d20</div><div class="qk-rollrow"><span>Résultat de ton d20</span>${num("qk-m-d20", QK.man.d20, 20)}</div>`;
+    let a = `<div class="qk-step"><span class="qk-n">3</span> Lance ton d20</div><div class="qk-rollrow"><span>Résultat de ton d20</span>${num("qk-m-d20", QK.man.d20, 20)}</div>`, b = "", tail = "";
     QK.finds = null;
-    if (!d20) return h + `<p class="muted">Entre le résultat de ton d20 (1 à 20).</p>`;
+    const cols = () => `<div class="qk-cols"><div>${a}</div><div>${b}</div></div>`;
+    if (!d20) return h + cols() + `<p class="muted">Entre le résultat de ton d20 (1 à 20).</p>`;
     const tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [], n = pool.length;
-    h += `<div class="qk-total"><span class="qk-tn">${tot}</span><span>total <span class="muted">(${d20}${srBonus() ? " " + sgn(srBonus()) : ""})</span><br>`;
-    if (!q) return h + `<b>Rien</b> n'est trouvé.</span></div>`;
-    h += `rareté <b>${esc(q)}</b></span></div>`;
-    if (!n) return h + `<p class="muted">Aucun ingrédient ${esc(q)} n'existe ici : rien trouvé.</p>`;
+    a += `<div class="qk-total"><span class="qk-tn">${tot}</span><span>total <span class="muted">(${d20}${srBonus() ? " " + sgn(srBonus()) : ""})</span><br>${q ? `rareté <b>${esc(q)}</b>` : `<b>Rien</b> n'est trouvé.`}</span></div>`;
+    if (!q) return h + cols();
+    if (!n) return h + cols() + `<p class="muted">Aucun ingrédient ${esc(q)} n'existe ici : rien trouvé.</p>`;
     const die = n === 1 ? 1 : okN(QK.man.die, n);
-    if (n > 1) h += `<div class="qk-step"><span class="qk-n">4</span> Lance ton dé de recherche : <b>d${n}</b></div><div class="qk-rollrow"><span>Résultat de ton d${n}</span>${num("qk-m-die", QK.man.die, n)}</div>`;
+    if (n > 1) b += `<div class="qk-step"><span class="qk-n">4</span> Lance ton dé de recherche : <b>d${n}</b></div><div class="qk-rollrow"><span>Résultat de ton d${n}</span>${num("qk-m-die", QK.man.die, n)}</div>`;
+    h += cols();
     if (!die) return h + (QK.man.die !== "" ? `<p class="muted">Le dé doit être entre 1 et ${n}.</p>` : "");
     const it = pool[die - 1], qt = srQty(n);
     QK.finds = [{ d20, q, it, qt, die, n }];
-    h += `<div class="qk-card" style="margin-top:14px"><div class="qk-name">Vous trouvez ${qt} ${esc(qkPlural(it.name.toLowerCase(), qt))}</div>
-      <div class="muted">(d20 : ${d20} puis d${n} : ${die})</div><div class="qk-q">${esc(q)}</div>${it.desc ? `<div class="muted qk-desc">${esc(qkClean(it.desc))}</div>` : ""}${qkKnowHtml(it)}
-      ${QK.added ? `<div class="muted" style="margin-top:8px">✓ Rangé dans ton sac</div>` : `<button type="button" class="btn" data-qk="bag" style="margin-top:8px">Ajouter à mon inventaire</button>`}</div>`;
+    h += `<div class="qk-card" style="margin-top:14px"><div class="qk-cardgrid"><div><div class="qk-name">Vous trouvez ${qt} ${esc(qkPlural(it.name.toLowerCase(), qt))}</div>
+      <div class="muted">(d20 : ${d20} puis d${n} : ${die})</div><div class="qk-q">${esc(q)}</div>${it.desc ? `<div class="muted qk-desc">${esc(qkClean(it.desc))}</div>` : ""}
+      ${QK.added ? `<div class="muted" style="margin-top:8px">✓ Rangé dans ton sac</div>` : `<button type="button" class="btn" data-qk="bag" style="margin-top:8px">Ajouter à mon inventaire</button>`}</div>${qkKnowHtml(it)}</div></div>`;
     if (me) h += `<div style="margin-top:16px">${qkGatherOut()}</div>`;
     return h;
   }
