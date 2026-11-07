@@ -1727,7 +1727,8 @@ const srEnvs = () => categories.filter(c => groupOf(c) === "environnement");
 const gatherSrc = () => CATALOG;
 const srPool = (env, q) => gatherSrc().filter(c => c.envs.includes(env) && c.q === q).sort((a, b) => a.name.localeCompare(b.name, "fr"));
 const srKnown = () => { const me = player(); return inventory.filter(i => i.player === me).map(i => catalogItem(i.name)).filter(Boolean); };
-const srQty = die => Math.max(1, Math.floor(die / 2));
+/* Quantité trouvée = la valeur maximale du dé de recherche divisée par 2 (arrondie à l'inférieur), au moins 1 : d10 → 5, d6 → 3, d4 → 2, d2 ou d1 → 1 */
+const srQty = n => Math.max(1, Math.floor(n / 2));
 function srNeed(it) {   // d20 minimum pour tomber sur cette rareté dans l'environnement choisi
   if (!SR.env) return null;
   if (!it.envs.includes(SR.env)) return { none: true };
@@ -1811,7 +1812,7 @@ function renderSearch() {
         else {
           h += `<p>Lance ton <b>dé de recherche d${n}</b> :</p><label>Résultat <input id="sr-die" type="number" min="1" max="${n}" value="${esc(SR.die)}" style="width:90px"></label>`;
           const die = parseInt(SR.die, 10);
-          if (die >= 1 && die <= n) { const it = pool[die - 1], qt = srQty(die);
+          if (die >= 1 && die <= n) { const it = pool[die - 1], qt = srQty(n);
             h += `<div class="card" style="margin-top:12px;padding:12px"><div class="muted">Tu as trouvé</div><div style="font-size:1.3rem"><b>${esc(cap(it.name))}</b> × ${qt}</div>
               <div class="muted">${esc(it.q)}${it.desc ? " · " + esc(it.desc) : ""}</div>
               <button type="button" class="btn" id="sr-add" style="margin-top:8px">Ajouter à mon inventaire</button></div>` + (me ? srCraftHtml(it) : "");
@@ -1845,7 +1846,7 @@ if ($("sr-root")) {
     if (e.target.id === "sr-add") {
       const me = player(); if (!me) { toast("Choisis d'abord ton personnage."); $("player").focus(); return; }
       const pool = srPool(SR.env, srRarity(parseInt(SR.d20, 10) + srBonus())), die = parseInt(SR.die, 10), it = pool[die - 1]; if (!it) return;
-      const name = norm(it.name), id = invId(me, name), ex = inventory.find(i => i.id === id), qt = srQty(die);
+      const name = norm(it.name), id = invId(me, name), ex = inventory.find(i => i.id === id), qt = srQty(pool.length);
       store.set("inventaire", id, { player: me, name, qty: (ex ? ex.qty : 0) + qt, cats: (ex && ex.cats) || [] });
       toast(`${cap(it.name)} × ${qt} ajouté à ton inventaire`);
     }
@@ -1882,7 +1883,7 @@ const qkS = n => n > 1 ? "s" : "";
 function qkRollGather() {   // une récolte = un seul jet : d20 + modificateur de rang -> rareté, puis dé de recherche -> ingrédient et quantité
   const d20 = qkD(20), tot = d20 + srBonus(), q = srRarity(tot), pool = q ? srPool(QK.env, q) : [];
   if (!pool.length) QK.finds = [{ d20, none: true }];
-  else { const die = qkD(pool.length), it = pool[die - 1]; QK.finds = [{ d20, q, it, qt: srQty(die), die, n: pool.length }]; }
+  else { const die = qkD(pool.length), it = pool[die - 1]; QK.finds = [{ d20, q, it, qt: srQty(pool.length), die, n: pool.length }]; }
   QK.added = false; QK.fresh = true;
 }
 const qkFound = () => (QK.finds || []).filter(f => !f.none);
@@ -2116,7 +2117,7 @@ function qkManual(me, fresh) {
     const die = n === 1 ? 1 : okN(QK.man.die, n);
     if (n > 1) h += `<div class="qk-step"><span class="qk-n">4</span> Lance ton dé de recherche : <b>d${n}</b></div><div class="qk-rollrow"><span>Résultat de ton d${n}</span>${num("qk-m-die", QK.man.die, n)}</div>`;
     if (!die) return h + (QK.man.die !== "" ? `<p class="muted">Le dé doit être entre 1 et ${n}.</p>` : "");
-    const it = pool[die - 1], qt = srQty(die);
+    const it = pool[die - 1], qt = srQty(n);
     QK.finds = [{ d20, q, it, qt, die, n }];
     h += `<div class="qk-card" style="margin-top:14px"><div class="qk-name">Vous trouvez ${qt} ${esc(qkPlural(it.name.toLowerCase(), qt))}</div>
       <div class="muted">(d20 : ${d20} puis d${n} : ${die})</div><div class="qk-q">${esc(q)}</div>${it.desc ? `<div class="muted qk-desc">${esc(qkClean(it.desc))}</div>` : ""}${qkKnowHtml(it)}
