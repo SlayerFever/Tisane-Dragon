@@ -1934,12 +1934,12 @@ function qkKnowHtml(it) {
 /* Le sac du PJ sous forme d'unités (comme le fait Recherche), plus d'éventuelles trouvailles pas encore rangées */
 function qkUnits(extras) {
   const me = player(), u = [];
+  (extras || []).forEach(f => { for (let k = 0; k < Math.min(f.qt, 6); k++) u.push({ it: f.it, from: "find" }); });   // la trouvaille passe en premier : c'est elle qu'on propose d'abord
   inventory.filter(i => i.player === me && i.qty > 0).forEach(i => { const c = alchItem(i.name); if (c) for (let k = 0; k < Math.min(i.qty, 6); k++) u.push({ it: c, from: "stock" }); });
   if (ALCH) tisanes.filter(x => x.player === me && x.qty > 0 && x.result).forEach(x => {
     const c = { id: "r_" + metaId(x.result), prod: true, name: x.result, key: stripKey(x.result), clas: [], q: "" };
     for (let k = 0; k < Math.min(x.qty, 6); k++) u.push({ it: c, from: "stock" });
   });
-  (extras || []).forEach(f => { for (let k = 0; k < Math.min(f.qt, 6); k++) u.push({ it: f.it, from: "find" }); });
   return u;
 }
 function qkMatch(slots, units) {   // chaque emplacement de la recette reçoit au plus une unité (couplage maximal)
@@ -2075,11 +2075,12 @@ function qkGatherOut() {
   const recs = qkRecipes();
   if (!recs.length) return `<p class="muted qk-hint">Tu ne connais pas encore de recette. Au laboratoire (à droite), mélange des ingrédients pour en découvrir : elles apparaîtront ici.</p>`;
   const extras = QK.added ? [] : qkFound(), now = [], before = [], almost = [];
-  recs.forEach(r => { const a = qkReady(r, extras), b = qkReady(r, []); if (!a.missing.length) (b.missing.length ? now : before).push(r); else if (a.missing.length === 1) almost.push({ r, k: a.missing[0] }); });
+  recs.forEach(r => { const a = qkReady(r, extras), b = qkReady(r, []); if (!a.missing.length) (b.missing.length ? now : before).push(a.usesFind && !b.missing.length ? Object.assign(r, { withFind: true }) : Object.assign(r, { withFind: false })); else if (a.missing.length === 1) almost.push({ r, k: a.missing[0] }); });
   let h = `<h3>Tu peux concocter</h3>`;
   if (QK.added) h += before.length ? before.map(r => qkRecLine(r)).join("") : `<p class="muted">Rien pour l'instant avec ton sac.</p>`;
   else {
-    h += now.map(r => qkRecLine(r, ` <span class="qk-new">✨ grâce à ta récolte</span>`)).join("") + before.map(r => qkRecLine(r)).join("");
+    before.sort((x, y) => (y.withFind - x.withFind));
+    h += now.map(r => qkRecLine(r, ` <span class="qk-new">✨ grâce à ta récolte</span>`)).join("") + before.map(r => qkRecLine(r, r.withFind ? ` <span class="qk-new">✨ avec ta trouvaille</span>` : "")).join("");
     if (!now.length && !before.length) h += `<p class="muted">Aucune recette complète pour l'instant avec cet ingrédient.</p>`;
   }
   if (almost.length) h += `<h3 style="margin-top:14px">Il ne manque presque rien</h3>` + almost.slice(0, 5).map(a => qkRecLine(a.r, ` <span class="muted">· il manque : ${esc(qkLabel(a.r, a.k))}</span>`)).join("");
@@ -2131,7 +2132,10 @@ const manualOn = () => PAGE_ALCH && QK.view === "classique";
 const qkViewBox = () => `<label class="qk-rank qk-viewbox" style="margin-left:0"><input type="checkbox" id="qk-view"${QK.view === "classique" ? " checked" : ""}> Je lance mes dés moi-même</label>`;
 function qkSlotText(rec, k, r) {
   const label = esc(qkLabel(rec, k)), rl = (QK.rolls || {})[k], j = r.su[k];
-  if (j >= 0) return `<div class="qk-slot ok"><span class="qk-st">${r.units[j].from === "find" ? "✨" : "✅"}</span><span><b>${label}</b> <span class="muted">${r.units[j].from === "find" ? "trouvé : " + esc(cap(r.units[j].it.name)) : "dans ton sac : " + esc(cap(r.units[j].it.name))}</span></span></div>`;
+  if (j >= 0) {
+    const cur = r.units[j].it, alt = [...new Set(r.units.filter(u => qkFits(rec.slots[k], u.it) && norm(u.it.name) !== norm(cur.name)).map(u => cap(u.it.name)))].slice(0, 5);
+    return `<div class="qk-slot ok"><span class="qk-st">${r.units[j].from === "find" ? "✨" : "✅"}</span><span><b>${label}</b> <span class="muted">${r.units[j].from === "find" ? "ta trouvaille : " + esc(cap(cur.name)) : "dans ton sac : " + esc(cap(cur.name))}</span>${alt.length ? `<br><span class="muted">Autres possibilités : ${alt.map(esc).join(", ")}</span>` : ""}</span></div>`;
+  }
   if (rl && rl.pendingDie) return `<div class="qk-slot"><span class="qk-st">🎲</span><span><b>${label}</b> <span class="muted">réussi : entre ton dé de recherche pour savoir lequel tu trouves</span></span></div>`;
   if (rl && rl.other && rl.it) return `<div class="qk-slot ko"><span class="qk-st">❌</span><span><b>${label}</b> <span class="muted">tu trouves ${esc(cap(rl.it.name))}, qui ne convient pas</span></span></div>`;
   if (rl && rl.found && rl.it) return `<div class="qk-slot ok"><span class="qk-st">✨</span><span><b>${label}</b> <span class="muted">trouvé : ${esc(cap(rl.it.name))}</span></span></div>`;
