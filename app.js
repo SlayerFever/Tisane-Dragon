@@ -398,7 +398,10 @@ function renderInventory() {
   const mineAll = inventory.filter(i => i.player === me).sort(invSorter());
   renderInvFilter(mineAll);
   const keep = i => !invFilter ? true : invFilter === "__none" ? !catIdsOf(i.name).length : catIdsOf(i.name).includes(invFilter);
-  const stock = mineAll.filter(i => i.qty > 0), known = mineAll;   // « connus » = tout ce que le PJ connaît, en stock ou non
+  const mineNames = new Set(mineAll.map(i => norm(i.name)));
+  /* Précis d'alchimie : les ingrédients que le rang et la spécialisation font connaître, même s'ils n'ont jamais été récoltés */
+  const auto = me ? CATALOG.filter(c => autoKnows(c) && !mineNames.has(norm(c.name))).map(c => ({ id: "auto__" + c.id, player: me, name: norm(c.name), qty: 0, auto: true })) : [];
+  const stock = mineAll.filter(i => i.qty > 0), known = [...mineAll, ...auto].sort(invSorter());   // « connus » = tout ce que le PJ connaît, en stock ou non
   const noMe = '<div class="empty">Choisis ton personnage en haut de la page.</div>';
   $("inventory").innerHTML = !me ? noMe
     : !stock.length ? '<div class="empty">Ton inventaire est vide. Utilise « Ajouter un ingrédient ».</div>'
@@ -446,6 +449,7 @@ function detailHTML(i) {
 function invTable(items, detail) {
   const row = i => {
     const r = rarityOf(i.name), open = qtyOpen === i.id;
+    if (i.auto) return `<tr class="autorow"><td></td><td><div class="iname">${rarMark(i.name)}${esc(cap(i.name))}</div>${r.q ? `<span class="qual">${qualLine(r)}</span>` : ""}<div class="muted" style="font-size:.85rem">📚 Connu grâce à ta formation</div></td>${GROUPS.map(g => `<td>${inGroup(i.name, g.id).map(c => tag(c)).join("")}</td>`).join("")}<td></td><td class="tcenter"><button class="btn ghost icon" data-act="inc" data-id="${i.id}" title="Ajouter un à l'inventaire" aria-label="Ajouter ${esc(i.name)} à l'inventaire">+</button></td></tr>`;
     return `<tr>${detail ? `<td class="tcenter"><button class="btn ghost icon" data-act="tog" data-id="${i.id}" aria-expanded="${knownOpen.has(i.id)}" aria-label="Historique de ${esc(i.name)}" title="Historique">${knownOpen.has(i.id) ? "▾" : "▸"}</button></td>` : ""}<td><div class="iname">${rarMark(i.name)}${esc(cap(i.name))}</div>${r.q ? `<span class="qual">${qualLine(r)}</span>` : ""}</td>
       ${GROUPS.map(g => `<td>${inGroup(i.name, g.id).map(c => tag(c)).join("")}<button type="button" class="catplus" data-act="cat" data-g="${g.id}" data-id="${i.id}" title="Ajouter ou retirer : ${g.label}" aria-label="${g.label} de ${esc(i.name)}">+</button></td>`).join("")}
       ${detail ? "" : `<td class="tcenter"><span class="qwrap" data-qwrap="1">${open ? `<button class="btn ghost small" data-act="dec" data-id="${i.id}" aria-label="Retirer un" ${i.qty <= 0 ? "disabled" : ""}>−</button>` : ""}
@@ -657,6 +661,10 @@ $("add-ing").onclick = () => {
 };
 function invClick(e) {
   const b = e.target.closest("button[data-id]"); if (!b) return;
+  if (b.dataset.id.startsWith("auto__")) {   // ingrédient du précis d'alchimie : le premier « + » le range dans l'inventaire du personnage
+    const c = CATALOG.find(x => "auto__" + x.id === b.dataset.id), me = player(); if (!c || !me) return;
+    store.set("inventaire", invId(me, norm(c.name)), { player: me, name: norm(c.name), qty: 1, cats: [] }); toast(`${cap(c.name)} : 1 en inventaire`); return;
+  }
   const it = inventory.find(i => i.id === b.dataset.id); if (!it) return;
   const act = b.dataset.act;
   if (act === "edit") { ingForm = { mode: "edit", id: it.id, name: it.name, rarity: rarityOf(it.name).id, qty: it.qty, known: false, cats: [...(it.cats || [])], noQty: !!b.closest("#known") }; ingModal(); }
@@ -1861,7 +1869,7 @@ function renderSearch() {
 }
 const srVisible = () => $("view-recherche") && !$("view-recherche").classList.contains("hidden");
 const srRefresh = () => { qkRefresh(); if (srVisible() && !(document.activeElement && document.activeElement.type === "number")) renderSearch(); };
-rawStore.subscribe("alch_fiches", d => { FICHES = d; srRefresh(); });
+rawStore.subscribe("alch_fiches", d => { FICHES = d; renderInventory(); srRefresh(); });
 if ($("sr-root")) {
   $("sr-root").addEventListener("click", e => {
     const m = e.target.closest("[data-srmode]"); if (m) { SR.mode = m.dataset.srmode; renderSearch(); return; }
@@ -1918,7 +1926,7 @@ function qkKnowHtml(it) {
   const cats = catsOf(norm(it.name)), inBag = !!myItem(norm(it.name));
   const rows = GROUPS.map(g => ({ g, l: cats.filter(c => groupOf(c) === g.id) })).filter(x => x.l.length);
   const ci = catalogItem(norm(it.name)), k = knowSet(), auto = !!ci && autoKnows(ci);
-  return `<div class="qk-know"><div class="qk-knowh">🔎 Ce que ton personnage sait</div>` + (auto ? `<div class="muted">📚 Figure dans ton précis d'alchimie (${esc(k.rank)}, ${esc(k.spec)}).</div>` : "") + (rows.length
+  return `<div class="qk-know"><div class="qk-knowh">🔎 Ce que ton personnage sait</div>` + (auto ? `<div class="muted">📚 Ton personnage connaît cet ingrédient grâce à sa formation (rang ${esc(k.rank)}, spécialisation ${esc(k.spec)}).</div>` : "") + (rows.length
     ? rows.map(x => `<div><span class="muted">${esc(x.g.label)} :</span> ${x.l.map(c => tag(c)).join("")}</div>`).join("")
     : `<div class="muted">Rien pour l'instant : ton personnage ne sait encore rien de cet ingrédient${inBag ? "." : " (une fois rangé dans ton sac, le MJ pourra te révéler ses catégories)."}</div>`) + `</div>`;
 }
@@ -2257,6 +2265,7 @@ if ($("qk-root")) {
     else if (t.id === "qk-rank") { SR.rank = t.value; try { localStorage.setItem("tisane_rank", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), rank: t.value }); QK.finds = null; QK.rolls = null; }
     else if (t.id === "qk-spec") { SR.spec = t.value; try { localStorage.setItem("tisane_spec", t.value); } catch (x) { /* ignoré */ } if (player()) rawStore.set("alch_fiches", ficheId(), { player: player(), spec: t.value }); QK.rec = ""; QK.rolls = null; }
     else return;
+    if (t.id === "qk-rank" || t.id === "qk-spec") renderInventory();   // le précis d'alchimie dépend du rang et de la spécialisation
     renderQuick();
   });
 }
